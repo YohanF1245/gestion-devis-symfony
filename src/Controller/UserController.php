@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Uid\Uuid;
 
 class UserController extends AbstractController
 {
@@ -48,11 +49,16 @@ class UserController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $data = new Users();
-            $signFile = $form->get("signature")->getData();
-            dd($signFile->getClientOriginalName(), $signFile->getClientOriginalExtension());
+            $tempUUID = Uuid::v1();
+           // $signFile = $form->get("signature")->getData();
+            //$fileName = $data->getId() . "." . $signFile->getClientOriginalExtension();
+            //$signFile->move($this->getParameter('kernel.project_dir').'uploaded-images/signs');
             $data = $form->getData();
+            //$data ->setSignature($this->getParameter('kernel.project_dir').'uploaded-images/signs'.$fileName);
             $data->setCreationDate(new DateTime("now"));
+            //dd($data);
               $em->persist($data);
+            dd($em);
              $em->flush();
         }
 
