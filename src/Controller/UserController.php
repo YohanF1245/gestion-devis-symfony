@@ -41,13 +41,15 @@ class UserController extends AbstractController
         }
         return new Response("user create at : ".$user->getCreationDate());
     }
-    #[Route("/user/create/form", name:"user.create")]
+    #[Route("/user/submit/signup", name:"user.create")]
     public function signup(Request $request, EntityManagerInterface $em){
         $form = $this->createForm(CreateUserType::class);
         $form->handleRequest(($request));
 
         if($form->isSubmitted() && $form->isValid()){
             $data = new Users();
+            $signFile = $form->get("signature")->getData();
+            dd($signFile->getClientOriginalName(), $signFile->getClientOriginalExtension());
             $data = $form->getData();
             $data->setCreationDate(new DateTime("now"));
               $em->persist($data);
