@@ -25,6 +25,9 @@ class Users
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $signature = null;
 
+    #[ORM\Column(lenght: 14, nullable: false)]
+    private ?int $siret = null;
+
     #[ORM\Column(length: 128)]
     private ?string $pass = null;
 
@@ -73,6 +76,18 @@ class Users
     public function setSignature(?string $signature): static
     {
         $this->signature = $signature;
+
+        return $this;
+    }
+
+    public function getSiret(): ?string
+    {
+        return $this->pass;
+    }
+
+    public function setSiret(string $pass): static
+    {
+        $this->pass = $pass;
 
         return $this;
     }

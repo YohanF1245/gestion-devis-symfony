@@ -8,17 +8,22 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\EqualTo;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class CreateUserType extends AbstractType
 {
@@ -40,12 +45,18 @@ class CreateUserType extends AbstractType
             ->add('pseudo', TextType ::class, [
                 "required" => true,
                 "constraints" => [
-                    new NotBlank(),
+                    new NotBlank(message : "le champ doit etre renseigné"),
                     new NotNull(),
                 ]
             ])
-            ->add('siret')
+            ->add('siret', TextType::class, [
+                "constraints" => [
+                    new Regex('[0-9]+'),
+                    new EqualTo(14)
+                ]
+            ])
             ->add('signature', FileType::class, [
+                "required" => false,
                 "mapped" => false,
                 "constraints" => [
                     new Image()
