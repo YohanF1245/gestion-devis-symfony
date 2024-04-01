@@ -48,18 +48,16 @@ class UserController extends AbstractController
         $form->handleRequest(($request));
 
         if($form->isSubmitted() && $form->isValid()){
-            $data = new Users();
-            $tempUUID = Uuid::v1();
-           // $signFile = $form->get("signature")->getData();
-            //$fileName = $data->getId() . "." . $signFile->getClientOriginalExtension();
-            //$signFile->move($this->getParameter('kernel.project_dir').'uploaded-images/signs');
             $data = $form->getData();
-            //$data ->setSignature($this->getParameter('kernel.project_dir').'uploaded-images/signs'.$fileName);
             $data->setCreationDate(new DateTime("now"));
-            //dd($data);
-              $em->persist($data);
-            dd($em);
-             $em->flush();
+            $em->persist($data);
+            if($data->getSignature()){
+            $signFile = $form->get("signature")->getData();
+            $fileName = $data->getId() . "." . $signFile->getClientOriginalExtension();
+            $signFile->move($this->getParameter('kernel.project_dir').'\uploaded-images\signs\\',$fileName);
+            $data ->setSignature($this->getParameter('kernel.project_dir').'uploaded-images/signs'.$fileName);
+            }
+            $em->flush();
         }
 
         return $this->render("user/signup.html.twig", [

@@ -8,9 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
+#[UniqueEntity("mail")]
 class Users
 {
     #[ORM\Id]
@@ -19,14 +22,14 @@ class Users
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
-    #[ORM\Column(length: 128)]
+    #[ORM\Column(length: 128, unique:true)]
     private ?string $mail = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $signature = null;
 
-    #[ORM\Column(lenght: 14, nullable: false)]
-    private ?int $siret = null;
+    #[ORM\Column(length: 14, nullable: false)]
+    private ?string $siret = null;
 
     #[ORM\Column(length: 128)]
     private ?string $pass = null;
@@ -43,8 +46,8 @@ class Users
     #[ORM\OneToMany(targetEntity: Business::class, mappedBy: 'user_id')]
     private Collection $businesses;
 
-    #[ORM\OneToOne(mappedBy: 'user_id', cascade: ['persist', 'remove'])]
-    private ?ResetPass $resetPass = null;
+    // #[ORM\OneToOne(mappedBy: 'user_id', cascade: ['persist', 'remove'])]
+    // private ?ResetPass $resetPass = null;
 
     public function __construct()
     {
@@ -82,12 +85,12 @@ class Users
 
     public function getSiret(): ?string
     {
-        return $this->pass;
+        return $this->siret;
     }
 
-    public function setSiret(string $pass): static
+    public function setSiret(string $siret): static
     {
-        $this->pass = $pass;
+        $this->siret = $siret;
 
         return $this;
     }
@@ -170,20 +173,20 @@ class Users
         return $this;
     }
 
-    public function getResetPass(): ?ResetPass
-    {
-        return $this->resetPass;
+//     public function getResetPass(): ?ResetPass
+//     {
+//         return $this->resetPass;
+//     }
+
+//     public function setResetPass(ResetPass $resetPass): static
+//     {
+//         // set the owning side of the relation if necessary
+//         if ($resetPass->getUserId() !== $this) {
+//             $resetPass->setUserId($this);
+//         }
+
+//         $this->resetPass = $resetPass;
+
+//         return $this;
+//     }
     }
-
-    public function setResetPass(ResetPass $resetPass): static
-    {
-        // set the owning side of the relation if necessary
-        if ($resetPass->getUserId() !== $this) {
-            $resetPass->setUserId($this);
-        }
-
-        $this->resetPass = $resetPass;
-
-        return $this;
-    }
-}

@@ -3,8 +3,12 @@
 {% block title "Créér un compte" %}
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
-    <div class="container col-6 offset-3">
-    <h1 class="text-center">Créer un compte</h1>
+    <div class="container-fluid bg-pd-blue" style="height:10vh!important"></div>
+    <div class="container col-4 offset-4">
+        <div class="col-12 d-flex mt-3">
+            <img class="img-fluid w-25 m-auto"src="{{asset("img/pigeon-devis-portrait.svg")}}">
+        </div>
+    <h1 class="text-center text-pd-yellow">Créer un compte</h1>
     {{form_start(form)}}
     <div class="row">
         <div class="col">
@@ -31,8 +35,13 @@
         </div>
     </div>
     <div class="row">
-        {{form_row(form.Envoyer)}}
+        <div class="py-3 d-grid">
+            <button type="submit" class="btn btn-block btn-primary ">Créer un compte</button>
+        </div>
+        {# {{form_row(form.Envoyer)}} #}
     </div>
     {{form_end(form)}}
     </div>
+    <div class="container-fluid bg-pd-blue position-fixed bottom-0" style="height:10vh!important">
+
 {% endblock %}
