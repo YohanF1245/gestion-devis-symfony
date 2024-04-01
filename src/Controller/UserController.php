@@ -22,7 +22,7 @@ class UserController extends AbstractController
     {
         $user = new Users();
         $user->setMail("test@test.com");
-        $user->setPass("devine");
+        $user->setPassword("devine");
         $user->setPseudo("toto");
         $user->setCreationDate(new DateTime("now"));
 
