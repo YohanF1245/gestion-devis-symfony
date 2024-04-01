@@ -62,9 +62,9 @@ class CreateUserType extends AbstractType
                     new Image()
                 ]
             ])
-            ->add('pass', RepeatedType::class,[
+            ->add('password', RepeatedType::class,[
                 'type' => PasswordType::class,
-                'invalid_message' => "Les mots de pass doivent correspondre",
+                'invalid_message' => "Les mots de passe doivent correspondre",
                 'options' => [
                     'attr' => [
                         'class' => 'password-field',

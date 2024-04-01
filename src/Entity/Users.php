@@ -38,7 +38,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $siret = null;
 
     #[ORM\Column(length: 128)]
-    private ?string $pass = null;
+    private ?string $password = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $creation_date = null;
@@ -103,12 +103,12 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getPassword(): ?string
     {
-        return $this->pass;
+        return $this->password;
     }
 
-    public function setPassword(string $pass): static
+    public function setPassword(string $password): static
     {
-        $this->pass = $pass;
+        $this->password = $password;
 
         return $this;
     }
