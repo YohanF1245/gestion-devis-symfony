@@ -11,8 +11,10 @@ use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
@@ -43,20 +45,28 @@ class UserController extends AbstractController
         return new Response("user create at : ".$user->getCreationDate());
     }
     #[Route("/user/submit/signup", name:"user.create")]
-    public function signup(Request $request, EntityManagerInterface $em){
+    public function signup(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher){
         $form = $this->createForm(CreateUserType::class);
         $form->handleRequest(($request));
 
         if($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
             $data->setCreationDate(new DateTime("now"));
+            $hachedPassword = $passwordHasher->hashPassword($data, $data->getPassword());
+            $data->setPassword($hachedPassword);
+            $data->setRoles([]);
             $em->persist($data);
-            if($data->getSignature()){
-            $signFile = $form->get("signature")->getData();
-            $fileName = $data->getId() . "." . $signFile->getClientOriginalExtension();
-            $signFile->move($this->getParameter('kernel.project_dir').'\uploaded-images\signs\\',$fileName);
-            $data ->setSignature($this->getParameter('kernel.project_dir').'uploaded-images/signs'.$fileName);
+            try{
+
+                $signFile = $form->get("signature")->getData();
+                $fileName = $data->getId() . "." . $signFile->getClientOriginalExtension();
+                $signFile->move($this->getParameter('kernel.project_dir').'\uploaded-images\signs\\',$fileName);
+                $data ->setSignature($this->getParameter('kernel.project_dir').'uploaded-images/signs'.$fileName);
+            }catch(\Exception $e){
+                echo $e->getMessage();
             }
+            dd($data);
+            $em->persist($data);
             $em->flush();
         }
 
