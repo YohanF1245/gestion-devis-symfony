@@ -5,16 +5,12 @@ namespace App\Entity;
 use App\Repository\UsersRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
-
-#[UniqueEntity("siret")]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -39,22 +35,22 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 14)]
-    private ?string $siret = null;
+    #[ORM\Column(length: 255)]
+    private ?string $pseudo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $signature = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $pseudo = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $creation_date = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $update_date = null;
 
-    public function getId(): ?uuid
+    #[ORM\Column(length: 14)]
+    private ?string $siret = null;
+
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
@@ -129,14 +125,14 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getSiret(): ?string
+    public function getPseudo(): ?string
     {
-        return $this->siret;
+        return $this->pseudo;
     }
 
-    public function setSiret(string $siret): static
+    public function setPseudo(string $pseudo): static
     {
-        $this->siret = $siret;
+        $this->pseudo = $pseudo;
 
         return $this;
     }
@@ -149,18 +145,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSignature(?string $signature): static
     {
         $this->signature = $signature;
-
-        return $this;
-    }
-
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(string $pseudo): static
-    {
-        $this->pseudo = $pseudo;
 
         return $this;
     }
@@ -185,6 +169,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdateDate(?\DateTimeInterface $update_date): static
     {
         $this->update_date = $update_date;
+
+        return $this;
+    }
+
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(string $siret): static
+    {
+        $this->siret = $siret;
 
         return $this;
     }

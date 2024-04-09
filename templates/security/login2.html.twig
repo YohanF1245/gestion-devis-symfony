@@ -19,7 +19,7 @@
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
     <label for="inputPassword">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
+     <a class="btn btn-sm btn-success" href="{{ path('app_login') }}">Se connecter</a>
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
