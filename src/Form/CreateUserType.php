@@ -29,7 +29,7 @@ class CreateUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('mail', TextType::class,[
+            ->add('email', TextType::class,[
                 "required" => true,
                 "constraints" => [
                     new NotBlank(message :"le champ doit être renseigné"),

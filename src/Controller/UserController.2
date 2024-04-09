@@ -20,14 +20,16 @@ class UserController extends AbstractController
 {
 
     #[Route("/user", name: "create_user")]
-    public function createUser(EntityManagerInterface $entityManager): Response
+    public function createUser(EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
     {
         $user = new Users();
-        $user->setMail("test@test.com");
-        //$user->setPassword("devine");
+        $user->seteMail("test@test.com");
+        
+
         $user->setPseudo("toto");
         $user->setCreationDate(new DateTime("now"));
-
+        $user->setSiret("00001111222234");
+        $user->setPassword($hasher->hashPassword($user, "devine"));
         $entityManager->persist($user);
 
         $entityManager->flush();
