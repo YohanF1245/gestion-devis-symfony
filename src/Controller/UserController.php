@@ -40,7 +40,7 @@ class UserController extends AbstractController
     {
         $user = $entityManager->getRepository(Users::class)->find($pseudo);
         if(!$user){
-            throw $this->createNotFoundException("no user foudn");
+            throw $this->createNotFoundException("no user found");
         }
         return new Response("user create at : ".$user->getCreationDate());
     }
@@ -57,15 +57,16 @@ class UserController extends AbstractController
             $data->setRoles([]);
             $em->persist($data);
             try{
-
                 $signFile = $form->get("signature")->getData();
-                $fileName = $data->getId() . "." . $signFile->getClientOriginalExtension();
-                $signFile->move($this->getParameter('kernel.project_dir').'\uploaded-images\signs\\',$fileName);
-                $data ->setSignature($this->getParameter('kernel.project_dir').'uploaded-images/signs'.$fileName);
+                if($signFile){
+
+                    $fileName = $data->getId() . "." . $signFile->getClientOriginalExtension();
+                    $signFile->move($this->getParameter('kernel.project_dir').'\uploaded-images\signs\\',$fileName);
+                    $data ->setSignature($this->getParameter('kernel.project_dir').'uploaded-images/signs'.$fileName);
+                }
             }catch(\Exception $e){
                 echo $e->getMessage();
             }
-            dd($data);
             $em->persist($data);
             $em->flush();
         }
