@@ -40,10 +40,9 @@ class UsersController extends AbstractController
             try{
                 $signFile = $form->get("signature")->getData();
                 if($signFile){
-
                     $fileName = $user->getId() . "." . $signFile->getClientOriginalExtension();
                     $signFile->move($this->getParameter('kernel.project_dir').'\uploaded-images\signs\\',$fileName);
-                    $user ->setSignature($this->getParameter('kernel.project_dir').'uploaded-images/signs'.$fileName);
+                    $user ->setSignature($this->getParameter('kernel.project_dir').'\uploaded-images\signs\\'.$fileName);
                 }
             }catch(\Exception $e){
                 echo $e->getMessage();
