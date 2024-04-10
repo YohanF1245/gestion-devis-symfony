@@ -35,7 +35,7 @@ class UsersController extends AbstractController
             $user->setPassword( $passwordHasher->hashPassword($user, $user->getPassword()));
             
             $user->setRoles([]);
-            $user->setCreationDate(new DateTime("now"));
+            $user->setCreationDate(new DateTime());
             $entityManager->persist($user);
             try{
                 $signFile = $form->get("signature")->getData();

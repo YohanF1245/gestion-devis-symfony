@@ -18,15 +18,15 @@ class Business
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
-    #[ORM\Column]
-    private ?int $siret = null;
+    #[ORM\Column(length: 14)]
+    private ?string $siret = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $logo = null;
 
     #[ORM\ManyToOne(inversedBy: 'businesses')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?users $user_id = null;
+    private ?Users $user_id = null;
 
     #[ORM\OneToMany(targetEntity: Outcome::class, mappedBy: 'business_id')]
     private Collection $outcomes;
@@ -45,12 +45,12 @@ class Business
         return $this->id;
     }
 
-    public function getSiret(): ?int
+    public function getSiret(): ?string
     {
         return $this->siret;
     }
 
-    public function setSiret(int $siret): static
+    public function setSiret(string $siret): static
     {
         $this->siret = $siret;
 

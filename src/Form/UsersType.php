@@ -37,17 +37,6 @@ class UsersType extends AbstractType
                 new NotNull(),
             ]
         ])
-        ->add('siret', TextType::class, [
-            "constraints" => [
-                new Regex('/[0-9]+/', message:"Un siret est composé uniquement de chiffre"),
-                new Length([
-                    "min" => 14,
-                    "max" => 14,
-                    "minMessage" => "le siret est trop petit",
-                    "maxMessage" => "le siret est trop grand"
-                ]),
-            ]
-        ])
         ->add('signature', FileType::class, [
             "required" => false,
             "mapped" => false,

@@ -51,8 +51,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $update_date = null;
 
-    #[ORM\Column(length: 14)]
-    private ?string $siret = null;
+    
 
     public function getId(): ?Uuid
     {
@@ -173,18 +172,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdateDate(?\DateTimeInterface $update_date): static
     {
         $this->update_date = $update_date;
-
-        return $this;
-    }
-
-    public function getSiret(): ?string
-    {
-        return $this->siret;
-    }
-
-    public function setSiret(string $siret): static
-    {
-        $this->siret = $siret;
 
         return $this;
     }
