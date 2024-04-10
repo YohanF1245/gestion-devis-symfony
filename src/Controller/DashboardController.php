@@ -9,7 +9,7 @@ class DashboardController extends AbstractController {
 
     #[Route("/dashboard", name: "home")]
     function dashboard(Request $request){
-        return $this->render("home/dashboard");
+        return $this->render("dashboard.html.twig");
     }
 
 }
