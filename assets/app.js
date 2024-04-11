@@ -1,4 +1,5 @@
 import './bootstrap.js';
+import './revenue-chart.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
