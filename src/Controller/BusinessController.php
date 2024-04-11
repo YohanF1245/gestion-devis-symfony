@@ -28,12 +28,24 @@ class BusinessController extends AbstractController
         $business = new Business();
         $form = $this->createForm(BusinessType::class, $business);
         $form->handleRequest($request);
-
+        $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
+
+            try{
+                $logo = $form->get("logo")->getData();
+                if($logo){
+                    $fileName = $user->getId() . "." . $logo->getClientOriginalExtension();
+                    $logo->move($this->getParameter('kernel.project_dir').'\uploaded-images\logos\\',$fileName);
+                    $business ->setLogo($this->getParameter('kernel.project_dir').'\uploaded-images\logos\\'.$fileName);
+                }
+            }catch(\Exception $e){
+                echo $e->getMessage();
+            }
+        $business->setUserId($user);
             $entityManager->persist($business);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_business_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('business/new.html.twig', [

@@ -4,7 +4,13 @@
 
 {% block body %}
 {% include 'navbar.html.twig' %}
-<div class = "container">
+{% if business == null %}
+<div class="alert alert-danger text-center" role="alert">
+    <p>Vous devez reseinger les données de l'entreprise avant de commencer a creer des devis !</p>
+    <a href="{{ path('app_business_new')}}">Renseigner une entreprise</a>
+</div>
+{% endif %}
+<div class="container">
         <div class="row">
             <div class="col-4 margin-4">
                 <button class="btn bg-pd-green h-100 w-100 my-4 text-white fw-bold">AJOUTER UN CLIENT</button>
