@@ -54,6 +54,10 @@ class Client
     #[ORM\OneToMany(targetEntity: DressEstimate::class, mappedBy: 'client_id')]
     private Collection $dressEstimates;
 
+    #[ORM\ManyToOne(inversedBy: 'clients')]
+    private ?Users $user_id = null;
+
+
     public function __construct()
     {
         $this->dressEstimates = new ArrayCollection();
@@ -222,6 +226,18 @@ class Client
                 $dressEstimate->setClientId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserId(): ?Users
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?Users $user_id): static
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

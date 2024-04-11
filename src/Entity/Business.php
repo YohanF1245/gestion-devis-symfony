@@ -7,9 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: BusinessRepository::class)]
+#[UniqueEntity('siret')]
 class Business
 {
     #[ORM\Id]
@@ -18,7 +20,7 @@ class Business
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
-    #[ORM\Column(length: 14)]
+    #[ORM\Column(length: 14, unique: true)]
     private ?string $siret = null;
 
     #[ORM\Column(length: 255, nullable: true)]

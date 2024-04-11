@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Client{% endblock %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% block body %}
+    <h1 class="text-center text-pd-yellow">Editer un client</h1>
+    <div class="container col-6">
+    {{form_start(form, {attr: {'novalidate': 'novalidate'}})}}
+		<div class="row">
+			<div class="col-12 d-flex justify-content-center">
+			<label>Personne morale</label>
+			<div class="form-check form-switch">
+				
+				{{form_row(form.is_physick)}}
+			</div>
+				
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				{{form_row(form.name)}}
+			</div>
+			<div class="col">
+				{{form_row(form.last_name)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				{{form_row(form.business_name)}}
+			</div>
+			<div class="col">
+				{{form_row(form.mail)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				{{form_row(form.num_street)}}
+			</div>
+			<div class="col">
+				{{form_row(form.street)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				{{form_row(form.zip_postal)}}
+			</div>
+			<div class="col">
+				{{form_row(form.town)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				{{form_row(form.index_tel)}}
+			</div>
+			<div class="col">
+				{{form_row(form.phone_number)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="py-3 d-grid">
+				<button type="submit" class="btn btn-block btn-primary ">Ajouter le client</button>
+			</div>
+			{# {{form_row(form.Envoyer)}} #}
+		</div>
+		{{form_end(form)}}
+
+    <a href="{{ path('app_client_index') }}">back to list</a>
+    </div>
+    {{ include('client/_delete_form.html.twig') }}
+{% endblock %}
