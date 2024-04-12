@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New DressEstimate{% endblock %}
+
+{% block body %}
+    <h1>Create new DressEstimate</h1>
+
+    {{ include('dress_estimate/_form.html.twig') }}
+
+    <a href="{{ path('app_dress_estimate_index') }}">back to list</a>
+{% endblock %}

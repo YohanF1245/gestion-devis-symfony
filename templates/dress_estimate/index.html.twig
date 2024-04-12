@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DressEstimate index{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+
+<div class="container col-8">
+    <h1 class="text-center text-pd-yellow my-3">Mes devis</h1>
+    <div class="d-flex justify-content-center mb-2">
+        <a class="btn bg-pd-blue" href="{{ path('app_dress_estimate_new') }}">Créér un devis</a>
+    </div>
+    <table class="table table-striped-column">
+        <thead class="">
+            <tr class="table-dark text-center">
+                <th>Numéro de devis</th>
+                <th>Date</th>
+                <th>Validité</th>
+                <th>Date d'expiration</th>
+                <th>Intitulé</th>
+                <th>Zone libre</th>
+                <th>Accompte</th>
+                <th>Remise</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dress_estimate in dress_estimates %}
+            <tr>
+                <td>{{ dress_estimate.id }}</td>
+                <td>{{ dress_estimate.estimateNumber }}</td>
+                <td>{{ dress_estimate.creationDate ? dress_estimate.creationDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ dress_estimate.validity }}</td>
+                <td>{{ dress_estimate.expirationDate ? dress_estimate.expirationDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ dress_estimate.intitule }}</td>
+                <td>{{ dress_estimate.freeZone }}</td>
+                <td>{{ dress_estimate.accompte }}</td>
+                <td>{{ dress_estimate.discount }}</td>
+                <td>
+                    <a href="{{ path('app_dress_estimate_show', {'id': dress_estimate.id}) }}">show</a>
+                    <a href="{{ path('app_dress_estimate_edit', {'id': dress_estimate.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_dress_estimate_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Performance index{% endblock %}
+{% block body %}
+{% include 'navbar.html.twig' %}
+
+<div class="container col-8">
+    <h1 class="text-center text-pd-yellow my-3">Mes clients</h1>
+    <div class="d-flex justify-content-center mb-2">
+        <a class="btn bg-pd-blue" href="{{ path('app_performance_new') }}">Ajouter une prestation</a>
+    </div>
+    <table class="table table-striped-column">
+        <thead class="">
+            <tr class="table-dark text-center">
+                <th>Quantité</th>
+                <th>Désignation</th>
+                <th>Prix</th>
+                <th>Unité</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for performance in performances %}
+            <tr>
+                <td>{{ performance.quantity }}</td>
+                <td>{{ performance.designation }}</td>
+                <td>{{ performance.pirce }}</td>
+                <td>{{ performance.unit }}</td>
+                <td>
+                    <a href="{{ path('app_performance_show', {'id': performance.id}) }}">show</a>
+                    <a href="{{ path('app_performance_edit', {'id': performance.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    <a href="{{ path('app_performance_new') }}">Create new</a>
+{% endblock %}

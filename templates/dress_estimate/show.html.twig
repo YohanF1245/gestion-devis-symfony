@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DressEstimate{% endblock %}
+
+{% block body %}
+    <h1>DressEstimate</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dress_estimate.id }}</td>
+            </tr>
+            <tr>
+                <th>Creation_date</th>
+                <td>{{ dress_estimate.creationDate ? dress_estimate.creationDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Estimate_number</th>
+                <td>{{ dress_estimate.estimateNumber }}</td>
+            </tr>
+            <tr>
+                <th>Validity</th>
+                <td>{{ dress_estimate.validity }}</td>
+            </tr>
+            <tr>
+                <th>Expiration_date</th>
+                <td>{{ dress_estimate.expirationDate ? dress_estimate.expirationDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Intitule</th>
+                <td>{{ dress_estimate.intitule }}</td>
+            </tr>
+            <tr>
+                <th>Free_zone</th>
+                <td>{{ dress_estimate.freeZone }}</td>
+            </tr>
+            <tr>
+                <th>Accompte</th>
+                <td>{{ dress_estimate.accompte }}</td>
+            </tr>
+            <tr>
+                <th>Discount</th>
+                <td>{{ dress_estimate.discount }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_dress_estimate_index') }}">back to list</a>
+
+    <a href="{{ path('app_dress_estimate_edit', {'id': dress_estimate.id}) }}">edit</a>
+
+    {{ include('dress_estimate/_delete_form.html.twig') }}
+{% endblock %}
