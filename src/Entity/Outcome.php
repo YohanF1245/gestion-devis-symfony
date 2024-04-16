@@ -30,6 +30,9 @@ class Outcome
     #[ORM\JoinColumn(nullable: false)]
     private ?Business $business_id = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -79,6 +82,18 @@ class Outcome
     public function setBusinessId(?Business $business_id): static
     {
         $this->business_id = $business_id;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }

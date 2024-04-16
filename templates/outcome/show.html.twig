@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Outcome{% endblock %}
+
+{% block body %}
+    <h1>Outcome</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ outcome.id }}</td>
+            </tr>
+            <tr>
+                <th>Outcome_date</th>
+                <td>{{ outcome.outcomeDate ? outcome.outcomeDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Outcome_amount</th>
+                <td>{{ outcome.outcomeAmount }}</td>
+            </tr>
+            <tr>
+                <th>Recipe_link</th>
+                <td>{{ outcome.recipeLink }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ outcome.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_outcome_index') }}">back to list</a>
+
+    <a href="{{ path('app_outcome_edit', {'id': outcome.id}) }}">edit</a>
+
+    {{ include('outcome/_delete_form.html.twig') }}
+{% endblock %}

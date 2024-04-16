@@ -35,7 +35,7 @@ class OutcomeRepository extends ServiceEntityRepository
     //            ->getResult()
     //        ;
     //    }
-
+            
     //    public function findOneBySomeField($value): ?Outcome
     //    {
     //        return $this->createQueryBuilder('o')

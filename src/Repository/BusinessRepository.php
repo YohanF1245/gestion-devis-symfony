@@ -35,7 +35,14 @@ class BusinessRepository extends ServiceEntityRepository
     //            ->getResult()
     //        ;
     //    }
-
+            public function findBusinessByUserId($userId): ?Business
+            {
+                return $this->createQueryBuilder('b')
+                    ->andWhere('b.user_id = :userId')
+                    ->setParameter('userId', $userId)
+                    ->getQuery()
+                    ->getOneOrNullResult();
+            }
     //    public function findOneBySomeField($value): ?Business
     //    {
     //        return $this->createQueryBuilder('b')
