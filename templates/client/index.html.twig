@@ -8,7 +8,7 @@
 <div class="container col-8">
     <h1 class="text-center text-pd-yellow my-3">Mes clients</h1>
     <div class="d-flex justify-content-center mb-2">
-        <a class="btn bg-pd-blue" href="{{ path('app_client_new') }}">Ajouter un client</a>
+        <a class="btn btn-primary" href="{{ path('app_client_new') }}">Ajouter un client</a>
     </div>
     <table class="table table-striped-column">
         <thead class="">
@@ -16,14 +16,9 @@
                 <th>Prénom</th>
                 <th>Nom</th>
                 <th>Nom de l'entreprise</th>
-                <th>Personne physique?</th>
                 <th>Email</th>
-                <th>Numéro de rue</th>
-                <th>Rue</th>
-                <th>Code postal</th>
                 <th>Index telephonique</th>
                 <th>Numéro de téléphone</th>
-                <th>Ville</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -33,17 +28,13 @@
                 <td>{{ client.name }}</td>
                 <td>{{ client.lastName }}</td>
                 <td>{{ client.businessName }}</td>
-                <td>{{ client.isPhysick ? 'Yes' : 'No' }}</td>
                 <td>{{ client.mail }}</td>
-                <td>{{ client.numStreet }}</td>
-                <td>{{ client.street }}</td>
-                <td>{{ client.zipPostal }}</td>
                 <td>{{ client.indexTel }}</td>
                 <td>{{ client.phoneNumber }}</td>
-                <td>{{ client.town }}</td>
-                <td>
-                    <a href="{{ path('app_client_show', {'id': client.id}) }}">Voir</a>
-                    <a href="{{ path('app_client_edit', {'id': client.id}) }}">Editer</a>
+                <td class="d-flex justify-content-around" >
+                    <a class="btn btn-primary" href="{{ path('app_client_show', {'id': client.id}) }}">Voir</a>
+                    <a class="btn btn-success" href="{{ path('app_client_edit', {'id': client.id}) }}">Editer</a>
+                    {{include('client/_delete_form.html.twig')}}
                 </td>
             </tr>
         {% else %}

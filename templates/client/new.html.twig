@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Client
+{% block title %}Nouveau client
 {% endblock %}
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
 	<div class="container-fluid bg-pd-blue" style="height:10vh!important"></div>
 
-	<h1 class="text-pd-yellow text-center">Create new Client</h1>
-	<div class="container col-6 offset-3">
+	<h1 class="text-pd-yellow text-center">Ajouter un client</h1>
+	<div class="container col-4 offset-4">
 		{{form_start(form, {attr: {'novalidate': 'novalidate'}})}}
 		<div class="row">
 			<div class="col-12 d-flex justify-content-center">
@@ -61,12 +61,14 @@
 		</div>
 		<div class="row">
 			<div class="py-3 d-grid">
-				<button type="submit" class="btn btn-block btn-primary ">Ajouter le client</button>
+				<button type="submit" class="btn btn-block btn-success ">Ajouter le client</button>
 			</div>
 			{# {{form_row(form.Envoyer)}} #}
 		</div>
 		{{form_end(form)}}
-		<a href="{{ path('app_client_index') }}">back to list</a>
+		<div class="d-flex justify-content-center">
+		<a class="btn btn-primary" href="{{ path('app_client_index') }}">Retour à la liste des clients</a>
+		</div>
 	</div>
 	<div class="container-fluid bg-pd-blue position-fixed bottom-0" style="height:10vh!important">
 
