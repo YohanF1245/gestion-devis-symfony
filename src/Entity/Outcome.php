@@ -21,7 +21,7 @@ class Outcome
     private ?\DateTimeInterface $outcome_date = null;
 
     #[ORM\Column]
-    private ?int $outcome_amount = null;
+    private ?float $outcome_amount = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $recipe_link = null;
@@ -47,12 +47,12 @@ class Outcome
         return $this;
     }
 
-    public function getOutcomeAmount(): ?int
+    public function getOutcomeAmount(): ?float
     {
         return $this->outcome_amount;
     }
 
-    public function setOutcomeAmount(int $outcome_amount): static
+    public function setOutcomeAmount(float $outcome_amount): static
     {
         $this->outcome_amount = $outcome_amount;
 

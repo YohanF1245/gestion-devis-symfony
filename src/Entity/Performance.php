@@ -28,7 +28,7 @@ class Performance
     private ?float $tax = null;
 
     #[ORM\Column]
-    private ?int $pirce = null;
+    private ?float $pirce = null;
 
     #[ORM\Column(length: 64, nullable: true)]
     private ?string $unit = null;
@@ -82,12 +82,12 @@ class Performance
         return $this;
     }
 
-    public function getPirce(): ?int
+    public function getPirce(): ?float
     {
         return $this->pirce;
     }
 
-    public function setPirce(int $pirce): static
+    public function setPirce(float $pirce): static
     {
         $this->pirce = $pirce;
 

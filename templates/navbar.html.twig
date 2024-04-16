@@ -5,7 +5,7 @@
 		</button>
 		<div class="collapse navbar-collapse w-100" id="navbarSupportedContent">
 			<ul class="navbar-nav mb-2 mb-lg-0 w-100" style="height: 80px">
-				<li class="nav-item col-lg-2 d-flex align-items-center justify-content-center bg-pd-green">
+				<li class="nav-item col-lg-2 d-flex align-items-center justify-content-center bg-pd-green" {% if app.request.get('_route') == '_dashboard' %} class="active"{% endif %}>
 					<img
 					src="{{asset("img/pigeon-devis-landscape.svg")}}" class="h-100">
 				<!-- <a class=" align-middle justify-content-center align-items-center" aria-current="page" href="#"><img class="img-fluid" src="../img/Fichier 4@2x.png"></a> -->
