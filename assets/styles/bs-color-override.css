@@ -34,3 +34,7 @@
 .text-pd-yellow{
     color: #f9b234!important;
 } 
+.active-nav{
+    background-color: white!important;
+    color: blue!important;
+}

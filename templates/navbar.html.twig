@@ -5,19 +5,19 @@
 		</button>
 		<div class="collapse navbar-collapse w-100" id="navbarSupportedContent">
 			<ul class="navbar-nav mb-2 mb-lg-0 w-100" style="height: 80px">
-				<li class="nav-item col-lg-2 d-flex align-items-center justify-content-center bg-pd-green" {% if app.request.get('_route') == '_dashboard' %} class="active"{% endif %}>
+				<li class="nav-item col-lg-2 d-flex align-items-center justify-content-center bg-pd-green">
 					<img
 					src="{{asset("img/pigeon-devis-landscape.svg")}}" class="h-100">
 				<!-- <a class=" align-middle justify-content-center align-items-center" aria-current="page" href="#"><img class="img-fluid" src="../img/Fichier 4@2x.png"></a> -->
 				</li>                                       
-				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center">
-					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('home') }}">
+				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') == 'home' %}style="background-color:white!important;"{% endif %}>
+					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('home') }}"{% if app.request.attributes.get('_route') == 'home' %}style="color:#35aae0!important;"{% endif %}>
 						
 						<p class="fs-6 fw-bold m-0">Dashboard</p>
 					</a>
 				</li>
-				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center">
-					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_dress_estimate_index') }}">
+				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') == 'app_dress_estimate_index' %}style="background-color:white!important;"{% endif %}>
+					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_dress_estimate_index') }}" {% if app.request.attributes.get('_route') == 'app_dress_estimate_index' %}style="color:#35aae0!important;"{% endif %}>
 						
 						<p class="fs-6 fw-bold m-0">Devis</p>
 					</a>
@@ -28,14 +28,14 @@
 						<p class="fs-6 fw-bold m-0">Factures</p>
 					</a>
 				</li>
-				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center">
-					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_performance_index') }}">
+				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') == 'app_performance_index' %}style="background-color:white!important;"{% endif %}>
+					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_performance_index') }}" {% if app.request.attributes.get('_route') == 'app_performance_index' %}style="color:#35aae0!important;"{% endif %}>
 						
 						<p class="fs-6 fw-bold m-0">Prestations</p>
 					</a>
 				</li>
-				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center">
-					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_client_index') }}">
+				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') == 'app_client_index' %}style="background-color:white!important;"{% endif %}>
+					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_client_index') }}" {% if app.request.attributes.get('_route') == 'app_client_index' %}style="color:#35aae0!important;"{% endif %}>
 						
 						<p class="fs-6 fw-bold m-0">Clients</p>
 					</a>
