@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\DressEstimate;
 use App\Form\DressEstimateType;
 use App\Repository\DressEstimateRepository;
+use App\Repository\PerformanceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,7 @@ class DressEstimateController extends AbstractController
     }
 
     #[Route('/new', name: 'app_dress_estimate_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, PerformanceRepository $performanceRepository, EntityManagerInterface $entityManager): Response
     {
         $dressEstimate = new DressEstimate();
         $form = $this->createForm(DressEstimateType::class, $dressEstimate);
@@ -32,13 +33,16 @@ class DressEstimateController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($dressEstimate);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        $userId = $this->getUser()->getId();
+        $performances = $performanceRepository->findBy(
+            ['user_id' => $userId]
+        );
         return $this->render('dress_estimate/new.html.twig', [
             'dress_estimate' => $dressEstimate,
             'form' => $form,
+            'performances' => $performances
         ]);
     }
 
@@ -71,7 +75,7 @@ class DressEstimateController extends AbstractController
     #[Route('/{id}', name: 'app_dress_estimate_delete', methods: ['POST'])]
     public function delete(Request $request, DressEstimate $dressEstimate, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$dressEstimate->getId(), $request->getPayload()->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $dressEstimate->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($dressEstimate);
             $entityManager->flush();
         }

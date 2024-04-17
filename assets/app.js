@@ -1,5 +1,7 @@
 import './bootstrap.js';
 import './revenue-chart.js';
+import './estimate-script.js';
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -7,6 +9,6 @@ import './revenue-chart.js';
  * which should already be in your base.html.twig.
  */
 import './styles/app.css';
-import "./styles/bs-color-override.css"
+import "./styles/bs-color-override.css";
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

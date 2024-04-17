@@ -1,11 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New DressEstimate{% endblock %}
+{% block title %}New DressEstimate
+{% endblock %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
 
 {% block body %}
-    <h1>Create new DressEstimate</h1>
+<div class="container col-8 offset-2">
+	<h1>Create new DressEstimate</h1>
+	<div class="row">
+		<div class="col-5">
+			<select class="form-select" id="selectPerf" aria-label="Default select example">
+				<option selected>Ajouter une prestation</option>
+				{% for i in 1..performances|length %}
+					<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}'>{{performances[i-1].quantity}}
+						{{performances[i-1].unit}}
+						{{performances[i-1].designation}}
+						{{performances[i-1].pirce}}</option>
+				{% endfor %}
+			</select>
+		</div>
 
-    {{ include('dress_estimate/_form.html.twig') }}
+		<div class="col-5">
+			<button type="button" class="btn btn-primary" onclick="addPerformance()">Ajouter
+			</button>
+		</div>
+	</div>
+	{{ include('dress_estimate/_form.html.twig') }}
+	<div id="performanceDiv">
+		<table class="table table-striped-column">
+			<thead class="">
+				<tr class="table-dark text-center">
+					<th>Quantité</th>
+					<th>Désignation</th>
+					<th>Unité</th>
+					<th>Prix</th>
+				</tr>
+			</thead>
+			<tbody id="perfomanceTableBody">
+			</tbody>
+		</div>
+		<a href="{{ path('app_dress_estimate_index') }}">back to list</a>
+	<div>
+    {% endblock %}
 
-    <a href="{{ path('app_dress_estimate_index') }}">back to list</a>
-{% endblock %}
