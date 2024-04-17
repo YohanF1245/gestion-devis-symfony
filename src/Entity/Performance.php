@@ -36,6 +36,10 @@ class Performance
     #[ORM\ManyToMany(targetEntity: EstimateTab::class, mappedBy: 'performace_id')]
     private Collection $estimateTabs;
 
+    #[ORM\ManyToOne(inversedBy: 'performances')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Users $user_id = null;
+
     public function __construct()
     {
         $this->estimateTabs = new ArrayCollection();
@@ -129,6 +133,18 @@ class Performance
         if ($this->estimateTabs->removeElement($estimateTab)) {
             $estimateTab->removePerformaceId($this);
         }
+
+        return $this;
+    }
+
+    public function getUserId(): ?Users
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?Users $user_id): static
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

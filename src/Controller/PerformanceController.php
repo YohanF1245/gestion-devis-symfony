@@ -30,6 +30,8 @@ class PerformanceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $userId = $this->getUser();
+            $performance->setUserId($userId);
             $entityManager->persist($performance);
             $entityManager->flush();
 

@@ -56,9 +56,13 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Client::class, mappedBy: 'user_id')]
     private Collection $clients;
 
+    #[ORM\OneToMany(targetEntity: Performance::class, mappedBy: 'user_id')]
+    private Collection $performances;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
+        $this->performances = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -208,6 +212,36 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($client->getUserId() === $this) {
                 $client->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Performance>
+     */
+    public function getPerformances(): Collection
+    {
+        return $this->performances;
+    }
+
+    public function addPerformance(Performance $performance): static
+    {
+        if (!$this->performances->contains($performance)) {
+            $this->performances->add($performance);
+            $performance->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removePerformance(Performance $performance): static
+    {
+        if ($this->performances->removeElement($performance)) {
+            // set the owning side to null (unless already changed)
+            if ($performance->getUserId() === $this) {
+                $performance->setUserId(null);
             }
         }
 

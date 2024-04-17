@@ -5,39 +5,39 @@
 {% include 'navbar.html.twig' %}
 
 <div class="container col-8">
-    <h1 class="text-center text-pd-yellow my-3">Mes dépenses</h1>
+    <h1 class="text-center text-pd-yellow my-3">Mes Dépenses</h1>
     <div class="d-flex justify-content-center mb-2">
-        <a class="btn btn-primary" href="{{ path('app_outcome_new') }}">Ajouter une dépenses</a>
+        <a class="btn btn-primary" href="{{ path('app_outcome_new') }}">Ajouter une dépense</a>
     </div>
     <table class="table table-striped-column">
         <thead class="">
             <tr class="table-dark text-center">
-                <th>Outcome_date</th>
-                <th>Outcome_amount</th>
-                <th>Recipe_link</th>
-                <th>Name</th>
+                <th>Nom</th>
+                <th>Montant</th>
+                <th>Date</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for outcome in outcomes %}
             <tr>
-                <td>{{ outcome.outcomeDate ? outcome.outcomeDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ outcome.outcomeAmount }}</td>
-                <td>{{ outcome.recipeLink }}</td>
                 <td>{{ outcome.name }}</td>
-                <td>
-                    <a href="{{ path('app_outcome_show', {'id': outcome.id}) }}">show</a>
-                    <a href="{{ path('app_outcome_edit', {'id': outcome.id}) }}">edit</a>
+                <td>{{ outcome.outcomeAmount }}</td>
+                <td>{{ outcome.outcomeDate ? outcome.outcomeDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="d-flex justify-content-around" >
+                    <a class="btn btn-primary" href="{{ path('app_outcome_show', {'id': outcome.id}) }}">Voir</a>
+                    
+                    <a class="btn btn-success" href="{{ path('app_outcome_edit', {'id': outcome.id}) }}">Editer</a>
+                
+                    {{ include('outcome/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="7">Aucune entrée trouvée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_outcome_new') }}">Create new</a>
+</div>
 {% endblock %}

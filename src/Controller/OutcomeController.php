@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Business;
 use App\Entity\Outcome;
 use App\Form\OutcomeType;
+use App\Repository\BusinessRepository;
 use App\Repository\OutcomeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -25,7 +26,7 @@ class OutcomeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_outcome_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, BusinessRepository $businessRepository): Response
     {
         $outcome = new Outcome();
         $form = $this->createForm(OutcomeType::class, $outcome);
@@ -33,11 +34,10 @@ class OutcomeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $userId = $this->getUser()->getId();
-            $repo = $entityManager->getRepository(Business::class);
-            $repo->findBusinessByUserId($userId);
-            //$businessId = $repo->getId();
+            $business = $businessRepository->findOneBy(['user_id' => $userId]);
+            $businessId = $business->getId();
             //$businessId = $repo->find($userId);
-            dd($repo);
+            $outcome->setBusinessId($business);
             $entityManager->persist($outcome);
             $entityManager->flush();
 
