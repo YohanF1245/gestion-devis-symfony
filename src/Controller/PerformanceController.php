@@ -17,8 +17,11 @@ class PerformanceController extends AbstractController
     #[Route('/', name: 'app_performance_index', methods: ['GET'])]
     public function index(PerformanceRepository $performanceRepository): Response
     {
+        $userId = $this->getUser()->getId();
         return $this->render('performance/index.html.twig', [
-            'performances' => $performanceRepository->findAll(),
+            'performances' => $performanceRepository->findBy(
+                ['user_id' => $userId]
+            ),
         ]);
     }
 

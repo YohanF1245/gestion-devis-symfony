@@ -17,8 +17,11 @@ class ClientController extends AbstractController
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
     public function index(ClientRepository $clientRepository): Response
     {
+        $userId = $this->getUser()->getId();
         return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findAll(),
+            'clients' => $clientRepository->findBy(
+                ['user_id' => $userId]
+            ),
         ]);
     }
 
@@ -30,6 +33,8 @@ class ClientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $userId = $this->getUser();
+            $client->setUserId($userId);
             $entityManager->persist($client);
             $entityManager->flush();
 

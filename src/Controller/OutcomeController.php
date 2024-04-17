@@ -18,10 +18,15 @@ use Symfony\Component\Routing\Attribute\Route;
 class OutcomeController extends AbstractController
 {
     #[Route('/', name: 'app_outcome_index', methods: ['GET'])]
-    public function index(OutcomeRepository $outcomeRepository): Response
-    {
+    public function index(OutcomeRepository $outcomeRepository, BusinessRepository $businessRepository): Response
+    {   
+        $userId = $this->getUser()->getId();
+        $business = $businessRepository->findOneBy(['user_id' => $userId]);
+        $businessId = $business->getId();
         return $this->render('outcome/index.html.twig', [
-            'outcomes' => $outcomeRepository->findAll(),
+            'outcomes' => $outcomeRepository->findBy(
+                ['business_id' => $businessId]
+            ),
         ]);
     }
 
@@ -35,7 +40,7 @@ class OutcomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userId = $this->getUser()->getId();
             $business = $businessRepository->findOneBy(['user_id' => $userId]);
-            $businessId = $business->getId();
+            //$businessId = $business->getId();
             //$businessId = $repo->find($userId);
             $outcome->setBusinessId($business);
             $entityManager->persist($outcome);
