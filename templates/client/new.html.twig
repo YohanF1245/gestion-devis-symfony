@@ -70,6 +70,7 @@
 		<a class="btn btn-primary" href="{{ path('app_client_index') }}">Retour à la liste des clients</a>
 		</div>
 	</div>
+	{% if app.request.attributes.get("_route") == "app_client_new" %}
 	<div class="container-fluid bg-pd-blue position-fixed bottom-0" style="height:10vh!important">
-
+	{% endif %}
 	{% endblock %}

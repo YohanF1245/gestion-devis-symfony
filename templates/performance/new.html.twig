@@ -36,5 +36,7 @@
     <div class="d-flex justify-content-center">
         <a class="btn btn-primary" href="{{ path('app_performance_index') }}">Retour a la la liste des prestations</a>
     </div>
-    <div class="container-fluid bg-pd-blue position-fixed bottom-0" style="height:10vh!important">
+    {% if app.request.attributes.get("_route") == "app_performance_new" %}
+    <div class="container-fluid bg-pd-blue position-fixed bottom-0" style="height:10vh!important"></div>
+    {% endif %}
 {% endblock %}
