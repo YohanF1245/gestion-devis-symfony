@@ -6,12 +6,10 @@
 
 
 {% block body %}
-	<div class="container col-8 offset-2">
-		<h1>Create new DressEstimate</h1>
+		<h1 class="text-pd-yellow text-center">Nouveau Devis</h1>
+	<div class="container col-8 offset-2" style="background-color:white!important;border-radius:25px!imortant;padding:10px!important;">
 		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-			Launch demo modal
-		</button>
+
 
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-turbo="false">
@@ -27,61 +25,106 @@
 				</div>
 			</div>
 		</div>
-	
 
-	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPerformance">
-		Launch demo modal
-	</button>
 
-	<!-- Modal -->
-	<div class="modal fade" id="newPerformance" tabindex="-1" aria-labelledby="newPerformanceLabel" aria-hidden="true" data-turbo="false">
-		<div class="modal-dialog modal-xl">
-			<div class="modal-content">
-				<div class="modal-body">
-					{{ render(controller('App\\Controller\\PerformanceController::new_modal')) }}
-				</div>
-				<div class="modal-footer bg-pd-blue">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+		
+
+		<!-- Modal -->
+		<div class="modal fade" id="newPerformance" tabindex="-1" aria-labelledby="newPerformanceLabel" aria-hidden="true" data-turbo="false">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+					<div class="modal-body">
+						{{ render(controller('App\\Controller\\PerformanceController::new_modal')) }}
+					</div>
+					<div class="modal-footer bg-pd-blue">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
+		{{form_start(form)}}
 
-<div class="row">
+		<div class="row">
+			<div class="col-3 offset-9">
+				{{form_row(form.estimate_number)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-3 offset-9">
+				{{form_row(form.creation_date)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-3 offset-9">
+				{{form_row(form.validity)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-3 offset-9">
+				{{form_row(form.expiration_date)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-3 offset-9">
+				{{form_row(form.client_id)}}
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+					Ajouter un nouveau client
+				</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-3">
+				{{form_row(form.intitule)}}
+			</div>
+		</div>
+		<div id="performanceDiv" class="row">
+			<table class="table table-striped-column">
+				<thead class="">
+					<tr class="table-dark text-center">
+						<th>Quantité</th>
+						<th>Désignation</th>
+						<th>Unité</th>
+						<th>Prix</th>
+					</tr>
+				</thead>
+				<tbody id="perfomanceTableBody"></tbody>
+			</table>
+			</div>
+			<div class="row">
+				<div class="col-5">
+					<select class="form-select" id="selectPerf" aria-label="Default select example">
+						<option selected>Ajouter une prestation</option>
+						{% for i in 1..performances|length %}
+							<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}'>{{performances[i-1].quantity}}
+								{{performances[i-1].unit}}
+								{{performances[i-1].designation}}
+								{{performances[i-1].pirce}}</option>
+						{% endfor %}
+					</select>
+				</div>
 
-
-	<div class="col-5">
-		<select class="form-select" id="selectPerf" aria-label="Default select example">
-			<option selected>Ajouter une prestation</option>
-			{% for i in 1..performances|length %}
-				<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}'>{{performances[i-1].quantity}}
-					{{performances[i-1].unit}}
-					{{performances[i-1].designation}}
-					{{performances[i-1].pirce}}</option>
-			{% endfor %}
-		</select>
-	</div>
-
-	<div class="col-5">
-		<button type="button" class="btn btn-primary" onclick="addPerformance()">Ajouter
+				<div class="col-5">
+					<button type="button" class="btn btn-primary" onclick="addPerformance()">Ajouter
+					</button>
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPerformance">
+			Créér une nouvelle prestation
 		</button>
-	</div>
-</div>
-{{ include('dress_estimate/_form.html.twig') }}
-<div id="performanceDiv">
-	<table class="table table-striped-column">
-		<thead class="">
-			<tr class="table-dark text-center">
-				<th>Quantité</th>
-				<th>Désignation</th>
-				<th>Unité</th>
-				<th>Prix</th>
-			</tr>
-		</thead>
-		<tbody id="perfomanceTableBody"></tbody>
-	</div>
-	<a href="{{ path('app_dress_estimate_index') }}">back to list</a>
-	<div>
-	{% endblock %}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-7">
+					{{form_row(form.free_zone)}}
+				</div>
+				<div class="col-4">
+					{{form_row(form.accompte)}}
+					{{form_row(form.discount)}}
+				</div>
+			</div>
+			{{form_end(form)}}
+
+
+			<a href="{{ path('app_dress_estimate_index') }}">back to list</a>
+			<div>
+			{% endblock %}

@@ -34,23 +34,23 @@ class DressEstimateType extends AbstractType
             ->add('free_zone')
             ->add('accompte')
             ->add('discount')
-            ->add('id', EntityType::class, [
-                'class' => Performance::class,
-                'choice_label' => 'designation',
-            ])
+            // ->add('id', EntityType::class, [
+            //     'class' => Performance::class,
+            //     'choice_label' => 'designation',
+            // ])
             ->add('client_id', EntityType::class, [
                 'class' => Client::class,
                 'choice_label' => 'name',
             ])
-            ->add('id', CollectionType::class, [
-                'entry_type' => PerformanceType::class,
-                'entry_options' => ['label' => false],
-                'allow_add' => true,
-            ])
-            ->add('estimateTab', EntityType::class, [
-                'class' => EstimateTab::class,
-                'choice_label' => 'name',
-            ])
+            // ->add('id', CollectionType::class, [
+            //     'entry_type' => PerformanceType::class,
+            //     'entry_options' => ['label' => false],
+            //     'allow_add' => true,
+            // ])
+            // ->add('estimateTab', EntityType::class, [
+            //     'class' => EstimateTab::class,
+            //     'choice_label' => 'name',
+            // ])
         ;
     }
 
