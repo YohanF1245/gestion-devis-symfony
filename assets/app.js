@@ -1,6 +1,7 @@
 import './bootstrap.js';
 import './revenue-chart.js';
 import './estimate-script.js';
+import './sweet-alerts.js';
 
 /*
  * Welcome to your app's main JavaScript file!

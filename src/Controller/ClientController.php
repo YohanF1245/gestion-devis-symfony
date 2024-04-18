@@ -7,7 +7,9 @@ use App\Form\ClientType;
 use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -15,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ClientController extends AbstractController
 {
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
-    public function index(ClientRepository $clientRepository): Response
+    public function index(ClientRepository $clientRepository ): Response
     {
         $userId = $this->getUser()->getId();
         return $this->render('client/index.html.twig', [
@@ -38,13 +40,55 @@ class ClientController extends AbstractController
             $entityManager->persist($client);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
-        }
+        //return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+    
+    }
 
         return $this->render('client/new.html.twig', [
             'client' => $client,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/new/modal', name: 'app_client_new_modal', methods: ['GET', 'POST'])]
+    public function new_modal(RequestStack $requestStack, EntityManagerInterface $entityManager): Response
+    {
+        $request = $requestStack->getMainRequest();
+        $client = new Client();
+        //$form = $this->createForm(ClientType::class, $client);
+        $form = $this->createForm(ClientType::class, $client, [
+            'action' => $this->generateUrl('app_dress_estimate_new')
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userId = $this->getUser();
+            $client->setUserId($userId);
+            $entityManager->persist($client);
+            $entityManager->flush();
+            $referer = $request->headers->get('referer');         
+            //return new RedirectResponse($referer);
+            //$response = $this->redirect($this->generateUrl('app_client_index'));
+            $response = $this->redirectToRoute('app_dress_estimate_new', []);
+           
+        //return $this->redirectToRoute('app_client_index', []);
+        
+//return  new Response();
+    }
+
+        return $this->render('client/new.html.twig', [
+            'client' => $client,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{success}', name:'app_client_success', methods:  ['GET'])]
+    public function success(): Response
+    {
+        return new Response(
+            '<div onload="operationSuccess()"></div>'
+        );
     }
 
     #[Route('/{id}', name: 'app_client_show', methods: ['GET'])]
@@ -55,6 +99,8 @@ class ClientController extends AbstractController
         ]);
     }
 
+    
+    
     #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Client $client, EntityManagerInterface $entityManager): Response
     {

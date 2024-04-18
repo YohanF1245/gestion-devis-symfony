@@ -8,6 +8,7 @@ use App\Repository\PerformanceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -46,6 +47,33 @@ class PerformanceController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/new/modal', name: 'app_performance_new_modal', methods: ['GET', 'POST'])]
+    public function new_modal(RequestStack $requestStack, EntityManagerInterface $entityManager): Response
+    {
+        $request = $requestStack->getMainRequest();
+        $performance = new Performance();
+        //$form = $this->createForm(PerformanceType::class, $performance);
+        $form = $this->createForm(PerformanceType::class, $performance, [
+            'action' => $this->generateUrl('app_dress_estimate_new')
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userId = $this->getUser();
+            $performance->setUserId($userId);
+            $entityManager->persist($performance);
+            $entityManager->flush();
+            $response = $this->redirectToRoute('app_dress_estimate_new', []);
+            //return $this->redirectToRoute('app_performance_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('performance/new.html.twig', [
+            'performance' => $performance,
+            'form' => $form,
+        ]);
+    }
+
 
     #[Route('/{id}', name: 'app_performance_show', methods: ['GET'])]
     public function show(Performance $performance): Response

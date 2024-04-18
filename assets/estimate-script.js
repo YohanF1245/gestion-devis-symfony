@@ -8,6 +8,7 @@ function addPerformance(){
     let unit = perfArray[4];
     console.log(perfArray);
     const test = document.createElement("tr");
+    test.setAttribute("value",perfArray[0])
     test.innerHTML = "<td>"+quantity+"</td><td>"+designation+"</td><td>"+price+"</td><td>"+unit+"</td>";
     perfDiv.append(test);
 }
