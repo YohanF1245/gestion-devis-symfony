@@ -7,13 +7,8 @@
 
 {% block body %}
 	<div class="container-fluid bg-pd-blue" style="height:10vh!important"></div>
-
 	<h1 class="text-pd-yellow text-center">Nouveau Devis</h1>
 	<div class="container col-8 offset-3" style="background-color:white!important;border-radius:25px!imortant;padding:10px!important;">
-	<!-- Button trigger modal -->
-
-
-	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-turbo="false">
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
@@ -47,23 +42,27 @@
 	{{form_start(form)}}
 
 	<div class="row">
-		<div class="col-3 offset-9">
+		<div class="col-2 offset-1">
+			
+			<img class="img-thumbnail" src={{asset("/public/uploaded-images/signs/018ec773-589e-74ea-a21d-2b482a7a0278.png")}}>
+		</div>
+		<div class="col-3 offset-6">
 			{{form_row(form.estimate_number)}}
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-3 offset-9">
 			{{form_row(form.creation_date)}}
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-3 offset-9">
 			{{form_row(form.validity)}}
+			{{form_row(form.expiration_date)}}
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-3 offset-9">
-			{{form_row(form.expiration_date)}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-3 offset-9">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-3 offset-9">
 		</div>
 	</div>
 	<div class="row">
