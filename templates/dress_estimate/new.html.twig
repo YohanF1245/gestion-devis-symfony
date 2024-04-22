@@ -101,7 +101,7 @@
 		</div>
 		<div class="row">
 			<div class="col-5">
-				<select class="form-select" id="selectPerf" aria-label="Default select example">
+				<select class="form-select" id="selectPerf" aria-label="Default select example" data-turbo="false">
 					<option selected>Ajouter une prestation</option>
 					{% for i in 1..performances|length %}
 						<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}'>{{performances[i-1].quantity}}

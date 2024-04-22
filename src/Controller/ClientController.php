@@ -52,7 +52,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('/new/modal', name: 'app_client_new_modal', methods: ['GET', 'POST'])]
-    public function new_modal(RequestStack $requestStack, EntityManagerInterface $entityManager): Response
+    public function new_modal(RequestStack $requestStack, ClientRepository $clientRepository, EntityManagerInterface $entityManager): Response
     {
         $request = $requestStack->getMainRequest();
         $client = new Client();
@@ -70,7 +70,13 @@ class ClientController extends AbstractController
             $referer = $request->headers->get('referer');         
             //return new RedirectResponse($referer);
             //$response = $this->redirect($this->generateUrl('app_client_index'));
-            $response = $this->redirectToRoute('app_dress_estimate_new', []);
+            
+        $userId = $this->getUser()->getId();
+        $clients = $clientRepository->findBy(
+            ['user_id' => $userId]
+        );
+            
+            $response = $this->redirectToRoute('app_dress_estimate_new', ['clients' => $clients]);
            
         //return $this->redirectToRoute('app_client_index', []);
         

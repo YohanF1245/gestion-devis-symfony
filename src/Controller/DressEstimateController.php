@@ -30,12 +30,6 @@ class DressEstimateController extends AbstractController
         $dressEstimate = new DressEstimate();
         $form = $this->createForm(DressEstimateType::class, $dressEstimate);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($dressEstimate);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
-        }
         $userId = $this->getUser()->getId();
         $performances = $performanceRepository->findBy(
             ['user_id' => $userId]
@@ -43,6 +37,12 @@ class DressEstimateController extends AbstractController
         $clients = $clientRepository->findBy(
             ['user_id' => $userId]
         );
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($dressEstimate);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
+        }
         return $this->render('dress_estimate/new.html.twig', [
             'dress_estimate' => $dressEstimate,
             'form' => $form,
