@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\DressEstimate;
 use App\Form\DressEstimateType;
+use App\Repository\ClientRepository;
 use App\Repository\DressEstimateRepository;
 use App\Repository\PerformanceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,9 +23,9 @@ class DressEstimateController extends AbstractController
             'dress_estimates' => $dressEstimateRepository->findAll(),
         ]);
     }
-
+ 
     #[Route('/new', name: 'app_dress_estimate_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PerformanceRepository $performanceRepository, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, ClientRepository $clientRepository, PerformanceRepository $performanceRepository, EntityManagerInterface $entityManager): Response
     {
         $dressEstimate = new DressEstimate();
         $form = $this->createForm(DressEstimateType::class, $dressEstimate);
@@ -39,10 +40,14 @@ class DressEstimateController extends AbstractController
         $performances = $performanceRepository->findBy(
             ['user_id' => $userId]
         );
+        $clients = $clientRepository->findBy(
+            ['user_id' => $userId]
+        );
         return $this->render('dress_estimate/new.html.twig', [
             'dress_estimate' => $dressEstimate,
             'form' => $form,
-            'performances' => $performances
+            'performances' => $performances, 
+            'clients' => $clients
         ]);
     }
 

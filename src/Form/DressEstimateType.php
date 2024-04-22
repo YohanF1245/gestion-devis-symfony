@@ -38,10 +38,10 @@ class DressEstimateType extends AbstractType
             //     'class' => Performance::class,
             //     'choice_label' => 'designation',
             // ])
-            ->add('client_id', EntityType::class, [
-                'class' => Client::class,
-                'choice_label' => 'name',
-            ])
+            // ->add('client_id', EntityType::class, [
+            //     'class' => Client::class,
+            //     'choice_label' => 'name'.' '.'lastname'. ' '.'business_name' ,
+            // ])
             // ->add('id', CollectionType::class, [
             //     'entry_type' => PerformanceType::class,
             //     'entry_options' => ['label' => false],
