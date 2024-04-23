@@ -37,9 +37,7 @@ class DressEstimateController extends AbstractController
         );
         $clients = $clientRepository->findBy(
             ['user_id' => $userId]
-        ); 
-        $twig = new \Twig\Environment($loader);
-$twig->addGlobal('text', new Text()); 
+        );  
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($dressEstimate);
             $entityManager->flush();
@@ -52,7 +50,34 @@ $twig->addGlobal('text', new Text());
             // 'clients' => $clients
         ]);
     }
-
+    #[Route('/insert/clients', name: 'app_insert_clients', methods: ['GET'])]
+    public function insertClients(ClientRepository $clientRepository){
+        $userId = $this->getUser()->getId();
+        // $performances = $performanceRepository->findBy(
+        //     ['user_id' => $userId]
+        // );
+        $clients = $clientRepository->findBy(
+            ['user_id' => $userId]
+        ); 
+        return $this->render('dress_estimate/select.client.html.twig', [
+            // 'performances' => $performances, 
+            'clients' => $clients
+        ]);
+    }
+    #[Route('/insert/performances', name: 'app_insert_performances', methods: ['GET'])]
+    public function insertPerformances(PerformanceRepository $performanceRepository){
+        $userId = $this->getUser()->getId();
+        $performances = $performanceRepository->findBy(
+            ['user_id' => $userId]
+        );
+        // $clients = $clientRepository->findBy(
+        //     ['user_id' => $userId]
+        // ); 
+        return $this->render('dress_estimate/select.performance.html.twig', [
+            // 'performances' => $performances, 
+            'performances' => $performances
+        ]);
+    }
     #[Route('/{id}', name: 'app_dress_estimate_show', methods: ['GET'])]
     public function show(DressEstimate $dressEstimate): Response
     {
