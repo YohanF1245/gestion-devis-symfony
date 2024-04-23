@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Config\TwigConfig;
 
 #[Route('/dress/estimate')]
 class DressEstimateController extends AbstractController
@@ -36,8 +37,9 @@ class DressEstimateController extends AbstractController
         );
         $clients = $clientRepository->findBy(
             ['user_id' => $userId]
-        );
-
+        ); 
+        $twig = new \Twig\Environment($loader);
+$twig->addGlobal('text', new Text()); 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($dressEstimate);
             $entityManager->flush();
@@ -46,8 +48,8 @@ class DressEstimateController extends AbstractController
         return $this->render('dress_estimate/new.html.twig', [
             'dress_estimate' => $dressEstimate,
             'form' => $form,
-            'performances' => $performances, 
-            'clients' => $clients
+            // 'performances' => $performances, 
+            // 'clients' => $clients
         ]);
     }
 
@@ -70,7 +72,7 @@ class DressEstimateController extends AbstractController
 
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        
         return $this->render('dress_estimate/edit.html.twig', [
             'dress_estimate' => $dressEstimate,
             'form' => $form,

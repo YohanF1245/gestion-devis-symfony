@@ -64,7 +64,8 @@
 		</div>
 		<div class="row">
 			<div class="col-3 offset-9">
-				<select class="form-select" id="selectClient" aria-label="Default select example">
+			{# {% include '/dress_estimate/select.client.html.twig' %} #}
+				{# <select class="form-select" id="selectClient" aria-label="Default select example">
 					<option selected>Selectionner le client</option>
 					{% for i in 1..clients|length %}
 						<option value='{{i}}!{{clients[i-1].name}}!{{clients[i-1].lastname}}!{{clients[i-1].businessname}}'>
@@ -73,7 +74,8 @@
 							{{clients[i-1].businessname}}
 		</option>
 					{% endfor %}
-				</select>
+				</select> #}
+
 
 
 				<button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -103,12 +105,15 @@
 			<div class="col-5">
 				<select class="form-select" id="selectPerf" aria-label="Default select example" data-turbo="false">
 					<option selected>Ajouter une prestation</option>
-					{% for i in 1..performances|length %}
+					{% for item in myPerformances() %}
+						<p>item.unit</p>
+					{% endfor %}
+					{# {% for i in 1..myPerformances()|length %}
 						<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}'>{{performances[i-1].quantity}}
 							{{performances[i-1].unit}}
 							{{performances[i-1].designation}}
 							{{performances[i-1].pirce}}</option>
-					{% endfor %}
+					{% endfor %} #}
 				</select>
 			</div>
 
