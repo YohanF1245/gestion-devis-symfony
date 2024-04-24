@@ -1,7 +1,7 @@
-<select class="form-select" id="selectClient" aria-label="Default select example">
+<select class="form-select" id="selectClient" name="clientSelect" aria-label="Default select example">
 	<option selected>Selectionner le client</option>
 	{% for i in 1..clients|length %}
-		<option value='{{i}}!{{clients[i-1].name}}!{{clients[i-1].lastname}}!{{clients[i-1].businessname}}'>
+		<option value='{{clients[i-1].id}}'>
 			{{clients[i-1].name}}
 			{{clients[i-1].lastname}}
 			{{clients[i-1].businessname}}

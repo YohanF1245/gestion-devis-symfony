@@ -39,6 +39,19 @@ class DressEstimateController extends AbstractController
             ['user_id' => $userId]
         );  
         if ($form->isSubmitted() && $form->isValid()) {
+            $clientId = $request->get('clientSelect');
+            $i = 1;
+            $loopOverPrestations = true;
+            $prestArray = [];
+            while($loopOverPrestations){
+                if($request->get('perfNum'.$i) !== null){
+                    $presArray[] = $request->get('perfNum'.$i);
+                    $i++;
+                }else{
+                    break;
+                }
+            }
+            dd($presArray);
             $entityManager->persist($dressEstimate);
             $entityManager->flush();
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
