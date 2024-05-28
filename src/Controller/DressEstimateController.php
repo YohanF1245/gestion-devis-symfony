@@ -27,7 +27,12 @@ class DressEstimateController extends AbstractController
             'dress_estimates' => $dressEstimateRepository->findAll(),
         ]);
     }
-
+    #[Route('/count', name:'app_dress_estimate_count', methods:['GET', 'POST'])]
+    public function count(Request $request, ClientRepository $clientRepository, EntityManagerInterface $entityManagerInterface)
+    {
+        
+        
+    }
     #[Route('/new', name: 'app_dress_estimate_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ClientRepository $clientRepository, PerformanceRepository $performanceRepository, EntityManagerInterface $entityManager): Response
     {

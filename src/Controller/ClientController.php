@@ -17,16 +17,18 @@ use Symfony\Component\Routing\Attribute\Route;
 class ClientController extends AbstractController
 {
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
-    public function index(ClientRepository $clientRepository ): Response
+    public function index(ClientRepository $clientRepository, EntityManagerInterface $em ): Response
     {
         $userId = $this->getUser()->getId();
+        $query = $em->createQuery('SELECT c FROM AppBundle:client c WHERE c.user_id = $userId');
+        $clientRepository->countWhere($userId);
         return $this->render('client/index.html.twig', [
             'clients' => $clientRepository->findBy(
                 ['user_id' => $userId]
             ),
+            
         ]);
     }
-
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

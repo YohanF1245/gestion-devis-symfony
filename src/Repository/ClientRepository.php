@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 
 /**
  * @extends ServiceEntityRepository<Client>
@@ -20,7 +21,25 @@ class ClientRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Client::class);
     }
-
+    public function countWhere($userId)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->where('c.user_id = :userId')
+            ->andWhere('c.name LIKE :likeName')
+            ->setParameter('userId', $userId, UuidType::NAME)
+            ->setParameter('likeName', '%han%');
+        $query = $qb->getQuery();
+        dd($query->execute());
+        // $userId = $this->getUser()->getId();
+        // $result = $entityManagerInterface->getRepository("client")->createQueryBuilder('c')
+        //     ->where('o.UserId = :userId')
+        //     ->andWhere('o.name LIKE :likeName')
+        //     ->setParameter('userId', $userId)
+        //     ->setParameter('likeName', 'han')
+        //     ->getQuery()
+        //     ->getResult();
+        // dd($result);
+    }
     //    /**
     //     * @return Client[] Returns an array of Client objects
     //     */
