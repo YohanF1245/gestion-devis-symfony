@@ -20,7 +20,7 @@ class ClientController extends AbstractController
     public function index(ClientRepository $clientRepository, EntityManagerInterface $em ): Response
     {
         $userId = $this->getUser()->getId();
-        $clientRepository->countWhere($userId);
+        //$clientRepository->countWhere($userId);
         return $this->render('client/index.html.twig', [
             'clients' => $clientRepository->findBy(
                 ['user_id' => $userId]

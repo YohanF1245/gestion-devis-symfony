@@ -9,6 +9,7 @@ use App\Form\DressEstimateType;
 use App\Repository\BusinessRepository;
 use App\Repository\ClientRepository;
 use App\Repository\DressEstimateRepository;
+use App\Repository\EstimateTabPerformanceRepository;
 use App\Repository\EstimateTabRepository;
 use App\Repository\PerformanceRepository;
 use Doctrine\ORM\EntityManager;
@@ -122,24 +123,42 @@ class DressEstimateController extends AbstractController
         ]);
     }
     #[Route('/{id}', name: 'app_dress_estimate_show', methods: ['GET'])]
-    public function show(EstimateTabRepository $estimateTab,EntityManagerInterface $entityManager,  PerformanceRepository $performanceRepository, DressEstimate $dressEstimate, BusinessRepository $businessRepository): Response
+    public function show(EstimateTabPerformanceRepository $estimateTabPerformanceRepository, EstimateTabRepository $estimateTab,EntityManagerInterface $entityManager,  PerformanceRepository $performanceRepository, DressEstimate $dressEstimate, BusinessRepository $businessRepository): Response
     {
         $businessId = $dressEstimate->getEstimateTab()->getBusinessId()->getId();
         $business = $businessRepository->findOneBy(
             ['id' => $businessId]
         );
-
         $estimateId = $dressEstimate->getId();
-        $estimateTabId = $estimateTab->findOneBy(
+        $estimateTabId = $estimateTab->findBy(
             ['estimate_id' => $estimateId]
         );
-        $qb = $entityManager->createQueryBuilder();
-        $qb->select('etp')
-            ->from('estimate_tab_performance', 'etp')
-            ->where('etp.estimate_tab_id = :id')
-            ->setParameter('id', $estimateId , UuidType::NAME);
-        $query = $qb->getQuery();
-        dd($query->execute());
+        dd($dressEstimate->get);
+        $performancess = $estimateTabPerformanceRepository->findBy(
+            ['estimate_tab_id' => $dressEstimate->getEstimateTab()]
+        );
+        dd($performancess);
+         dd($estimateTabId[0]->getId());
+         $estimateTabId2 = $estimateTabId[0]->getId();
+         $conn = $entityManager->getConnection();
+        $sql = '
+            SELECT * FROM estimate_tab_performance etp
+            WHERE etp.estimate_tab_id = :estimateId
+        ';
+        $resultSet = $conn->executeQuery($sql, ['estimateId' => $estimateTabId2->toBinary()]);
+        $resultFecth = $resultSet->fetchAllAssociative();
+        dd($resultFecth[0]['performance_id']);
+         dd($resultSet->fetchAllAssociative());
+        // $estimateTabId = $estimateTab->findOneBy(
+        //     ['estimate_id' => $estimateId]
+        // );
+        // $qb = $entityManager->createQueryBuilder();
+        // $qb->select('etp')
+        //     ->from('estimate_tab_performance', 'etp')
+        //     ->where('etp.estimate_tab_id = :id')
+        //     ->setParameter('id', $estimateId , UuidType::NAME);
+        // $query = $qb->getQuery();
+        //dd($query->execute());
         return $this->render('dress_estimate/show.html.twig', [
             'dress_estimate' => $dressEstimate,
         ]);
