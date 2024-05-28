@@ -27,15 +27,14 @@
         <tbody>
         {% for dress_estimate in dress_estimates %}
             <tr>
-                <td>{{ dress_estimate.id }}</td>
                 <td>{{ dress_estimate.estimateNumber }}</td>
                 <td>{{ dress_estimate.creationDate ? dress_estimate.creationDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ dress_estimate.validity }}</td>
                 <td>{{ dress_estimate.expirationDate ? dress_estimate.expirationDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ dress_estimate.intitule }}</td>
                 <td>{{ dress_estimate.freeZone }}</td>
-                <td>{{ dress_estimate.accompte }}</td>
-                <td>{{ dress_estimate.discount }}</td>
+                <td>{{ dress_estimate.accompte }} %</td>
+                <td>{{ dress_estimate.discount }} %</td>
                 <td>
                     <a href="{{ path('app_dress_estimate_show', {'id': dress_estimate.id}) }}">show</a>
                     <a href="{{ path('app_dress_estimate_edit', {'id': dress_estimate.id}) }}">edit</a>

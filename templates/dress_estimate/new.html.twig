@@ -22,8 +22,6 @@
 				</div>
 			</div>
 		</div>
-
-
 		<!-- Modal -->
 		<div class="modal fade" id="newPerformance" tabindex="-1" aria-labelledby="newPerformanceLabel" aria-hidden="true" data-turbo="false">
 			<div class="modal-dialog modal-xl">
@@ -41,17 +39,57 @@
 
 		{{form_start(form)}}
 
-		<div class="row">
-			<div class="col-2 offset-1">
+		<div
+			class="row">
+			{# <div class="col-2 offset-1">
+						
+										<img class="img-thumbnail" src={{asset("/public/uploaded-images/signs/018ec773-589e-74ea-a21d-2b482a7a0278.png")}}>
+									</div> #}
+			<div class="row">
+				<div class="col-4">
+					{{form_row(form.estimate_number)}}
+				</div>
+				<div class="col-4">
+					{{form_row(form.creation_date)}}
 
-				<img class="img-thumbnail" src={{asset("/public/uploaded-images/signs/018ec773-589e-74ea-a21d-2b482a7a0278.png")}}>
+				</div>
+				<div class="col-4">
+					{{form_row(form.validity)}}
+
+				</div>
 			</div>
-			<div class="col-3 offset-6">
-				{{form_row(form.estimate_number)}}
-				{{form_row(form.creation_date)}}
-				{{form_row(form.validity)}}
-				{{form_row(form.expiration_date)}}
+			<div class="row ">
+
+				<div class="col-4 d-flex flex-column justify-content-start">
+					{{form_row(form.expiration_date)}}
+
+				</div>
+				<div class="col-4 d-flex flex-column justify-content-start ">
+				<label class="mb-2">Selectionner le client</label>
+					{{render(controller('App\\Controller\\DressEstimateController::insertClients'))}}
+					{# {% include '/dress_estimate/select.client.html.twig' %} #}
+					{# <select class="form-select" id="selectClient" aria-label="Default select example">
+																						<option selected>Selectionner le client</option>
+																						{% for i in 1..clients|length %}
+																							<option value='{{i}}!{{clients[i-1].name}}!{{clients[i-1].lastname}}!{{clients[i-1].businessname}}'>
+																								{{clients[i-1].name}}
+																								{{clients[i-1].lastname}}
+																								{{clients[i-1].businessname}}
+																			</option>
+																						{% endfor %}
+																					</select> #}
+
+
+						<button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal"> Ajouter un nouveau client
+					</button>
+				</div>
+
+				<div class="col-4 d-flex flex-column justify-content-start">
+					{{form_row(form.intitule)}}
+				</div>
 			</div>
+
+
 		</div>
 		<div class="row">
 			<div class="col-3 offset-9"></div>
@@ -62,31 +100,8 @@
 		<div class="row">
 			<div class="col-3 offset-9"></div>
 		</div>
-		<div class="row">
-			<div class="col-3 offset-9">
-				{{render(controller('App\\Controller\\DressEstimateController::insertClients'))}}
-				{# {% include '/dress_estimate/select.client.html.twig' %} #}
-				{# <select class="form-select" id="selectClient" aria-label="Default select example">
-													<option selected>Selectionner le client</option>
-													{% for i in 1..clients|length %}
-														<option value='{{i}}!{{clients[i-1].name}}!{{clients[i-1].lastname}}!{{clients[i-1].businessname}}'>
-															{{clients[i-1].name}}
-															{{clients[i-1].lastname}}
-															{{clients[i-1].businessname}}
-										</option>
-													{% endfor %}
-												</select> #}
-
-
-					<button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal"> Ajouter un nouveau client
-				</button>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-3">
-				{{form_row(form.intitule)}}
-			</div>
-		</div>
+		<div class="row"></div>
+		<div class="row"></div>
 		<div id="performanceDiv" class="row">
 			<input type="hidden" id="prestationTotal" name="prestationTotal" value="0">
 			<table class="table table-striped-column">
@@ -107,14 +122,14 @@
 					<option selected>Ajouter une prestation</option>
 					{{render(controller('App\\Controller\\DressEstimateController::insertPerformances'))}}
 				{# {% for item in myPerformances() %}
-														<p>item.unit</p>
-													{% endfor %} #}
+																						<p>item.unit</p>
+																					{% endfor %} #}
 					{# {% for i in 1..myPerformances()|length %}
-																<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}'>{{performances[i-1].quantity}}
-																	{{performances[i-1].unit}}
-																	{{performances[i-1].designation}}
-																	{{performances[i-1].pirce}}</option>
-															{% endfor %} #}
+																										<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}'>{{performances[i-1].quantity}}
+																											{{performances[i-1].unit}}
+																											{{performances[i-1].designation}}
+																											{{performances[i-1].pirce}}</option>
+																									{% endfor %} #}
 				</select>
 			</div>
 

@@ -30,7 +30,7 @@ class EstimateTab
     private Collection $performace_id;
 
     #[ORM\OneToOne(inversedBy: 'estimateTab', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?FactureEmit $facture_id = null;
 
     public function __construct()

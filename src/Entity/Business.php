@@ -36,6 +36,18 @@ class Business
     #[ORM\OneToMany(targetEntity: EstimateTab::class, mappedBy: 'business_id')]
     private Collection $estimateTabs;
 
+    #[ORM\Column(length: 255)]
+    private ?string $business_name = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $code_ape = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $code_tva = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $rib = null;
+
     public function __construct()
     {
         $this->outcomes = new ArrayCollection();
@@ -139,6 +151,54 @@ class Business
                 $estimateTab->setBusinessId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBusinessName(): ?string
+    {
+        return $this->business_name;
+    }
+
+    public function setBusinessName(string $business_name): static
+    {
+        $this->business_name = $business_name;
+
+        return $this;
+    }
+
+    public function getCodeApe(): ?string
+    {
+        return $this->code_ape;
+    }
+
+    public function setCodeApe(string $code_ape): static
+    {
+        $this->code_ape = $code_ape;
+
+        return $this;
+    }
+
+    public function getCodeTva(): ?string
+    {
+        return $this->code_tva;
+    }
+
+    public function setCodeTva(?string $code_tva): static
+    {
+        $this->code_tva = $code_tva;
+
+        return $this;
+    }
+
+    public function getRib(): ?string
+    {
+        return $this->rib;
+    }
+
+    public function setRib(?string $rib): static
+    {
+        $this->rib = $rib;
 
         return $this;
     }

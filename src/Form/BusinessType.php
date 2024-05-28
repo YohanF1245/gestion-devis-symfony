@@ -31,6 +31,12 @@ class BusinessType extends AbstractType
                     ]),
                 ]
             ])
+            ->add('business_name', TextType::class,[
+                "required" => true,
+            ])
+            ->add('code_ape')
+            ->add('code_tva')
+            ->add('rib')
             ->add('logo', FileType::class, [
                 "required" => false,
                 "mapped" => false,

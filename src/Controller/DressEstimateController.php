@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Business;
 use App\Entity\DressEstimate;
+use App\Entity\EstimateTab;
 use App\Form\DressEstimateType;
+use App\Repository\BusinessRepository;
 use App\Repository\ClientRepository;
 use App\Repository\DressEstimateRepository;
 use App\Repository\PerformanceRepository;
@@ -24,35 +27,52 @@ class DressEstimateController extends AbstractController
             'dress_estimates' => $dressEstimateRepository->findAll(),
         ]);
     }
- 
+
     #[Route('/new', name: 'app_dress_estimate_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ClientRepository $clientRepository, PerformanceRepository $performanceRepository, EntityManagerInterface $entityManager): Response
     {
         $dressEstimate = new DressEstimate();
+        $estimateTab = new EstimateTab();
+        // $estimateTab->setEstimateId()
         $form = $this->createForm(DressEstimateType::class, $dressEstimate);
         $form->handleRequest($request);
         $userId = $this->getUser()->getId();
-        $performances = $performanceRepository->findBy(
-            ['user_id' => $userId]
-        );
-        $clients = $clientRepository->findBy(
-            ['user_id' => $userId]
-        );  
+        // $performances = $performanceRepository->findBy(
+        //     ['user_id' => $userId]
+        // );
+        // $clients = $clientRepository->findBy(
+        //     ['user_id' => $userId]
+        // );
+        $repository = $entityManager->getRepository(Business::class);
+        $business = $repository->findOneBy(['user_id' => $userId]);
         if ($form->isSubmitted() && $form->isValid()) {
             $clientId = $request->get('clientSelect');
+            $client = $clientRepository->findOneBy(
+                ['id' => $clientId]
+            );
             $i = 1;
             $loopOverPrestations = true;
-            $prestArray = [];
-            while($loopOverPrestations){
-                if($request->get('perfNum'.$i) !== null){
-                    $presArray[] = $request->get('perfNum'.$i);
+            while ($loopOverPrestations) {
+                if ($request->get('perfNum' . $i) !== null) {
+                    $presArray[] = $request->get('perfNum' . $i);
                     $i++;
-                }else{
+                } else {
                     break;
                 }
             }
-            dd($presArray);
+            foreach ($presArray as $key => $value) {
+                $prest = $performanceRepository->findOneBy(
+                    ['id' => $value]
+                );
+                $estimateTab->addPerformaceId($prest);
+            }
+            $dressEstimate->setClientId($client);
             $entityManager->persist($dressEstimate);
+            $estimateTab->setEstimateId($dressEstimate);
+            $estimateTab->setBusinessId($business);
+            $entityManager->persist($dressEstimate);
+            $entityManager->persist($estimateTab);
+            //dd($estimateTab, $dressEstimate, $presArray);
             $entityManager->flush();
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -64,21 +84,23 @@ class DressEstimateController extends AbstractController
         ]);
     }
     #[Route('/insert/clients', name: 'app_insert_clients', methods: ['GET'])]
-    public function insertClients(ClientRepository $clientRepository){
+    public function insertClients(ClientRepository $clientRepository)
+    {
         $userId = $this->getUser()->getId();
         // $performances = $performanceRepository->findBy(
         //     ['user_id' => $userId]
         // );
         $clients = $clientRepository->findBy(
             ['user_id' => $userId]
-        ); 
+        );
         return $this->render('dress_estimate/select.client.html.twig', [
             // 'performances' => $performances, 
             'clients' => $clients
         ]);
     }
     #[Route('/insert/performances', name: 'app_insert_performances', methods: ['GET'])]
-    public function insertPerformances(PerformanceRepository $performanceRepository){
+    public function insertPerformances(PerformanceRepository $performanceRepository)
+    {
         $userId = $this->getUser()->getId();
         $performances = $performanceRepository->findBy(
             ['user_id' => $userId]
@@ -92,8 +114,13 @@ class DressEstimateController extends AbstractController
         ]);
     }
     #[Route('/{id}', name: 'app_dress_estimate_show', methods: ['GET'])]
-    public function show(DressEstimate $dressEstimate): Response
+    public function show(DressEstimate $dressEstimate, BusinessRepository $businessRepository): Response
     {
+        $businessId = $dressEstimate->getEstimateTab()->getBusinessId()->getId();
+        $business = $businessRepository->findOneBy(
+            ['id' => $businessId]
+        );
+        dd($business);
         return $this->render('dress_estimate/show.html.twig', [
             'dress_estimate' => $dressEstimate,
         ]);
@@ -110,7 +137,7 @@ class DressEstimateController extends AbstractController
 
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
-        
+
         return $this->render('dress_estimate/edit.html.twig', [
             'dress_estimate' => $dressEstimate,
             'form' => $form,

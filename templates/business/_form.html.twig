@@ -1,16 +1,32 @@
 {{ form_start(form) }}
 <div class="row">
-    <div class="col-12">
-            {{form_row(form.siret)}}
-            </div>
-        </div>
-        <div class="row">
-            {{form_row(form.logo)}}
-        </div>
-    <div class="row">
-        <div class="py-3 d-grid">
-            <button type="submit" class="btn btn-block btn-primary ">Créer un compte</button>
-        </div>
-        {# {{form_row(form.Envoyer)}} #}
-    </div>
+			<div class="col-6">
+				{{form_row(form.business_name)}}
+			</div>
+			<div class="col-6">
+				{{form_row(form.logo)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				{{form_row(form.siret)}}
+			</div>
+			<div class="col-6">
+				{{form_row(form.code_ape)}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				{{form_row(form.code_tva)}}
+			</div>
+			<div class="col-6">
+				{{form_row(form.rib)}}
+			</div>
+		</div>
+<div class="row">
+	<div class="py-3 d-grid">
+		<button type="submit" class="btn btn-block btn-primary ">Créer un compte</button>
+	</div>
+	{# {{form_row(form.Envoyer)}} #}
+</div>
 {{ form_end(form) }}
