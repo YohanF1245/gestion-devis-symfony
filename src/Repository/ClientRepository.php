@@ -6,6 +6,7 @@ use App\Entity\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @extends ServiceEntityRepository<Client>
@@ -27,9 +28,12 @@ class ClientRepository extends ServiceEntityRepository
             ->where('c.user_id = :userId')
             ->andWhere('c.name LIKE :likeName')
             ->setParameter('userId', $userId, UuidType::NAME)
-            ->setParameter('likeName', '%han%');
-        $query = $qb->getQuery();
-        dd($query->execute());
+            ->setParameter('likeName', '%han%')
+            ->getQuery()
+            ->getSingleScalarResult();
+        //$query = $qb->getQuery();
+        //$count= $qb->getQuery()->getScalarResult();
+        dd($qb);
         // $userId = $this->getUser()->getId();
         // $result = $entityManagerInterface->getRepository("client")->createQueryBuilder('c')
         //     ->where('o.UserId = :userId')

@@ -9,8 +9,11 @@ use App\Form\DressEstimateType;
 use App\Repository\BusinessRepository;
 use App\Repository\ClientRepository;
 use App\Repository\DressEstimateRepository;
+use App\Repository\EstimateTabRepository;
 use App\Repository\PerformanceRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -119,13 +122,24 @@ class DressEstimateController extends AbstractController
         ]);
     }
     #[Route('/{id}', name: 'app_dress_estimate_show', methods: ['GET'])]
-    public function show(DressEstimate $dressEstimate, BusinessRepository $businessRepository): Response
+    public function show(EstimateTabRepository $estimateTab,EntityManagerInterface $entityManager,  PerformanceRepository $performanceRepository, DressEstimate $dressEstimate, BusinessRepository $businessRepository): Response
     {
         $businessId = $dressEstimate->getEstimateTab()->getBusinessId()->getId();
         $business = $businessRepository->findOneBy(
             ['id' => $businessId]
         );
-        dd($business);
+
+        $estimateId = $dressEstimate->getId();
+        $estimateTabId = $estimateTab->findOneBy(
+            ['estimate_id' => $estimateId]
+        );
+        $qb = $entityManager->createQueryBuilder();
+        $qb->select('etp')
+            ->from('estimate_tab_performance', 'etp')
+            ->where('etp.estimate_tab_id = :id')
+            ->setParameter('id', $estimateId , UuidType::NAME);
+        $query = $qb->getQuery();
+        dd($query->execute());
         return $this->render('dress_estimate/show.html.twig', [
             'dress_estimate' => $dressEstimate,
         ]);
