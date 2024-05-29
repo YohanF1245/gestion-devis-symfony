@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\HttpFoundation\Response;
 
 class PdfService
 {
@@ -15,6 +16,7 @@ class PdfService
         $pdfOptions = new Options();
 
         $pdfOptions->set('defaultFont', 'Garamond');
+        $pdfOptions->set('isRemoteEnabled', true);
 
         $this->domPdf->setOptions($pdfOptions);
     }
@@ -23,7 +25,7 @@ class PdfService
     {
         $this->domPdf->loadHtml($html);
         $this->domPdf->render();
-        $this->domPdf->stream(filename:"details.pdf");
+        $this->domPdf->stream("devis.pdf", ['Attachment' =>false]);
     }
     
     public function generateBinaryPDF($html) {

@@ -1,9 +1,0 @@
-knp_snappy:
-    pdf:
-        enabled:    true
-        binary:     '%kernel.root_dir%'
-        options:    []
-    image:
-        enabled:    true
-        binary:     '%env(WKHTMLTOIMAGE_PATH)%'
-        options:    []
