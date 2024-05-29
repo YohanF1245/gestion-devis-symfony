@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit EstimatePerformanceLink{% endblock %}
+
+{% block body %}
+    <h1>Edit EstimatePerformanceLink</h1>
+
+    {{ include('estimate_performance_link/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_estimate_performance_link_index') }}">back to list</a>
+
+    {{ include('estimate_performance_link/_delete_form.html.twig') }}
+{% endblock %}
