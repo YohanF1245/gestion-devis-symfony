@@ -5,7 +5,7 @@
 {% block body %}
     <h1>DressEstimate</h1>
 
-    {# <table class="table"> #}
+    <table class="table">
     <div class="container col-8 offset-2" style="background-color:white!important">
         <div class="row text-end fw-bold">
             <p>Devis N° {{dress_estimate.estimateNumber}}</p>
@@ -23,121 +23,54 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div>
                 <p>
-                <span class="fw-bold ps-3 text-decoration-underline">Emetteur :</span><br>
+                <span class="text-bold">Emetteur :</span><br>
+                
+                
                 </p>
             </div>
-            <div class="col-4 offset-3">
-                <p class="fw-bold ps-3 ms-3 text-decoration-underline">Destinataire : </p>
-            </div>
-        </div>
-    <div class="row">
-        <div class="col-4 border m-3 p-3">
-            <div>{{business.businessName}}</div>
-            <div>{{user.email}}</div>
-        </div>
-        <div class="col-4 border mt-3 mb-3 p-3 offset-3">
-            <div>{{client.businessName}}</div>
-            <div>{{client.mail}}</div>
-            <div>{{client.name}} {{client.lastname}}</div>
-            <div>{{client.numStreet}} {{client.street}}</div>
-            <div>{{client.zipPostal}} {{client.town}}</div>
         </div>
     </div>
-    <div class="row">
-        <p class="ms-5">Intitulé : {{dress_estimate.intitule}}</p>
-    </div>
-    
-    <div id="performanceDiv" class="row ms-5 me-5">
-			<table class="table table-striped-column">
-				<thead class="">
-					<tr class="table-dark text-center">
-						<th>Quantité</th>
-						<th>Désignation</th>
-						<th>Unité</th>
-						<th>Prix</th>
-                        <th>Total HT</th>
-					</tr>
-				</thead>
-				<tbody id="perfomanceTableBody">
-                    {% for perf in performances %}
-                    <tr>
-                        <td>{{perf[0].quantity}}</td>
-                        <td>{{perf[0].designation}}</td>
-                        <td>{{perf[0].unit}}</td>
-                        <td>{{perf[0].pirce}}</td>
-                        <td>1million</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-			</table>
-	</div>
-    <div  class="row">
-        <div class="col-7">
-            <p class="border">{{dress_estimate.freeZone}}</p>
-        </div>
-        <div class="col-3 offset-1">
-            <div class="row">
-                <div class="col-9">
-                    Total HT:
-                </div>
-                <div class="col-3 text-end">
-                    dlfjdf
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-9">
-                    Accompte:
-                </div>
-                <div class="col-3 text-end">
-                    dlfjdf
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-9">
-                    Tva:
-                </div>
-                <div class="col-3 text-end">
-                    dlfjdf
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-9">
-                    Remise:
-                </div>
-                <div class="col-3 text-end">
-                    dlfjdf
-                </div>
-            </div>
-            <div class="row bg-dark text-white">
-                <div class="col-9">
-                    Total TTC:
-                </div>
-                <div class="col-3 text-end">
-                    dlfjdf
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-3 mb-3"> 
-        <div class="col-4 border offset-1">
-            <p class="text-center">Bon pour accord du client</p>
-            <br><br><br><br>
-        </div>
-        
-        <div class="col-4 border offset-1">
-            <p class="text-center">Signature :</p>
-            <br><br><br><br>
-        </div>
-    </div>
-    <div class="row text-center bg-black text-white pt-3 pb-3">
-        <div>Siret : {{business.siret}}</div>
-        <div>Code ape : {{business.codeApe}} Tva :  {{business.codeTva}}</div>
-        <div>Rib : {{business.rib}}</div>
-    </div>
-    </div>
-        
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dress_estimate.id }}</td>
+            </tr>
+            <tr>
+                <th>Creation_date</th>
+                <td>{{ dress_estimate.creationDate ? dress_estimate.creationDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Estimate_number</th>
+                <td>{{ dress_estimate.estimateNumber }}</td>
+            </tr>
+            <tr>
+                <th>Validity</th>
+                <td>{{ dress_estimate.validity }}</td>
+            </tr>
+            <tr>
+                <th>Expiration_date</th>
+                <td>{{ dress_estimate.expirationDate ? dress_estimate.expirationDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Intitule</th>
+                <td>{{ dress_estimate.intitule }}</td>
+            </tr>
+            <tr>
+                <th>Free_zone</th>
+                <td>{{ dress_estimate.freeZone }}</td>
+            </tr>
+            <tr>
+                <th>Accompte</th>
+                <td>{{ dress_estimate.accompte }}</td>
+            </tr>
+            <tr>
+                <th>Discount</th>
+                <td>{{ dress_estimate.discount }}</td>
+            </tr>
+        </tbody>
+    </table>
 
     <a href="{{ path('app_dress_estimate_index') }}">back to list</a>
 

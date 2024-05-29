@@ -4,17 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Business;
 use App\Entity\DressEstimate;
-use App\Entity\EstimatePerformanceLink;
 use App\Entity\EstimateTab;
 use App\Form\DressEstimateType;
 use App\Repository\BusinessRepository;
 use App\Repository\ClientRepository;
 use App\Repository\DressEstimateRepository;
-use App\Repository\EstimatePerformanceLinkRepository;
 use App\Repository\EstimateTabPerformanceRepository;
 use App\Repository\EstimateTabRepository;
 use App\Repository\PerformanceRepository;
-use App\Service\PdfService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -22,10 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Config\TwigConfig;
-use Knp\Snappy\Pdf;
-
 
 #[Route('/dress/estimate')]
 class DressEstimateController extends AbstractController
@@ -75,18 +69,11 @@ class DressEstimateController extends AbstractController
                     break;
                 }
             }
-            $entityManager->persist($estimateTab);
             foreach ($presArray as $key => $value) {
-                
-                $estimateTabLink = new EstimatePerformanceLink();
-                $estimateTabLink->setEstimateTabId($estimateTab->getId());
                 $prest = $performanceRepository->findOneBy(
-                     ['id' => $value]
+                    ['id' => $value]
                 );
-                $prestId = $prest->getId();
-                $estimateTabLink->setPerformanceId($prestId);
-                $entityManager->persist($estimateTabLink);
-                // $estimateTab->addPerformaceId($prest);
+                $estimateTab->addPerformaceId($prest);
             }
             $dressEstimate->setClientId($client);
             $entityManager->persist($dressEstimate);
@@ -129,22 +116,16 @@ class DressEstimateController extends AbstractController
         );
         // $clients = $clientRepository->findBy(
         //     ['user_id' => $userId]
-        // ); *
-        
+        // ); 
         return $this->render('dress_estimate/select.performance.html.twig', [
             // 'performances' => $performances, 
             'performances' => $performances
         ]);
     }
     #[Route('/{id}', name: 'app_dress_estimate_show', methods: ['GET'])]
-    public function show(ClientRepository $clientRepository, EstimatePerformanceLinkRepository $estimatePerformanceLink, EstimateTabRepository $estimateTab,EntityManagerInterface $entityManager,  PerformanceRepository $performanceRepository, DressEstimate $dressEstimate, BusinessRepository $businessRepository): Response
+    public function show(EstimateTabPerformanceRepository $estimateTabPerformanceRepository, EstimateTabRepository $estimateTab,EntityManagerInterface $entityManager,  PerformanceRepository $performanceRepository, DressEstimate $dressEstimate, BusinessRepository $businessRepository): Response
     {
-        $user = $this->getUser();
         $businessId = $dressEstimate->getEstimateTab()->getBusinessId()->getId();
-        $clientId = $dressEstimate->getClientId()->getId();
-        $client = $clientRepository->findOneBy(
-            ['id' => $clientId]
-        );
         $business = $businessRepository->findOneBy(
             ['id' => $businessId]
         );
@@ -152,25 +133,22 @@ class DressEstimateController extends AbstractController
         $estimateTabId = $estimateTab->findBy(
             ['estimate_id' => $estimateId]
         );
-        //  dd($estimateTabId[0]->getId());
-          $estimateTabId2 = $estimateTabId[0]->getId();
-        $performances = $estimatePerformanceLink->findBy(
-            ['estimate_tab_id' => $estimateTabId2]
+        dd($dressEstimate->get);
+        $performancess = $estimateTabPerformanceRepository->findBy(
+            ['estimate_tab_id' => $dressEstimate->getEstimateTab()]
         );
-        for ($i = 0; $i<count($performances); $i++){
-            $performance[]= $performanceRepository->findBy(
-                ['id'=> $performances[$i]->getPerformanceId()]
-            );
-        }
-        //  $conn = $entityManager->getConnection();
-        // $sql = '
-        //     SELECT * FROM estimate_tab_performance etp
-        //     WHERE etp.estimate_tab_id = :estimateId
-        // ';
-        // $resultSet = $conn->executeQuery($sql, ['estimateId' => $estimateTabId2->toBinary()]);
-        // $resultFecth = $resultSet->fetchAllAssociative();
-        // dd($resultFecth[0]['performance_id']);
-        //  dd($resultSet->fetchAllAssociative());
+        dd($performancess);
+         dd($estimateTabId[0]->getId());
+         $estimateTabId2 = $estimateTabId[0]->getId();
+         $conn = $entityManager->getConnection();
+        $sql = '
+            SELECT * FROM estimate_tab_performance etp
+            WHERE etp.estimate_tab_id = :estimateId
+        ';
+        $resultSet = $conn->executeQuery($sql, ['estimateId' => $estimateTabId2->toBinary()]);
+        $resultFecth = $resultSet->fetchAllAssociative();
+        dd($resultFecth[0]['performance_id']);
+         dd($resultSet->fetchAllAssociative());
         // $estimateTabId = $estimateTab->findOneBy(
         //     ['estimate_id' => $estimateId]
         // );
@@ -181,21 +159,10 @@ class DressEstimateController extends AbstractController
         //     ->setParameter('id', $estimateId , UuidType::NAME);
         // $query = $qb->getQuery();
         //dd($query->execute());
-
         return $this->render('dress_estimate/show.html.twig', [
             'dress_estimate' => $dressEstimate,
-            'performances' => $performance,
-            'client' => $client,
-            'business' => $business,
-            'user' => $user,
         ]);
     }
-    #[Route('pdf/{id}', name: 'devis.pdf')]
-    public function generateDevisPdf(DressEstimate $dressEstimate = null, PdfService $pdf){
-        $html = $this->render('/dress_estimate/show.html.twig', ['dress_estimate' => $dressEstimate]);
-        $pdf->showPdfFile($html);
-    }
-
 
     #[Route('/{id}/edit', name: 'app_dress_estimate_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, DressEstimate $dressEstimate, EntityManagerInterface $entityManager): Response
