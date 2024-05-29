@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EstimatePerformanceLink{% endblock %}
+
+{% block body %}
+    <h1>Create new EstimatePerformanceLink</h1>
+
+    {{ include('estimate_performance_link/_form.html.twig') }}
+
+    <a href="{{ path('app_estimate_performance_link_index') }}">back to list</a>
+{% endblock %}

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240528182727 extends AbstractMigration
+final class Version20240529064738 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,6 +24,7 @@ final class Version20240528182727 extends AbstractMigration
         $this->addSql('CREATE TABLE client (id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', user_id_id BINARY(16) DEFAULT NULL COMMENT \'(DC2Type:uuid)\', name VARCHAR(255) DEFAULT NULL, last_name VARCHAR(255) DEFAULT NULL, business_name VARCHAR(255) DEFAULT NULL, is_physick TINYINT(1) NOT NULL, mail VARCHAR(255) DEFAULT NULL, num_street VARCHAR(64) NOT NULL, street VARCHAR(255) NOT NULL, zip_postal VARCHAR(128) NOT NULL, index_tel VARCHAR(10) DEFAULT NULL, phone_number VARCHAR(14) DEFAULT NULL, town VARCHAR(255) NOT NULL, INDEX IDX_C74404559D86650F (user_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE console_make_user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE dress_estimate (id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', client_id_id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', creation_date DATETIME NOT NULL, estimate_number INT NOT NULL, validity INT DEFAULT NULL, expiration_date DATETIME NOT NULL, intitule VARCHAR(128) NOT NULL, free_zone LONGTEXT DEFAULT NULL, accompte INT DEFAULT NULL, discount INT DEFAULT NULL, INDEX IDX_4E0EB682DC2902E0 (client_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE estimate_performance_link (id INT AUTO_INCREMENT NOT NULL, estimate_tab_id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', performance_id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE estimate_tab (id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', business_id_id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', estimate_id_id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', facture_id_id BINARY(16) DEFAULT NULL COMMENT \'(DC2Type:uuid)\', INDEX IDX_1B043BA31A579E8 (business_id_id), UNIQUE INDEX UNIQ_1B043BA3805AF98 (estimate_id_id), UNIQUE INDEX UNIQ_1B043BA3ED7016E0 (facture_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE estimate_tab_performance (estimate_tab_id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', performance_id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', INDEX IDX_FF37F21986A00D33 (estimate_tab_id), INDEX IDX_FF37F219B91ADEEE (performance_id), PRIMARY KEY(estimate_tab_id, performance_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE facture_emit (id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', creation_date DATETIME NOT NULL, payment_date DATETIME DEFAULT NULL, majoration INT DEFAULT NULL, date_limit DATETIME DEFAULT NULL, is_paid TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -63,6 +64,7 @@ final class Version20240528182727 extends AbstractMigration
         $this->addSql('DROP TABLE client');
         $this->addSql('DROP TABLE console_make_user');
         $this->addSql('DROP TABLE dress_estimate');
+        $this->addSql('DROP TABLE estimate_performance_link');
         $this->addSql('DROP TABLE estimate_tab');
         $this->addSql('DROP TABLE estimate_tab_performance');
         $this->addSql('DROP TABLE facture_emit');
