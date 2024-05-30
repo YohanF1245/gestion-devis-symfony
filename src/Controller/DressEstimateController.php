@@ -221,6 +221,13 @@ class DressEstimateController extends AbstractController
             'business' => $business,
             'user' => $user,
         ]);
+        // return $this->render('dress_estimate/pdf.html.twig', [
+        //     'dress_estimate' => $dressEstimate,
+        //     'performances' => $performance,
+        //     'client' => $client,
+        //     'business' => $business,
+        //     'user' => $user,
+        // ]);
         $pdf->showPdfFile($html);
         return new Response('', 200, [
             'Content-Type' => 'application/pdf',

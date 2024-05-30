@@ -4,20 +4,132 @@
 {% endblock %}
 
 {% block body %}
-
+	<style>
+		.p-l-1{
+			padding-left:1rem;
+		}
+		.container {
+			width:100%;
+		}
+		.padding-1{
+			padding:1rem;
+		}
+		.padding {
+			padding:3rem;
+		}
+		.right {
+			text-align:right;
+		}
+		.space-top-1{
+			margin-top:1rem;
+		}
+		.w-70 {
+			width:70%;
+		}
+		.w-60 {
+			width:60%;
+		}
+		.w-50 {
+			width:50%;
+		}
+		.w-30 {
+			width:30%;
+		}
+		.w-20{
+			width:20%;
+		}
+		.w-100{
+			width:100%;
+		}
+		.inline-block{
+			display:inline-block;
+		}
+		.h-tot{
+			height:1.5rem;
+		}
+		.m-t-1{
+			margin-top:1rem;
+		}
+		.m-t-2{
+			margin-top:2rem;
+		}
+		.m-t-3{
+			margin-top:3rem;
+		}
+		.bold-underline{
+			font-weight:bold;
+			text-decoration:underline;
+		}
+		.float-right{
+			float:right;
+		}
+		.float-left{
+			float:left;
+		}
+		div{
+		}
+		.flex{
+			display:flex;
+		}
+		.bg-black{
+			background-color:black!important;
+		}
+		.text-white{
+			color:white;
+		}
+		.border{
+			border:1px solid black;
+		}
+		.border-left{
+			border-left: 1px solid black;
+		}
+		.border-right{
+			border-right: 1px solid black;
+		}
+		.text-center{
+			text-align:center;
+		}
+		.flex-gap-1{
+			gap:1rem;
+		}
+		.flex-gap-2{
+			gap:2rem;
+		}
+		.flex-gap-3{
+			gap:3rem;
+		}
+		.flex-gap-4{
+			gap:4rem;
+		}
+		.clear{
+			clear:both;
+		}
+		.m-l-1{
+			margin-left:1rem;
+		}
+		.m-l-2{
+			margin-left:2rem;
+		}
+		.m-l-3{
+			margin-left:3rem;
+		}
+		.m-3{
+			margin:3rem;
+		}
+	</style>
 	{# <table class="table"> #}
-	<div style="background-color:white!important">
-		<div>
-			<p>Devis N°
-				{{dress_estimate.estimateNumber}}</p>
-		</div>
-		<div>
-			<div>
+	<div class="container w-100" style="background-color:white!important">
+		<div class=" w-100">
+			<div class="w-50 float-left">
 
 				<img class="img-thumbnail" src={{asset("/public/uploaded-images/signs/018ec773-589e-74ea-a21d-2b482a7a0278.png")}}>
 			</div>
-			<div >
-				<p>Date d'émission :
+			<div class="w-50" style="float:right">
+				<p class="right">
+					Devis N°
+					{{dress_estimate.estimateNumber}}
+					<br><br>
+					Date d'émission :
 					{{dress_estimate.creationDate |date('d-m-Y')}}
 					<br>Validité :
 					{{dress_estimate.estimateNumber}}
@@ -26,23 +138,23 @@
 				<br>
 			</div>
 		</div>
-		<div >
-			<div >
-				<p>
-					<span>Emetteur :</span><br>
+		<div class="m-t-1 clear">
+			<div class="w-30 float-left">
+				<p class="bold-underline">
+					Emetteur :
 				</p>
 			</div>
-			<div >
-				<p >Destinataire :
+			<div class="w-30 float-right">
+				<p class="bold-underline">Destinataire :
 				</p>
 			</div>
 		</div>
-		<div >
-			<div >
+		<div class=" clear m-t-1" style="">
+			<div class="w-30 border float-left padding-1">
 				<div>{{business.businessName}}</div>
 				<div>{{user.email}}</div>
 			</div>
-			<div >
+			<div class="w-30 border float-right padding-1">
 				<div>{{client.businessName}}</div>
 				<div>{{client.mail}}</div>
 				<div>{{client.name}}
@@ -53,26 +165,26 @@
 					{{client.town}}</div>
 			</div>
 		</div>
-		<div >
+		<div class="m-t-1 clear">
 			<p >Intitulé :
 				{{dress_estimate.intitule}}</p>
 		</div>
 
 		<div id="performanceDiv" >
-			<table >
+			<table class="w-100" style="border:1px solid black">
 				<thead >
-					<tr >
-						<th>Quantité</th>
-						<th>Désignation</th>
-						<th>Unité</th>
-						<th>Prix</th>
-						<th>Total HT</th>
+					<tr class="bg-black text-white">
+						<th class="w-20 p-l-1">Quantité</th>
+						<th class="w-20">Désignation</th>
+						<th class="w-20">Unité</th>
+						<th class="w-20">Prix</th>
+						<th class="w-20">Total HT</th>
 					</tr>
 				</thead>
 				<tbody >
 					{% for perf in performances %}
-						<tr>
-							<td>{{perf[0].quantity}}</td>
+						<tr >
+							<td class="p-l-1">{{perf[0].quantity}}</td>
 							<td>{{perf[0].designation}}</td>
 							<td>{{perf[0].unit}}</td>
 							<td>{{perf[0].pirce}}</td>
@@ -82,48 +194,48 @@
 				</tbody>
 			</table>
 		</div>
-		<div >
-			<div >
+		<div class="clear m-t-1">
+			<div class="border w-60 float-left " style="min-height:4rem">
 				<p>{{dress_estimate.freeZone}}</p>
 			</div>
-			<div >
-				<div>
-					<div>
+			<div class="w-30 float-right" style="border:1px solid white">
+				<div class=" h-tot">
+					<div  class="float-left">
 						Total HT:
 					</div>
-					<div >
+					<div  class="float-right">
 						dlfjdf
 					</div>
 				</div>
-				<div class=>
-					<div >
+				<div  class=" h-tot">
+					<div  class="float-left">
 						Accompte:
 					</div>
-					<div >
+					<div  class="float-right">
 						dlfjdf
 					</div>
 				</div>
-				<div >
-					<div>
+				<div class=" h-tot" >
+					<div class=" float-left">
 						Tva:
 					</div>
-					<div>
+					<div class="float-right">
 						dlfjdf
 					</div>
 				</div>
-				<div>
-					<div>
+				<div class=" h-tot">
+					<div class="clear float-left">
 						Remise:
 					</div>
-					<div>
+					<div class="float-right">
 						dlfjdf
 					</div>
 				</div>
-				<div>
-					<div>
+				<div class=" h-tot bg-black text-white" style="">
+					<div class="float-left ">
 						Total TTC:
 					</div>
-					<div>
+					<div class="float-right">
 						dlfjdf
 					</div>
 				</div>
@@ -135,12 +247,17 @@
 				<br><br><br><br>
 			</div>
 
-			<div>
+			<div class="clear m-t-3">
+			<div class="w-30 float-right">
+				<p>Bon pour accord du client :</p>
+			</div>
+			<div class="w-30 float-left">
 				<p>Signature :</p>
-				<br><br><br><br>
+			</div>
+				<br><br><br><br><br><br>
 			</div>
 		</div>
-		<div>
+		<div class="clear text-center bg-black text-white">
 			<div>Siret :
 				{{business.siret}}</div>
 			<div>Code ape :
@@ -153,9 +270,9 @@
 	</div>
 
 
-	<a href="{{ path('app_dress_estimate_index') }}">back to list</a>
+	<a style="text-decoration:none;color:white" href="{{ path('app_dress_estimate_index') }}">back to list</a>
 
-	<a href="{{ path('app_dress_estimate_edit', {'id': dress_estimate.id}) }}">edit</a>
+	<a style="text-decoration:none;color:white" href="{{ path('app_dress_estimate_edit', {'id': dress_estimate.id}) }}">edit</a>
 
-	{{ include('dress_estimate/_delete_form.html.twig') }}
+	{{ include('dress_estimate/_delete2_form.html.twig') }}
 {% endblock %}
