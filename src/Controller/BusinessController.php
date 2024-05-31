@@ -67,7 +67,17 @@ class BusinessController extends AbstractController
     {
         $form = $this->createForm(BusinessType::class, $business);
         $form->handleRequest($request);
-
+        try{
+            $user = $this->getUser();
+            $logo = $form->get("logo")->getData();
+            if($logo){
+                $fileName = $user->getId() . "." . $logo->getClientOriginalExtension();
+                $logo->move($this->getParameter('kernel.project_dir').'assets\public\uploaded-images\logos\\',$fileName);
+                $business ->setLogo($this->getParameter('kernel.project_dir').'assets\public\uploaded-images\logos\\'.$fileName);
+            }
+        }catch(\Exception $e){
+            echo $e->getMessage();
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
