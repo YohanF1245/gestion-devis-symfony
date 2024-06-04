@@ -210,7 +210,7 @@
 							{% set quantity = perf[0].quantity|trim %}
 							{% set tax = perf[0].tax %}
 							{% set totalHt = totalHt + ((pirce*quantity) * (1+tax/100)) %}
-							<td> {{ (pirce*quantity) * (1+tax/100) }} €</td>
+							<td> {{ (pirce*quantity) * (1+tax/100)| round(2,'common') }} €</td>
 						</tr>
 					{% endfor %}
 				</tbody>
@@ -226,7 +226,7 @@
 						Total:
 					</div>
 					<div  class="float-right">
-						{{totalHt}} €
+						{{totalHt| round(2,'common')}} €
 					</div>
 				</div>
 				<div class=" h-tot">
@@ -234,7 +234,7 @@
 						Remise {{dress_estimate.discount}} %:
 					</div>
 					<div class="float-right">
-						{{(totalHt*2/100)}} €
+						{{(totalHt*2/100)| round(2,'common')}} €
 					</div>
 				</div>
 				{% set discount = dress_estimate.discount %}
@@ -244,7 +244,7 @@
 						Total TTC:
 					</div>
 					<div class="float-right">
-						{{totalTTC}} €
+						{{totalTTC| round(2,'common')}} €
 					</div>
 				</div>
 				<div  class=" h-tot">
@@ -253,7 +253,7 @@
 					</div>
 					{% set accompte = dress_estimate.accompte %}
 					<div  class="float-right">
-						{{(totalTTC*accompte/100)}} €
+						{{(totalTTC*accompte/100)| round(2,'common')}} €
 					</div>
 				</div>
 			</div>

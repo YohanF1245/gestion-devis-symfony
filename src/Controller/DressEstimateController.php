@@ -196,7 +196,7 @@ class DressEstimateController extends AbstractController
             'user' => $user,
         ]);
     }
-    #[Route('/pdf/{id}', name: 'devis.pdf')]
+    #[Route('/{id}/pdf', name: 'devis_pdf')]
     public function generateDevisPdf(ClientRepository $clientRepository, EstimatePerformanceLinkRepository $estimatePerformanceLink, EstimateTabRepository $estimateTab,EntityManagerInterface $entityManager,  PerformanceRepository $performanceRepository, DressEstimate $dressEstimate, BusinessRepository $businessRepository, PdfService $pdf){
         $user = $this->getUser();
         $businessId = $dressEstimate->getEstimateTab()->getBusinessId()->getId();

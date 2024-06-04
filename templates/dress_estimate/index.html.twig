@@ -5,7 +5,7 @@
 {% block body %}
     {% include 'navbar.html.twig' %}
 
-<div class="container col-8">
+<div class="container col-9">
     <h1 class="text-center text-pd-yellow my-3">Mes devis</h1>
     <div class="d-flex justify-content-center mb-2">
         <a class="btn bg-pd-blue" href="{{ path('app_dress_estimate_new') }}">Créér un devis</a>
@@ -36,9 +36,18 @@
                 <td>{{ dress_estimate.accompte }} %</td>
                 <td>{{ dress_estimate.discount }} %</td>
                 <td>
-                    <a href="{{ path('app_dress_estimate_show', {'id': dress_estimate.id}) }}">show</a>
-                    <a href="{{ path('app_dress_estimate_edit', {'id': dress_estimate.id}) }}">edit</a>
+                <table>
+                    <td><a class=" btn btn-primary"href="{{ path('app_dress_estimate_show', {'id': dress_estimate.id}) }}">Voir</a></td>
+                    <td><a class=" btn btn-success"href="{{ path('app_dress_estimate_edit', {'id': dress_estimate.id}) }}">Editer</a></td>
+                
+                    <td>{{ include('dress_estimate/_delete_form.html.twig') }}</td>
+               
+                    <td><a target="_blank" href="{{ path('devis_pdf', {'id': dress_estimate.id}) }}"><img style="height:40px!important;"
+					src="{{asset("img/PDF_file_icon.svg.png")}}" class="h-100"></a> 
+                    </td>
+                </table>
                 </td>
+                
             </tr>
         {% else %}
             <tr>
@@ -49,5 +58,5 @@
     </table>
     
     </div>
-    <a href="{{ path('app_dress_estimate_new') }}">Create new</a>
+    {# <a href="{{ path('app_dress_estimate_new') }}">Create new</a> #}
 {% endblock %}

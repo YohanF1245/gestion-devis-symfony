@@ -6,7 +6,6 @@
 
 {{include('topbar.html.twig')}}
     <h1 class="text-pd-yellow text-center">Voir le devis</h1>
-
     {# <table class="table"> #}
     <div class="container mt-5 col-8 offset-2" style="background-color:white!important">
         <div class="row text-end fw-bold ms-5 mt-3">
@@ -14,10 +13,8 @@
         </div>
         <div class="row ">
 			<div class="col-2 offset-1">
-
 				<img class="img-thumbnail" src={{asset("/public/uploaded-images/logos/"~logo_name~"")}}>
-                {# <img class="img-thumbnail" src='{{ absolute_url(business.logo) }}'> #}
-                
+                {# <img class="img-thumbnail" src='{{ absolute_url(business.logo) }}'> #}             
             </div>
             <div class="col-9 text-end m-0">
                 <p>Date d'émission : {{dress_estimate.creationDate |date('d-m-Y')}}
