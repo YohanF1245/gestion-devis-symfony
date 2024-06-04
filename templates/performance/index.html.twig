@@ -16,7 +16,8 @@
                 <th>Désignation</th>
                 <th>Prix</th>
                 <th>Unité</th>
-                <th>actions</th>
+                <th>T.V.A</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
                 <td>{{ performance.designation }}</td>
                 <td>{{ performance.pirce }}</td>
                 <td>{{ performance.unit }}</td>
+                <td>{{ performance.tax }}</td>
                 <td class="d-flex justify-content-around" >
                     <a class="btn btn-primary" href="{{ path('app_performance_show', {'id': performance.id}) }}">Voir</a>
                     

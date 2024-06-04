@@ -5,6 +5,9 @@
 
 {% block body %}
 	<style>
+		* {
+			margin:0;
+		}
 			html {
 		font-size:10px;
 }
@@ -44,6 +47,9 @@
 		.w-100{
 			width:100%;
 		}
+		.w-tab{
+			width:calc(100% / 6);
+		}
 		.inline-block{
 			display:inline-block;
 		}
@@ -58,6 +64,9 @@
 		}
 		.m-t-3{
 			margin-top:3rem;
+		}
+		.m-b-1{
+			margin-bottom:1rem;
 		}
 		.bold-underline{
 			font-weight:bold;
@@ -121,12 +130,13 @@
 		}
 		.bottom{
 			position:absolute;
+			left:0;
 			bottom:0;
 		}
 	</style>
 	{# <table class="table"> #}
 	<div class="container w-100" style="background-color:white!important;postion:relative;">
-		<div class=" w-100">
+		<div class=" w-100 m-t-3">
 			<div class="w-50 float-left">
 
 				<img class="img-thumbnail" src="data:image/{{extension}};base64,{{image}}" width="50mm">
@@ -179,21 +189,28 @@
 			<table class="w-100" style="border:1px solid black">
 				<thead >
 					<tr class="bg-black text-white">
-						<th class="w-20 p-l-1">Quantité</th>
-						<th class="w-20">Désignation</th>
-						<th class="w-20">Unité</th>
-						<th class="w-20">Prix</th>
-						<th class="w-20">Total HT</th>
+						<th class="w-tab p-l-1">Quantité</th>
+						<th class="w-tab">Désignation</th>
+						<th class="w-tab">Unité</th>
+						<th class="w-tab">Prix</th>
+						<th class="w-tab">T.V.A</th>
+						<th class="w-tab">Total</th>
 					</tr>
 				</thead>
 				<tbody >
+				{% set totalHt = 0 %}
 					{% for perf in performances %}
 						<tr >
 							<td class="p-l-1">{{perf[0].quantity}}</td>
 							<td>{{perf[0].designation}}</td>
 							<td>{{perf[0].unit}}</td>
-							<td>{{perf[0].pirce}}</td>
-							<td>1million</td>
+							<td>{{perf[0].pirce}} €</td>
+							<td>{{perf[0].tax}} %</td>
+							{% set pirce = perf[0].pirce|trim %}
+							{% set quantity = perf[0].quantity|trim %}
+							{% set tax = perf[0].tax %}
+							{% set totalHt = totalHt + ((pirce*quantity) * (1+tax/100)) %}
+							<td> {{ (pirce*quantity) * (1+tax/100) }} €</td>
 						</tr>
 					{% endfor %}
 				</tbody>
@@ -206,42 +223,37 @@
 			<div class="w-30 float-right" style="border:1px solid white">
 				<div class=" h-tot">
 					<div  class="float-left">
-						Total HT:
+						Total:
 					</div>
 					<div  class="float-right">
-						dlfjdf
-					</div>
-				</div>
-				<div  class=" h-tot">
-					<div  class="float-left">
-						Accompte:
-					</div>
-					<div  class="float-right">
-						dlfjdf
-					</div>
-				</div>
-				<div class=" h-tot" >
-					<div class=" float-left">
-						Tva:
-					</div>
-					<div class="float-right">
-						dlfjdf
+						{{totalHt}} €
 					</div>
 				</div>
 				<div class=" h-tot">
 					<div class="clear float-left">
-						Remise:
+						Remise {{dress_estimate.discount}} %:
 					</div>
 					<div class="float-right">
-						dlfjdf
+						{{(totalHt*2/100)}} €
 					</div>
 				</div>
+				{% set discount = dress_estimate.discount %}
+				{% set totalTTC = (totalHt-(totalHt*discount/100)) %}
 				<div class=" h-tot bg-black text-white" style="">
 					<div class="float-left ">
 						Total TTC:
 					</div>
 					<div class="float-right">
-						dlfjdf
+						{{totalTTC}} €
+					</div>
+				</div>
+				<div  class=" h-tot">
+					<div  class="float-left">
+						Accompte {{dress_estimate.accompte}} %:
+					</div>
+					{% set accompte = dress_estimate.accompte %}
+					<div  class="float-right">
+						{{(totalTTC*accompte/100)}} €
 					</div>
 				</div>
 			</div>
@@ -263,14 +275,14 @@
 				<br><br><br><br><br><br>
 			</div>
 		</div>
-		<div class="clear text-center bg-black text-white bottom" style="width:80%;">
-			<div>Siret :
+		<div class="clear text-center bg-black text-white bottom" style="width:100%;">
+			<div class="m-t-1">Siret :
 				{{business.siret}}</div>
 			<div>Code ape :
 				{{business.codeApe}}
 				Tva :
 				{{business.codeTva}}</div>
-			<div>Rib :
+			<div class="m-b-1">Rib :
 				{{business.rib}}</div>
 		</div>
 	</div>
