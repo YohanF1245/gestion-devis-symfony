@@ -2,10 +2,41 @@
 
 {% block title %}Edit DressEstimate{% endblock %}
 
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
     <h1>Edit DressEstimate</h1>
-
-    {{ include('dress_estimate/_form.html.twig', {'button_label': 'Update'}) }}
+    {{form_start(form)}}
+    <div class="row">
+    <div class="col-3">
+        {{form_row(form.creation_date)}}
+    </div>
+    <div class="col-3">
+    {{form_row(form.estimate_number)}}
+    </div>
+    <div class="col-3">
+    {{form_row(form.validity)}}
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-3">
+    {{form_row(form.expiration_date)}}
+    </div>
+    <div class="col-3">
+    heres lies select client options
+    </div>
+    <div class="col-3">
+    {{form_row(form.intitule)}}
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-3">
+    </div>
+    <div class="col-3">
+        <button class="btn btn-primary">Ajouter un client</button>
+    </div>
+    </div>
+    {{form_end(form)}}
+    {# {{ include('dress_estimate/_form.html.twig', {'button_label': 'Update'}) }} #}
 
     <a href="{{ path('app_dress_estimate_index') }}">back to list</a>
 
