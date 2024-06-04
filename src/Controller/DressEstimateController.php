@@ -156,6 +156,11 @@ class DressEstimateController extends AbstractController
         $performances = $estimatePerformanceLink->findBy(
             ['estimate_tab_id' => $estimateTabId2]
         );
+        $logoExt = pathinfo($business->getLogo(),PATHINFO_EXTENSION);
+        $userId = $user->getId();
+        $logoName = $userId.".".$logoExt;
+        $logoExt = pathinfo($user->getSignature(), PATHINFO_EXTENSION);
+        $signName = $userId.".".$logoExt;
         for ($i = 0; $i<count($performances); $i++){
             $performance[]= $performanceRepository->findBy(
                 ['id'=> $performances[$i]->getPerformanceId()]
@@ -182,6 +187,8 @@ class DressEstimateController extends AbstractController
         //dd($query->execute());
 
         return $this->render('dress_estimate/show.html.twig', [
+            'logo_name' => $logoName,
+            'sign_name' => $signName,
             'dress_estimate' => $dressEstimate,
             'performances' => $performance,
             'client' => $client,
@@ -257,8 +264,6 @@ class DressEstimateController extends AbstractController
             'Content-Type' => 'application/pdf',
           ]);
     }
-
-
     #[Route('/{id}/edit', name: 'app_dress_estimate_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, DressEstimate $dressEstimate, EntityManagerInterface $entityManager): Response
     {
@@ -276,7 +281,6 @@ class DressEstimateController extends AbstractController
             'form' => $form,
         ]);
     }
-
     #[Route('/{id}', name: 'app_dress_estimate_delete', methods: ['POST'])]
     public function delete(Request $request, DressEstimate $dressEstimate, EntityManagerInterface $entityManager): Response
     {
