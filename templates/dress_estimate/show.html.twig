@@ -6,15 +6,17 @@
     <h1>DressEstimate</h1>
 
     {# <table class="table"> #}
-    <div class="container col-8 offset-2" style="background-color:white!important">
-        <div class="row text-end fw-bold">
+    <div class="container mt-5 col-8 offset-2" style="background-color:white!important">
+        <div class="row text-end fw-bold ms-5">
             <p>Devis N° {{dress_estimate.estimateNumber}}</p>
         </div>
-        <div class="row">
+        <div class="row ">
 			<div class="col-2 offset-1">
 
-				<img class="img-thumbnail" src={{asset("/public/uploaded-images/signs/018ec773-589e-74ea-a21d-2b482a7a0278.png")}}>
-			</div>
+				{# <img class="img-thumbnail" src={{asset("/public/uploaded-images/signs/018ec773-589e-74ea-a21d-2b482a7a0278.png")}}> #}
+                <img class="img-thumbnail" src='{{ absolute_url(business.logo) }}'>
+                {{business.logo}}
+            </div>
             <div class="col-9 text-end m-0">
                 <p>Date d'émission : {{dress_estimate.creationDate |date('d-m-Y')}}
                 <br>Validité : {{dress_estimate.estimateNumber}} jours</p>
@@ -23,7 +25,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-4 ms-5">
                 <p>
                 <span class="fw-bold ps-3 text-decoration-underline">Emetteur :</span><br>
                 </p>
@@ -32,7 +34,7 @@
                 <p class="fw-bold ps-3 ms-3 text-decoration-underline">Destinataire : </p>
             </div>
         </div>
-    <div class="row">
+    <div class="row ms-5">
         <div class="col-4 border m-3 p-3">
             <div>{{business.businessName}}</div>
             <div>{{user.email}}</div>
@@ -57,65 +59,67 @@
 						<th>Désignation</th>
 						<th>Unité</th>
 						<th>Prix</th>
-                        <th>Total HT</th>
+                        <th>Tva</th>
+                        <th>Total</th>
 					</tr>
 				</thead>
+                {% set totalHt = 0 %}
 				<tbody id="perfomanceTableBody">
                     {% for perf in performances %}
                     <tr>
                         <td>{{perf[0].quantity}}</td>
                         <td>{{perf[0].designation}}</td>
                         <td>{{perf[0].unit}}</td>
-                        <td>{{perf[0].pirce}}</td>
-                        <td>1million</td>
+                        <td>{{perf[0].pirce}} €</td>
+                        <td>{{perf[0].tax}} %</td>
+							{% set pirce = perf[0].pirce|trim %}
+							{% set quantity = perf[0].quantity|trim %}
+							{% set tax = perf[0].tax %}
+							{% set totalHt = totalHt + ((pirce*quantity) * (1+tax/100)) %}
+                        <td>{{((pirce*quantity) * (1+tax/100))}} €</td>
                     </tr>
                     {% endfor %}
                 </tbody>
 			</table>
 	</div>
     <div  class="row">
-        <div class="col-7">
+        <div class="col-6 ms-5">
             <p class="border">{{dress_estimate.freeZone}}</p>
         </div>
         <div class="col-3 offset-1">
             <div class="row">
                 <div class="col-9">
-                    Total HT:
+                    Total:
                 </div>
                 <div class="col-3 text-end">
-                    dlfjdf
+                    {{totalHt}} €
                 </div>
             </div>
             <div class="row">
                 <div class="col-9">
-                    Accompte:
+                    Remise {{dress_estimate.discount}} %:
                 </div>
                 <div class="col-3 text-end">
-                    dlfjdf
+                    {{(totalHt*2/100)}} €
                 </div>
             </div>
-            <div class="row">
-                <div class="col-9">
-                    Tva:
-                </div>
-                <div class="col-3 text-end">
-                    dlfjdf
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-9">
-                    Remise:
-                </div>
-                <div class="col-3 text-end">
-                    dlfjdf
-                </div>
-            </div>
+            {% set discount = dress_estimate.discount %}
+				{% set totalTTC = (totalHt-(totalHt*discount/100)) %}
             <div class="row bg-dark text-white">
                 <div class="col-9">
                     Total TTC:
                 </div>
                 <div class="col-3 text-end">
-                    dlfjdf
+                    {{totalTTC}} €
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                   Accompte {{dress_estimate.accompte}} %:
+                </div>
+                <div class="col-3 text-end">
+					{% set accompte = dress_estimate.accompte %}
+                    {{(totalTTC*accompte/100)}} €
                 </div>
             </div>
         </div>
