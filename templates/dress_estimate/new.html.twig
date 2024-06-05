@@ -42,9 +42,9 @@
 		<div
 			class="row">
 			{# <div class="col-2 offset-1">
-						
-										<img class="img-thumbnail" src={{asset("/public/uploaded-images/signs/018ec773-589e-74ea-a21d-2b482a7a0278.png")}}>
-									</div> #}
+									
+													<img class="img-thumbnail" src={{asset("/public/uploaded-images/signs/018ec773-589e-74ea-a21d-2b482a7a0278.png")}}>
+												</div> #}
 			<div class="row">
 				<div class="col-4">
 					{{form_row(form.estimate_number)}}
@@ -65,19 +65,19 @@
 
 				</div>
 				<div class="col-4 d-flex flex-column justify-content-start ">
-				<label class="mb-2">Selectionner le client</label>
+					<label class="mb-2">Selectionner le client</label>
 					{{render(controller('App\\Controller\\DressEstimateController::insertClients'))}}
 					{# {% include '/dress_estimate/select.client.html.twig' %} #}
 					{# <select class="form-select" id="selectClient" aria-label="Default select example">
-																						<option selected>Selectionner le client</option>
-																						{% for i in 1..clients|length %}
-																							<option value='{{i}}!{{clients[i-1].name}}!{{clients[i-1].lastname}}!{{clients[i-1].businessname}}'>
-																								{{clients[i-1].name}}
-																								{{clients[i-1].lastname}}
-																								{{clients[i-1].businessname}}
-																			</option>
-																						{% endfor %}
-																					</select> #}
+																											<option selected>Selectionner le client</option>
+																											{% for i in 1..clients|length %}
+																												<option value='{{i}}!{{clients[i-1].name}}!{{clients[i-1].lastname}}!{{clients[i-1].businessname}}'>
+																													{{clients[i-1].name}}
+																													{{clients[i-1].lastname}}
+																													{{clients[i-1].businessname}}
+																								</option>
+																											{% endfor %}
+																										</select> #}
 
 
 						<button type="button" class="btn btn-primary mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal"> Ajouter un nouveau client
@@ -123,14 +123,14 @@
 					<option selected>Ajouter une prestation</option>
 					{{render(controller('App\\Controller\\DressEstimateController::insertPerformances'))}}
 				{# {% for item in myPerformances() %}
-																						<p>item.unit</p>
-																					{% endfor %} #}
-					{# {% for i in 1..myPerformances()|length %}
-																										<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}'>{{performances[i-1].quantity}}
-																											{{performances[i-1].unit}}
-																											{{performances[i-1].designation}}
-																											{{performances[i-1].pirce}}</option>
+																										<p>item.unit</p>
 																									{% endfor %} #}
+					{# {% for i in 1..myPerformances()|length %}
+																															<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}'>{{performances[i-1].quantity}}
+																																{{performances[i-1].unit}}
+																																{{performances[i-1].designation}}
+																																{{performances[i-1].pirce}}</option>
+																														{% endfor %} #}
 				</select>
 			</div>
 

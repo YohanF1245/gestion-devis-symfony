@@ -68,12 +68,13 @@ class UsersController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_users_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Users $user, EntityManagerInterface $entityManager): Response
+    public function edit(UserPasswordHasherInterface $passwordHasher, Request $request, Users $user, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UsersType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword( $passwordHasher->hashPassword($user, $user->getPassword()));
             try{
                 $signFile = $form->get("signature")->getData();
                 if($signFile){
