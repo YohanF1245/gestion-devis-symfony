@@ -50,7 +50,7 @@ class UsersController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_users_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('users/new.html.twig', [
@@ -74,7 +74,7 @@ class UsersController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword( $passwordHasher->hashPassword($user, $user->getPassword()));
+            
             try{
                 $signFile = $form->get("signature")->getData();
                 if($signFile){
