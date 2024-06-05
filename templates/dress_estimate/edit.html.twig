@@ -83,9 +83,10 @@
 				</thead>
                 {% set totalHt = 0 %}
 				<tbody id="perfomanceTableBody">
+				{% set i = 1 %}
                     {% for perf in performances %}
                     <tr>
-                        <input type='hidden' name='perfNum"+i+"' value='"+id+"'/>
+                        <input type='hidden' name='perfNum{{i}}' value='"{{perf[0].id}}"'/>
                         <td><input type='text' value='{{perf[0].quantity}}'readonly style='border:none!important'</td>
                         <td><input type='text' value='{{perf[0].designation}}'readonly style='border:none!important'</td>
                         <td><input type='text' value='{{perf[0].unit}}'readonly style='border:none!important'</td>
@@ -97,7 +98,9 @@
 							{% set totalHt = totalHt + ((pirce*quantity) * (1+tax/100)) %}
                         <td><input type='text' value='{{((pirce*quantity) * (1+tax/100))| round(2,'common')}} €'readonly style='border:none!important'</td>
                     </tr>
+					{% set i = i+1 %}
                     {% endfor %}
+
                 </tbody>
 			</table>
 			</table>

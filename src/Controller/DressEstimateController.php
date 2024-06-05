@@ -87,6 +87,7 @@ class DressEstimateController extends AbstractController
                 $entityManager->persist($estimateTabLink);
                 // $estimateTab->addPerformaceId($prest);
             }
+            dd($presArray);
             $dressEstimate->setClientId($client);
             $entityManager->persist($dressEstimate);
             $estimateTab->setEstimateId($dressEstimate);
@@ -288,7 +289,7 @@ class DressEstimateController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $presArray[] = 'null';
-            $i=0;
+            $i=1;
             $loopOverPrestations = true;
             while ($loopOverPrestations) {
                 if ($request->get('perfNum' . $i) !== null) {
