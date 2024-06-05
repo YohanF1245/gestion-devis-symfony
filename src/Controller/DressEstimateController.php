@@ -267,9 +267,10 @@ class DressEstimateController extends AbstractController
     #[Route('/{id}/edit', name: 'app_dress_estimate_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, DressEstimate $dressEstimate,PerformanceRepository $performanceRepository, EstimateTabRepository $estimateTabRepository, EstimatePerformanceLinkRepository $estimatePerformanceLink, EntityManagerInterface $entityManager): Response
     {
+
         $form = $this->createForm(DressEstimateType::class, $dressEstimate);
         $form->handleRequest($request);
-
+        
         $dressEstimateId = $dressEstimate->getId();
         $estimateTabId = $dressEstimate->getEstimateTab()->getId();
         $userId = $this->getUser()->getId();
@@ -284,14 +285,26 @@ class DressEstimateController extends AbstractController
                 ['id'=> $performances[$i]->getPerformanceId()]
             );
         }
-        dd($performance);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $presArray[] = 'null';
+            $i=0;
+            $loopOverPrestations = true;
+            while ($loopOverPrestations) {
+                if ($request->get('perfNum' . $i) !== null) {
+                    $presArray[] = $request->get('perfNum' . $i);
+                    $i++;
+                } else {
+                    break;
+                }
+            }
+            dd($presArray);
+            $entityManager->flush();
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('dress_estimate/edit.html.twig', [
+            'performances' => $performance,
             'dress_estimate' => $dressEstimate,
             'form' => $form,
         ]);
