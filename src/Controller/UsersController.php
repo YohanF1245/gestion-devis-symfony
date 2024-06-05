@@ -19,6 +19,8 @@ class UsersController extends AbstractController
     #[Route('/', name: 'app_users_index', methods: ['GET'])]
     public function index(UsersRepository $usersRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         return $this->render('users/index.html.twig', [
             'users' => $usersRepository->findAll(),
         ]);
@@ -74,7 +76,7 @@ class UsersController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $user->setPassword( $passwordHasher->hashPassword($user, $user->getPassword()));
             try{
                 $signFile = $form->get("signature")->getData();
                 if($signFile){
