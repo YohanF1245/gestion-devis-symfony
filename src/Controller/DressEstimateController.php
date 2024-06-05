@@ -152,7 +152,7 @@ class DressEstimateController extends AbstractController
             ['estimate_id' => $estimateId]
         );
         //  dd($estimateTabId[0]->getId());
-          $estimateTabId2 = $estimateTabId[0]->getId();
+        $estimateTabId2 = $estimateTabId[0]->getId();
         $performances = $estimatePerformanceLink->findBy(
             ['estimate_tab_id' => $estimateTabId2]
         );
@@ -265,11 +265,26 @@ class DressEstimateController extends AbstractController
           ]);
     }
     #[Route('/{id}/edit', name: 'app_dress_estimate_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, DressEstimate $dressEstimate, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, DressEstimate $dressEstimate,PerformanceRepository $performanceRepository, EstimateTabRepository $estimateTabRepository, EstimatePerformanceLinkRepository $estimatePerformanceLink, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(DressEstimateType::class, $dressEstimate);
         $form->handleRequest($request);
 
+        $dressEstimateId = $dressEstimate->getId();
+        $estimateTabId = $dressEstimate->getEstimateTab()->getId();
+        $userId = $this->getUser()->getId();
+        
+
+        $performances = $estimatePerformanceLink->findBy(
+            ['estimate_tab_id' => $estimateTabId]
+        );
+
+        for ($i = 0; $i<count($performances); $i++){
+            $performance[]= $performanceRepository->findBy(
+                ['id'=> $performances[$i]->getPerformanceId()]
+            );
+        }
+        dd($performance);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 

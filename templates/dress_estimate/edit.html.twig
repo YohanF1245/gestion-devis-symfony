@@ -70,16 +70,35 @@
 		<div id="performanceDiv" class="row">
 			<input type="hidden" id="prestationTotal" name="prestationTotal" value="0">
 			<table class="table table-striped-column">
+				<table class="table table-striped-column">
 				<thead class="">
 					<tr class="table-dark text-center">
 						<th>Quantité</th>
 						<th>Désignation</th>
 						<th>Unité</th>
-						<th>T.V.A</th>
 						<th>Prix</th>
+                        <th>Tva</th>
+                        <th>Total</th>
 					</tr>
 				</thead>
-				<tbody id="perfomanceTableBody"></tbody>
+                {% set totalHt = 0 %}
+				<tbody id="perfomanceTableBody">
+                    {% for perf in performances %}
+                    <tr>
+                        <td>{{perf[0].quantity}}</td>
+                        <td>{{perf[0].designation}}</td>
+                        <td>{{perf[0].unit}}</td>
+                        <td>{{perf[0].pirce}} €</td>
+                        <td>{{perf[0].tax}} %</td>
+							{% set pirce = perf[0].pirce|trim %}
+							{% set quantity = perf[0].quantity|trim %}
+							{% set tax = perf[0].tax %}
+							{% set totalHt = totalHt + ((pirce*quantity) * (1+tax/100)) %}
+                        <td>{{((pirce*quantity) * (1+tax/100))| round(2,'common')}} €</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+			</table>
 			</table>
 		</div>
 		<div class="row">
