@@ -87,7 +87,9 @@ class DressEstimateController extends AbstractController
                 $entityManager->persist($estimateTabLink);
                 // $estimateTab->addPerformaceId($prest);
             }
-            dd($presArray);
+
+            
+
             $dressEstimate->setClientId($client);
             $entityManager->persist($dressEstimate);
             $estimateTab->setEstimateId($dressEstimate);
@@ -96,6 +98,9 @@ class DressEstimateController extends AbstractController
             $entityManager->persist($estimateTab);
             //dd($estimateTab, $dressEstimate, $presArray);
             $entityManager->flush();
+
+
+
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render('dress_estimate/new.html.twig', [
@@ -266,7 +271,7 @@ class DressEstimateController extends AbstractController
           ]);
     }
     #[Route('/{id}/edit', name: 'app_dress_estimate_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, DressEstimate $dressEstimate,PerformanceRepository $performanceRepository, EstimateTabRepository $estimateTabRepository, EstimatePerformanceLinkRepository $estimatePerformanceLink, EntityManagerInterface $entityManager): Response
+    public function edit(EstimatePerformanceLinkRepository $estimatePerformanceLinkRepository, Request $request, DressEstimate $dressEstimate,PerformanceRepository $performanceRepository, EstimateTabRepository $estimateTabRepository, EstimatePerformanceLinkRepository $estimatePerformanceLink, EntityManagerInterface $entityManager): Response
     {
 
         $form = $this->createForm(DressEstimateType::class, $dressEstimate);
@@ -276,7 +281,7 @@ class DressEstimateController extends AbstractController
         $estimateTabId = $dressEstimate->getEstimateTab()->getId();
         $userId = $this->getUser()->getId();
         
-
+        $performance = null;
         $performances = $estimatePerformanceLink->findBy(
             ['estimate_tab_id' => $estimateTabId]
         );
@@ -299,11 +304,19 @@ class DressEstimateController extends AbstractController
                     break;
                 }
             }
-            dd($presArray);
+
+            //clear all links performance-estimate
+            $actualPerfList = $estimatePerformanceLinkRepository->findBy(
+                ['estimate_tab_id'=> $estimateTabId] 
+            );
+            foreach ($actualPerfList as $key => $value) {
+                $entityManager->remove($value);
+            }
             $entityManager->flush();
+
+
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->render('dress_estimate/edit.html.twig', [
             'performances' => $performance,
             'dress_estimate' => $dressEstimate,
