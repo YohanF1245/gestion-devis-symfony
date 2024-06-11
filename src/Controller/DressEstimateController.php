@@ -227,7 +227,7 @@ class DressEstimateController extends AbstractController
                 ['id'=> $performances[$i]->getPerformanceId()]
             );
         }
-        $imageData = file_get_contents(dirname(__DIR__, 2)."\public\img\pigeon-devis-portrait.png");
+        $imageData = file_get_contents(dirname(__DIR__, 2)."/public/img/pigeon-devis-portrait.png");
         $extension = 'png';
         $base64 = base64_encode($imageData);
         // dd($base64);
@@ -247,7 +247,7 @@ class DressEstimateController extends AbstractController
         }
         // dd($business->getLogo());
         // dd($base64);
-        $html = $this->render('/dress_estimate/pdf.html.twig', [
+        $html = $this->render('dress_estimate/pdf.html.twig', [
             'image' => $base64,
             'extension' => $extension,
             'logo' => $logo64,
