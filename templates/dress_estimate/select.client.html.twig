@@ -1,5 +1,6 @@
 <select class="form-select" id="selectClient" name="clientSelect" aria-label="Default select example">
 	<option selected>Selectionner le client</option>
+	{% if clients is not empty %}
 	{% for i in 1..clients|length %}
 		<option value='{{clients[i-1].id}}'>
 			{{clients[i-1].name}}
@@ -7,4 +8,5 @@
 			{{clients[i-1].businessname}}
 		</option>
 	{% endfor %}
+	{% endif %}
 </select>

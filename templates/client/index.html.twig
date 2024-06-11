@@ -33,7 +33,7 @@
 						<td>{{ client.indexTel }}</td>
 						<td>{{ client.phoneNumber }}</td>
 						<td>
-							<div class="d-flex justify-content-around">
+							<div class="d-flex justify-content-around gap-2">
 								<a class="btn btn-primary" href="{{ path('app_client_show', {'id': client.id}) }}">Voir</a>
 								<a class="btn btn-success" href="{{ path('app_client_edit', {'id': client.id}) }}">Editer</a>
 								{{include('client/_delete_form.html.twig')}}

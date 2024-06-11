@@ -11,6 +11,8 @@
 </div>
 {% endif %}
 <div class="container">
+
+{% if business != null %}
         <div class="row">
             <div class="col-4 margin-4">
                 <button onclick="window.location.href='{{ path('app_client_new') }}';" class="btn bg-pd-green h-100 w-100 my-4 text-white fw-bold">AJOUTER UN CLIENT</button>
@@ -22,10 +24,11 @@
                 <button class="btn bg-pd-yellow h-100 w-100 my-4 text-white fw-bold">GÉNÉRER UNE FACTURE</button>
             </div>
         </div>
+        {% endif %}
         <div class="row">
         <div class="col-6 my-5">
                 <canvas id="myChart"></canvas>
-                <div class="row my-5">
+                <div class="row my-5 mb-0">
                     <div class="col-6 bg-pd-red h-100 px-0">
                             <p class="py-3  fs-4  text-white text-center">Rentrée</p>
                             <hr class="text-white mx-auto w-75 hr hr-blurry">

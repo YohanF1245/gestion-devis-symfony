@@ -116,6 +116,9 @@
 		.clear{
 			clear:both;
 		}
+		.m-r-2{
+			margin-right:2rem;
+		}
 		.m-l-1{
 			margin-left:1rem;
 		}
@@ -143,8 +146,8 @@
 			</div>
 			<div class="w-50" style="float:right">
 				<p class="right">
-					Devis N°
-					{{dress_estimate.estimateNumber}}
+					<span style="font-size:1.5rem">Devis N°
+					{{dress_estimate.estimateNumber}}</span>
 					<br><br>
 					Date d'émission :
 					{{dress_estimate.creationDate |date('d-m-Y')}}
@@ -153,23 +156,17 @@
 					jours</p>
 			</div>
 		</div>
-		<div class="m-t-1 clear">
-			<div class="w-30 float-left">
-				<p class="bold-underline">
+		<div class=" clear m-t-1" style="">
+			<div class="w-30  float-left padding-1">
+			<p class="bold-underline">
 					Emetteur :
 				</p>
-			</div>
-			<div class="w-30 float-right">
-				<p class="bold-underline">Destinataire :
-				</p>
-			</div>
-		</div>
-		<div class=" clear m-t-1" style="">
-			<div class="w-30 border float-left padding-1">
 				<div>{{business.businessName}}</div>
 				<div>{{user.email}}</div>
 			</div>
-			<div class="w-30 border float-right padding-1">
+			<div class="w-30 float-right padding-1">
+				<p class="bold-underline">Destinataire :
+				</p>
 				<div>{{client.businessName}}</div>
 				<div>{{client.mail}}</div>
 				<div>{{client.name}}

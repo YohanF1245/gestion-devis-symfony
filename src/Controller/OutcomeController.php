@@ -8,6 +8,7 @@ use App\Form\OutcomeType;
 use App\Repository\BusinessRepository;
 use App\Repository\OutcomeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,12 +23,18 @@ class OutcomeController extends AbstractController
     {   
         $userId = $this->getUser()->getId();
         $business = $businessRepository->findOneBy(['user_id' => $userId]);
-        $businessId = $business->getId();
+            if($business != null){
+             $businessId = $business->getId();
         return $this->render('outcome/index.html.twig', [
             'outcomes' => $outcomeRepository->findBy(
                 ['business_id' => $businessId]
             ),
         ]);
+ }else{
+        return $this->render('outcome/index.html.twig', [
+            'outcomes' => null,
+        ]);
+       }
     }
 
     #[Route('/new', name: 'app_outcome_new', methods: ['GET', 'POST'])]

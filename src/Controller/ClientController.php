@@ -101,6 +101,8 @@ class ClientController extends AbstractController
     #[Route('/{id}', name: 'app_client_show', methods: ['GET'])]
     public function show(Client $client): Response
     {
+        
+        dd("");
         return $this->render('client/show.html.twig', [
             'client' => $client,
         ]);
@@ -119,7 +121,6 @@ class ClientController extends AbstractController
 
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->render('client/edit.html.twig', [
             'client' => $client,
             'form' => $form,

@@ -1,3 +1,4 @@
+{% if performances is not empty %}
 {% for i in 1..performances|length %}
 	<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}!{{performances[i-1].id}}!{{performances[i-1].tax}}'>{{performances[i-1].quantity}}
 		{{performances[i-1].unit}}
@@ -5,3 +6,4 @@
 		{{performances[i-1].pirce}}€
 		{{performances[i-1].tax}}%</option>
 {% endfor %}
+{% endif %}

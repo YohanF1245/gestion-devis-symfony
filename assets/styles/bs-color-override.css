@@ -16,6 +16,13 @@
 .bg-pd-yellow{
     background-color: #f9b234!important;
 }
+.bg-general{
+    
+    background-color: #a4d3e9!important;
+}
+.bg-primary{
+    background-color: red!important;
+}
 .text-pd-green{
     color: #95c21f!important;
 }
@@ -37,6 +44,9 @@
 .active-nav{
     background-color: white!important;
     color: blue!important;
+}
+h1 {
+    text-shadow: 4px 3px 0px #000000, 9px 8px 0px rgba(0,0,0,0.15)!important;
 }
 .table {
     border: 1px solid black!important;
