@@ -113,6 +113,7 @@ class DressEstimateController extends AbstractController
     #[Route('/insert/clients', name: 'app_insert_clients', methods: ['GET'])]
     public function insertClients(ClientRepository $clientRepository)
     {
+        
         $userId = $this->getUser()->getId();
         // $performances = $performanceRepository->findBy(
         //     ['user_id' => $userId]
@@ -314,7 +315,7 @@ class DressEstimateController extends AbstractController
             }
             $entityManager->flush();
 
-
+            
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render('dress_estimate/edit.html.twig', [
