@@ -6,7 +6,7 @@
 
 
 {% block body %}
-	<div class="container-fluid bg-pd-blue" style="height:10vh!important"></div>
+	{{include('topbar.html.twig')}}
 	<h1 class="text-pd-yellow text-center">Nouveau Devis</h1>
 	<div class="container col-8 offset-2 p-3" style="padding:30px!important;background-color:white!important;border-radius:25px!imortant;">
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-turbo="false">
@@ -42,9 +42,9 @@
 		<div
 			class="row">
 			{# <div class="col-2 offset-1">
-												
-																<img class="img-thumbnail" src={{asset("/public/uploaded-images/signs/018ec773-589e-74ea-a21d-2b482a7a0278.png")}}>
-															</div> #}
+																		
+																						<img class="img-thumbnail" src={{asset("/public/uploaded-images/signs/018ec773-589e-74ea-a21d-2b482a7a0278.png")}}>
+																					</div> #}
 			<div class="row">
 				<div class="col-4">
 					{{form_row(form.estimate_number)}}
@@ -67,7 +67,8 @@
 				<div class="col-4 d-flex flex-column justify-content-start ">
 					<label class="mb-2">Selectionner le client</label>
 					{{render(controller('App\\Controller\\DressEstimateController::insertClients'))}}
-						<button type="button" class="btn btn-primary mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal"> Ajouter un nouveau client
+					<button type="button" class="btn btn-primary mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						Ajouter un nouveau client
 					</button>
 				</div>
 
@@ -97,8 +98,9 @@
 						<th>Quantité</th>
 						<th>Désignation</th>
 						<th>Unité</th>
-						<th>T.V.A</th>
 						<th>Prix</th>
+						<th>T.V.A</th>
+						<th>Prix total</th>
 					</tr>
 				</thead>
 				<tbody id="perfomanceTableBody"></tbody>
@@ -110,14 +112,14 @@
 					<option selected>Ajouter une prestation</option>
 					{{render(controller('App\\Controller\\DressEstimateController::insertPerformances'))}}
 				{# {% for item in myPerformances() %}
-																														<p>item.unit</p>
-																													{% endfor %} #}
+																																						<p>item.unit</p>
+																																					{% endfor %} #}
 					{# {% for i in 1..myPerformances()|length %}
-																																				<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}'>{{performances[i-1].quantity}}
-																																					{{performances[i-1].unit}}
-																																					{{performances[i-1].designation}}
-																																					{{performances[i-1].pirce}}</option>
-																																			{% endfor %} #}
+																																														<option value='{{i}}!{{performances[i-1].quantity}}!{{performances[i-1].unit}}!{{performances[i-1].designation}}!{{performances[i-1].pirce}}'>{{performances[i-1].quantity}}
+																																															{{performances[i-1].unit}}
+																																															{{performances[i-1].designation}}
+																																															{{performances[i-1].pirce}}</option>
+																																													{% endfor %} #}
 				</select>
 			</div>
 
@@ -146,12 +148,30 @@
 			{# {{form_row(form.Envoyer)}} #}
 		</div>
 		{{form_end(form)}}
+		<div class="row d-flex justify-content-center align-items-center">
+			<div class="col-1">
+				<div id="arrowAnim">
+					<div class="arrowSliding">
+						<div class="arrow"></div>
+					</div>
+					<div class="arrowSliding delay1">
+						<div class="arrow"></div>
+					</div>
+					<div class="arrowSliding delay2">
+						<div class="arrow"></div>
+					</div>
+					<div class="arrowSliding delay3">
+						<div class="arrow"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<a href="{{ path('app_dress_estimate_index') }}">back to list</a>
+			</div>
+		</div>
 
-
-		<a href="{{ path('app_dress_estimate_index') }}">back to list</a>
 	</div>
-	<div style="height:15vh!important">
-		<div class="container-fluid bg-pd-blue position-fixed bottom-0" style="height:10vh!important">
+	{{include('botbar.html.twig')}}
 
 
-		{% endblock %}
+{% endblock %}

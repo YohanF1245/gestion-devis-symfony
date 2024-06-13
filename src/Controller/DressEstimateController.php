@@ -168,6 +168,7 @@ class DressEstimateController extends AbstractController
         $logoName = $userId.".".$logoExt;
         $logoExt = pathinfo($user->getSignature(), PATHINFO_EXTENSION);
         $signName = $userId.".".$logoExt;
+        $performance  = null;
         for ($i = 0; $i<count($performances); $i++){
             $performance[]= $performanceRepository->findBy(
                 ['id'=> $performances[$i]->getPerformanceId()]
@@ -192,7 +193,6 @@ class DressEstimateController extends AbstractController
         //     ->setParameter('id', $estimateId , UuidType::NAME);
         // $query = $qb->getQuery();
         //dd($query->execute());
-
         return $this->render('dress_estimate/show.html.twig', [
             'logo_name' => $logoName,
             'sign_name' => $signName,
@@ -292,7 +292,7 @@ class DressEstimateController extends AbstractController
                 ['id'=> $performances[$i]->getPerformanceId()]
             );
         }
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $presArray[] = 'null';
             $i=1;
@@ -304,8 +304,6 @@ class DressEstimateController extends AbstractController
                 } else {
                     break;
                 }
-            }
-
             //clear all links performance-estimate
             $actualPerfList = $estimatePerformanceLinkRepository->findBy(
                 ['estimate_tab_id'=> $estimateTabId] 
@@ -314,8 +312,25 @@ class DressEstimateController extends AbstractController
                 $entityManager->remove($value);
             }
             $entityManager->flush();
+            foreach ($presArray as $key => $value) {
+                if ($value != 'null') {
+                $estimateTabLink = new EstimatePerformanceLink();
+                $entityManager->persist($estimateTabLink);
+                $estimateTabLink->setEstimateTabId($estimateTabId);
+                $prest = $performanceRepository->findOneBy(
+                     ['id' => $value]
+                );
+                $prestId = $prest->getId();
+                $estimateTabLink->setPerformanceId($prestId);
+                $entityManager->persist($estimateTabLink);
+                // $estimateTab->addPerformaceId($prest);
+            }
+            }
+            $entityManager->flush();
+            }
 
             
+
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render('dress_estimate/edit.html.twig', [
