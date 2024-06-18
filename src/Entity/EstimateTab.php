@@ -18,7 +18,11 @@ class EstimateTab
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
+<<<<<<< HEAD
     #[ORM\ManyToOne(targetEntity:Business::class, inversedBy: 'estimateTabs')]
+=======
+    #[ORM\ManyToOne(inversedBy: 'estimateTabs')]
+>>>>>>> parent of acdad8f (estimate number auto generation and ui fixes)
     #[ORM\JoinColumn(nullable: false)]
     private ?Business $business_id = null;
 

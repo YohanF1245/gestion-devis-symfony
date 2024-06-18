@@ -5,7 +5,7 @@
 {% block body %}
 
 {{include('topbar.html.twig')}}
-    <h1 class="text-pd-yellow text-center mt-3 ">Voir le devis</h1>
+    <h1 class="text-pd-yellow text-center">Voir le devis</h1>
     {# <table class="table"> #}
     <div class="container mt-5 col-8 offset-2" style="background-color:white!important">
         <div class="row text-end fw-bold ms-5 mt-3">
@@ -143,10 +143,10 @@
     </div>
     </div>
         
-    <div class="d-flex justify-content-around mt-3 col-6 offset-3">
-    <a class="btn btn-primary" href="{{ path('app_dress_estimate_index') }}">Retour à la liste des devis</a>
+    <div class="d-flex justify-content-center gap-2 mt-3">
+    <a class="btn btn-primary" href="{{ path('app_dress_estimate_index') }}">back to list</a>
 
-    <a class="btn btn-success" href="{{ path('app_dress_estimate_edit', {'id': dress_estimate.id}) }}">Editer le devis</a>
+    <a class="btn btn-success" href="{{ path('app_dress_estimate_edit', {'id': dress_estimate.id}) }}">edit</a>
 
     {{ include('dress_estimate/_delete_form.html.twig') }}
     </div>
