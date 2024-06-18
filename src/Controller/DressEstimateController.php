@@ -43,14 +43,66 @@ class DressEstimateController extends AbstractController
         
     }
     #[Route('/new', name: 'app_dress_estimate_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ClientRepository $clientRepository, PerformanceRepository $performanceRepository, EntityManagerInterface $entityManager): Response
+    public function new(BusinessRepository $businessRepository, EstimateTabRepository $estimateTabRepository, Request $request, ClientRepository $clientRepository, PerformanceRepository $performanceRepository,DressEstimateRepository $dressEstimateRepository, EntityManagerInterface $entityManager): Response
     {
+        $userId = $this->getUser()->getId();
+        $businessId = $businessRepository->findBy(
+            ['user_id' => $userId],
+        );
+        //dd($businessId[0]->getId()->__toString());
+        $year = date('Y');
+        $start =$year."-01-01";
+        $end =$year."-12-31";
+        $queryDateSelect = $estimateTabRepository->createQueryBuilder('et')
+        ->join('et.estimate_id', 'd')
+        ->join('et.business_id', 'b')
+        ->where('d.creation_date BETWEEN :start AND :end')
+        ->setParameter('start', $start)
+        ->setParameter('end', $end);
+        $estimateList = $queryDateSelect->getQuery()->getResult();
+        $i = 0;
+        foreach ($estimateList as $key => $value) {
+            if($value->getBusinessId()->getId() != $businessId[0]->getId()){
+                unset($estimateList[$i]);
+            };
+            $i++;
+        }
+        $estimatenum = count($estimateList);
+        $enstimatenumLen = strlen((string)$estimatenum);
+
+        $addZero = '';
+        
+        switch ($enstimatenumLen) {
+            case 1:
+                $addZero = "00000";
+                break;
+            case 2:
+                $addZero = "0000";
+                # code...
+                break;
+            case 3:
+                $addZero = "000";
+                # code...
+                break;
+            case 4:
+                $addZero = "00";
+                # code...
+                break;
+            case 5:
+                $addZero = "0";
+                # code...
+                break;   
+            default:
+                # code...
+                break;
+        }
+
+        dd("D-".$year."-" .$addZero. ($estimatenum+1));
         $dressEstimate = new DressEstimate();
         $estimateTab = new EstimateTab();
         // $estimateTab->setEstimateId()
         $form = $this->createForm(DressEstimateType::class, $dressEstimate);
         $form->handleRequest($request);
-        $userId = $this->getUser()->getId();
         // $performances = $performanceRepository->findBy(
         //     ['user_id' => $userId]
         // );

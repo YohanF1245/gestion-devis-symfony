@@ -18,7 +18,7 @@ class EstimateTab
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'estimateTabs')]
+    #[ORM\ManyToOne(targetEntity: Business::class, inversedBy: 'estimateTabs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Business $business_id = null;
 

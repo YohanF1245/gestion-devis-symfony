@@ -67,7 +67,7 @@
 				<div class="col-4 d-flex flex-column justify-content-start ">
 					<label class="mb-2">Selectionner le client</label>
 					{{render(controller('App\\Controller\\DressEstimateController::insertClients'))}}
-					<button type="button" class="btn btn-primary mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+					<button type="button" class="btn btn-success mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						Ajouter un nouveau client
 					</button>
 				</div>
@@ -123,10 +123,10 @@
 				</select>
 			</div>
 
-			<div class="col">
+			<div class="col d-flex justify-content-between">
 				<button type="button" class="btn btn-primary" onclick="addPerformance()">Ajouter
 				</button>
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPerformance">
+				<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newPerformance">
 					Créér une nouvelle prestation
 				</button>
 				<button type="button" class="btn btn-danger" onclick="removeLast()">Retirer le dernier élément</button>
@@ -149,24 +149,8 @@
 		</div>
 		{{form_end(form)}}
 		<div class="row d-flex justify-content-center align-items-center">
-			<div class="col-1">
-				<div id="arrowAnim">
-					<div class="arrowSliding">
-						<div class="arrow"></div>
-					</div>
-					<div class="arrowSliding delay1">
-						<div class="arrow"></div>
-					</div>
-					<div class="arrowSliding delay2">
-						<div class="arrow"></div>
-					</div>
-					<div class="arrowSliding delay3">
-						<div class="arrow"></div>
-					</div>
-				</div>
-			</div>
-			<div class="col">
-				<a href="{{ path('app_dress_estimate_index') }}">back to list</a>
+			<div class="col text-center">
+				<a class="btn btn-primary" href="{{ path('app_dress_estimate_index') }}">Retour a la liste des devis</a>
 			</div>
 		</div>
 

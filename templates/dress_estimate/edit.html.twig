@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit DressEstimate{% endblock %}
+{% block title %}Edition de devis{% endblock %}
 
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
@@ -31,11 +31,12 @@
 				</div>
 			</div>
 		</div>
-
-    <h1>Edit DressEstimate</h1>
+	
+{{include('topbar.html.twig')}}
+    <h1 class="text-pd-yellow text-center mt-3 mb-3" >Editer un devis</h1>
 <div class="container col-10 bg-white p-5 rounded">
     {{form_start(form)}}
-    <div class="row">
+    <div class="row mb-3">
     <div class="col-4">
         {{form_row(form.creation_date)}}
     </div>
@@ -46,14 +47,14 @@
     {{form_row(form.validity)}}
     </div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
     <div class="col-4">
     {{form_row(form.expiration_date)}}
     </div>
     <div class="col-4">
     <label class="mb-2">Selectionner le client</label>
 		{{render(controller('App\\Controller\\DressEstimateController::insertClients'))}}
-		<button type="button" class="btn btn-block btn-primary mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal"> Ajouter un nouveau client
+		<button type="button" class="btn btn-block btn-success mt-3 mb-3 w-100" data-bs-toggle="modal" data-bs-target="#exampleModal"> Ajouter un nouveau client
 		</button>
     </div>
     <div class="col-4">
@@ -67,9 +68,9 @@
     </div>
     </div>
     
-		<div id="performanceDiv" class="row">
+		<div id="performanceDiv" class="row mb-3">
 			<input type="hidden" id="prestationTotal" name="prestationTotal" value="0">
-			<table class="table table-striped-column">
+			<table class="table table-striped-column ">
 				<table class="table table-striped-column">
 				<thead class="">
 					<tr class="table-dark text-center">
@@ -122,10 +123,10 @@
 				</select>
 			</div>
 
-			<div class="col">
+			<div class="col d-flex mb-3 justify-content-between">
 				<button type="button" class="btn btn-primary" onclick="addPerformance()">Ajouter
 				</button>
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPerformance">
+				<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newPerformance">
 					Créér une nouvelle prestation
 				</button>
 				<button type="button" class="btn btn-danger" onclick="removeLast()">Retirer le dernier élément</button>
@@ -141,13 +142,20 @@
 			</div>
 		</div>
     
-			<div class="py-3 d-grid">
+			<div class="py-3 mb-3 d-grid">
 				<button type="submit" class="btn btn-block btn-success">Mettre à jour le devis</button>
 			</div>
     {{form_end(form)}}
     {# {{ include('dress_estimate/_form.html.twig', {'button_label': 'Update'}) }} #}
-
-    <a href="{{ path('app_dress_estimate_index') }}">back to list</a>
-
+    <div class="d-flex col-8 offset-2 justify-content-around">
+    <a class="btn btn-primary " href="{{ path('app_dress_estimate_index') }}">Retour à la liste des devis</a>
+	
     {{ include('dress_estimate/_delete_form.html.twig') }}
+	
+	
+	</div>
+	</div>
+	{{include('botbar.html.twig')}}
+	<br><br><br><br>
+
 {% endblock %}
