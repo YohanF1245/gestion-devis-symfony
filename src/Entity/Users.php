@@ -59,10 +59,14 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Performance::class, mappedBy: 'user_id')]
     private Collection $performances;
 
+    #[ORM\OneToMany(targetEntity: DressEstimate::class, mappedBy: 'user_id', orphanRemoval: true)]
+    private Collection $estimates;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
         $this->performances = new ArrayCollection();
+        $this->estimates = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -242,6 +246,36 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($performance->getUserId() === $this) {
                 $performance->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DressEstimate>
+     */
+    public function getEstimates(): Collection
+    {
+        return $this->estimates;
+    }
+
+    public function addEstimate(DressEstimate $estimate): static
+    {
+        if (!$this->estimates->contains($estimate)) {
+            $this->estimates->add($estimate);
+            $estimate->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEstimate(DressEstimate $estimate): static
+    {
+        if ($this->estimates->removeElement($estimate)) {
+            // set the owning side to null (unless already changed)
+            if ($estimate->getUserId() === $this) {
+                $estimate->setUserId(null);
             }
         }
 

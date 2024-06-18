@@ -30,8 +30,12 @@ use Symfony\Config\TwigConfig;
 class DressEstimateController extends AbstractController
 {
     #[Route('/', name: 'app_dress_estimate_index', methods: ['GET'])]
-    public function index(DressEstimateRepository $dressEstimateRepository): Response
+    public function index(BusinessRepository $businessRepository, EstimateTabRepository $estimateTabRepository, DressEstimateRepository $dressEstimateRepository): Response
     {
+        $userId = $this->getUser()->getId();
+        $business = $businessRepository->findBy($userId);
+        
+        dd($userId);
         return $this->render('dress_estimate/index.html.twig', [
             'dress_estimates' => $dressEstimateRepository->findAll(),
         ]);
@@ -96,8 +100,8 @@ class DressEstimateController extends AbstractController
                 # code...
                 break;
         }
-
-        dd("D-".$year."-" .$addZero. ($estimatenum+1));
+        
+        $estimateNumFinal = ("D-".$year."-" .$addZero. ($estimatenum+1));
         $dressEstimate = new DressEstimate();
         $estimateTab = new EstimateTab();
         // $estimateTab->setEstimateId()
@@ -156,6 +160,7 @@ class DressEstimateController extends AbstractController
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render('dress_estimate/new.html.twig', [
+            'estimate_num' => $estimateNumFinal,
             'dress_estimate' => $dressEstimate,
             'form' => $form,
             // 'performances' => $performances, 
