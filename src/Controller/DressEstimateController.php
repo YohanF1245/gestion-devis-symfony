@@ -68,6 +68,8 @@ class DressEstimateController extends AbstractController
             $i++;
         }
         $estimatenum = count($estimateList);
+
+        
         $enstimatenumLen = strlen((string)$estimatenum);
 
         $addZero = '';
@@ -96,8 +98,10 @@ class DressEstimateController extends AbstractController
                 # code...
                 break;
         }
+        $estimateNumFinal = intval($addZero.$estimatenum+1);
+        //dd("D-".$year."-" .$addZero. ($estimatenum+1));
+        $estimateNumShow = "D-".$year.$addZero.$estimatenum+1;
 
-        dd("D-".$year."-" .$addZero. ($estimatenum+1));
         $dressEstimate = new DressEstimate();
         $estimateTab = new EstimateTab();
         // $estimateTab->setEstimateId()
@@ -140,8 +144,8 @@ class DressEstimateController extends AbstractController
                 // $estimateTab->addPerformaceId($prest);
             }
 
-            
-
+            $dressEstimate->setEstimateNumber($estimateNumFinal);
+            $dressEstimate->setUserId($this->getUser());
             $dressEstimate->setClientId($client);
             $entityManager->persist($dressEstimate);
             $estimateTab->setEstimateId($dressEstimate);
@@ -156,6 +160,7 @@ class DressEstimateController extends AbstractController
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render('dress_estimate/new.html.twig', [
+            'estimate_number' => $estimateNumShow,
             'dress_estimate' => $dressEstimate,
             'form' => $form,
             // 'performances' => $performances, 
@@ -198,6 +203,39 @@ class DressEstimateController extends AbstractController
     public function show(ClientRepository $clientRepository, EstimatePerformanceLinkRepository $estimatePerformanceLink, EstimateTabRepository $estimateTab,EntityManagerInterface $entityManager,  PerformanceRepository $performanceRepository, DressEstimate $dressEstimate, BusinessRepository $businessRepository): Response
     {
         $user = $this->getUser();
+        $year = date_format($dressEstimate->getCreationDate(),"Y");
+        $estimatenum = $dressEstimate->getEstimateNumber();
+
+        
+        $enstimatenumLen = strlen((string)$estimatenum);
+
+        $addZero = '';
+        
+        switch ($enstimatenumLen) {
+            case 1:
+                $addZero = "00000";
+                break;
+            case 2:
+                $addZero = "0000";
+                # code...
+                break;
+            case 3:
+                $addZero = "000";
+                # code...
+                break;
+            case 4:
+                $addZero = "00";
+                # code...
+                break;
+            case 5:
+                $addZero = "0";
+                # code...
+                break;   
+            default:
+                # code...
+                break;
+        }
+
         $businessId = $dressEstimate->getEstimateTab()->getBusinessId()->getId();
         $clientId = $dressEstimate->getClientId()->getId();
         $client = $clientRepository->findOneBy(
@@ -245,7 +283,10 @@ class DressEstimateController extends AbstractController
         //     ->setParameter('id', $estimateId , UuidType::NAME);
         // $query = $qb->getQuery();
         //dd($query->execute());
+
+        $estimateNumberShow = "D-".$year."-".$addZero.$estimatenum;
         return $this->render('dress_estimate/show.html.twig', [
+            'estimate_num' => $estimateNumberShow,
             'logo_name' => $logoName,
             'sign_name' => $signName,
             'dress_estimate' => $dressEstimate,

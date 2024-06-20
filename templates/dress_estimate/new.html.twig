@@ -47,7 +47,9 @@
 																					</div> #}
 			<div class="row">
 				<div class="col-4">
-					{{form_row(form.estimate_number)}}
+					<div>Numéro du devis :</div>
+					<div class="mt-2">{{estimate_number}}</div>
+
 				</div>
 				<div class="col-4">
 					{{form_row(form.creation_date)}}
@@ -153,8 +155,8 @@
 				<a class="btn btn-primary" href="{{ path('app_dress_estimate_index') }}">Retour a la liste des devis</a>
 			</div>
 		</div>
-
 	</div>
+	<br><br><br><br>
 	{{include('botbar.html.twig')}}
 
 

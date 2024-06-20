@@ -25,7 +25,7 @@ class DressEstimateType extends AbstractType
             ->add('creation_date', null, [
                 'widget' => 'single_text',
             ])
-            ->add('estimate_number')
+            //->add('estimate_number')
             ->add('validity')
             ->add('expiration_date', null, [
                 'widget' => 'single_text',
