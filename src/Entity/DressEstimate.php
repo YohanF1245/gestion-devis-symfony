@@ -45,6 +45,10 @@ class DressEstimate
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $client_id = null;
 
+    #[ORM\ManyToOne()]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Users $user_id = null;
+
     #[ORM\OneToOne(mappedBy: 'estimate_id', cascade: ['persist', 'remove'])]
     private ?EstimateTab $estimateTab = null;
 
@@ -165,6 +169,17 @@ class DressEstimate
         return $this;
     }
 
+    public function getUserId(): ?Users
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?Users $user_id): static
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
     public function getEstimateTab(): ?EstimateTab
     {
         return $this->estimateTab;
