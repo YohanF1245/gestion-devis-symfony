@@ -52,10 +52,6 @@ class DressEstimate
     #[ORM\OneToOne(mappedBy: 'estimate_id', cascade: ['persist', 'remove'])]
     private ?EstimateTab $estimateTab = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Users $userId = null;
-
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -193,18 +189,6 @@ class DressEstimate
         }
 
         $this->estimateTab = $estimateTab;
-
-        return $this;
-    }
-
-    public function getUserId(): ?Users
-    {
-        return $this->userId;
-    }
-
-    public function setUserId(?Users $userId): static
-    {
-        $this->userId = $userId;
 
         return $this;
     }
