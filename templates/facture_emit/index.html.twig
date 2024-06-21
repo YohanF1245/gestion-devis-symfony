@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FactureEmit index{% endblock %}
+
+{% block body %}
+    <h1>FactureEmit index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Creation_date</th>
+                <th>Payment_date</th>
+                <th>Majoration</th>
+                <th>Date_limit</th>
+                <th>Is_paid</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for facture_emit in facture_emits %}
+            <tr>
+                <td>{{ facture_emit.id }}</td>
+                <td>{{ facture_emit.creationDate ? facture_emit.creationDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ facture_emit.paymentDate ? facture_emit.paymentDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ facture_emit.majoration }}</td>
+                <td>{{ facture_emit.dateLimit ? facture_emit.dateLimit|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ facture_emit.isPaid ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_facture_emit_show', {'id': facture_emit.id}) }}">show</a>
+                    <a href="{{ path('app_facture_emit_edit', {'id': facture_emit.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_facture_emit_new') }}">Create new</a>
+{% endblock %}

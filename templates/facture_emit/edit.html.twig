@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit FactureEmit{% endblock %}
+
+{% block body %}
+    <h1>Edit FactureEmit</h1>
+
+    {{ include('facture_emit/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_facture_emit_index') }}">back to list</a>
+
+    {{ include('facture_emit/_delete_form.html.twig') }}
+{% endblock %}
