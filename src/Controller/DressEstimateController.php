@@ -32,8 +32,11 @@ class DressEstimateController extends AbstractController
     #[Route('/', name: 'app_dress_estimate_index', methods: ['GET'])]
     public function index(DressEstimateRepository $dressEstimateRepository): Response
     {
+        $estimate = $dressEstimateRepository->findBy(
+            ['user_id' => $this->getUser()],
+        );
         return $this->render('dress_estimate/index.html.twig', [
-            'dress_estimates' => $dressEstimateRepository->findAll(),
+            'dress_estimates' => $estimate,
         ]);
     }
     #[Route('/count', name:'app_dress_estimate_count', methods:['GET', 'POST'])]
@@ -67,6 +70,7 @@ class DressEstimateController extends AbstractController
             };
             $i++;
         }
+        
         $estimatenum = count($estimateList);
 
         
