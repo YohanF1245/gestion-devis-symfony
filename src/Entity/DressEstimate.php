@@ -35,6 +35,9 @@ class DressEstimate
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $free_zone = null;
 
+    #[ORM\Column]
+    private ?float $total = null;
+
     #[ORM\Column(nullable: true)]
     private ?int $accompte = null;
 
@@ -89,6 +92,18 @@ class DressEstimate
     public function setValidity(?int $validity): static
     {
         $this->validity = $validity;
+
+        return $this;
+    }
+
+    public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
+    public function setTotal(float $total): static
+    {
+        $this->total = $total;
 
         return $this;
     }
