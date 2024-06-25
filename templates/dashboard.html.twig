@@ -29,15 +29,15 @@
         <div class="col-6 my-5">
                 <canvas id="myChart"></canvas>
                 <div class="row my-5 mb-0">
-                    <div class="col-6 bg-pd-red h-100 px-0">
+                    <div class="col-6 bg-pd-green h-100 px-0">
                             <p class="py-3  fs-4  text-white text-center">Rentrée</p>
                             <hr class="text-white mx-auto w-75 hr hr-blurry">
-                            <p class="  fs-1 text-white text-center">537.3 €</p>
+                            <p class="  fs-1 text-white text-center">{{totalIncome}}</p>
                     </div>
-                    <div class="col-6 bg-pd-green h-100 px-0">
+                    <div class="col-6 bg-pd-red h-100 px-0">
                             <p class="py-3 fs-4 text-white text-center">Sortie</p>
                             <hr class="w-75 mx-auto text-white hr hr-blurry">
-                            <p class="  fs-1 text-white text-center">537.3 €</p>
+                            <p class="  fs-1 text-white text-center">{{totalOutcome}}</p>
                     </div>
                 </div>
         </div>
@@ -66,10 +66,26 @@
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: [
+      {% for label in labels %}
+      ' {{ label[0] }}',
+      {% endfor %}
+      ],
       datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        label: 'Entrées',
+        data: [
+        {% for label in labels %}
+        ' {{ label[1] }}',
+        {% endfor %}],
+        backgroundColor:'#95C21F', 
+        borderWidth: 1
+      },{
+        label: 'Sorties',
+        data: [
+        {% for label in labels %}
+        ' {{ label[2] }}',
+        {% endfor %}],
+        backgroundColor:'#E84F1C', 
         borderWidth: 1
       }]
     },

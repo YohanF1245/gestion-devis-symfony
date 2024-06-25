@@ -2,10 +2,13 @@
 namespace App\Controller;
 
 use App\Entity\Business;
+use App\Entity\EstimateTab;
 use App\Entity\Users;
+use App\Repository\BusinessRepository;
 use App\Repository\DressEstimateRepository;
 use App\Repository\EstimatePerformanceLinkRepository;
 use App\Repository\EstimateTabRepository;
+use App\Repository\OutcomeRepository;
 use App\Repository\PerformanceRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,11 +21,58 @@ use Symfony\Component\Routing\Attribute\Route;
 class DashboardController extends AbstractController {
 
     #[Route("/dashboard", name: "home")]
-    function dashboard(Request $request,DressEstimateRepository $dressEstimateRepository, EntityManagerInterface $entityManager){
+    function dashboard(BusinessRepository $businessRepository, OutcomeRepository $outcomeRepository, Request $request,DressEstimateRepository $dressEstimateRepository, EntityManagerInterface $entityManager){
         $user = $this->getUser();
         $userId = $user->getId();
 
+        //setup js chart variable
+        $monthArray = array (
+            array('Janvier',0,0),
+            array('Février',0,0),
+            array('Mars',0,0),
+            array('Avril',0,0),
+            array('Mai',0,0),
+            array('Juin',0,0),
+            array('Juillet',0,0),
+            array('Août',0,0),
+            array('Septembre',0,0),
+            array('Octobre',0,0),
+            array('Novembre',0,0),
+            array('Décembre',0,0)
+        );
+        //income variables
         $estimateList = $dressEstimateRepository->findBy([
+            'user_id' => $userId,
+        ]);
+        
+        $totalIncome = 0;
+       
+
+        foreach ($estimateList as $estimate) {
+            $date = $estimate->getCreationDate();
+            $intMonth = intval(date_format($date,'m'));
+            $estimateTot = $estimate->getTotal();
+            $totalIncome += $estimateTot;
+            $monthArray[$intMonth-1][1] = $monthArray[$intMonth-1][1] + $estimateTot;
+        }
+        //fill outcome variables
+        $business = $businessRepository->findBy([
+            'user_id' => $userId,
+        ]);
+        $outcomeList = $outcomeRepository->findBy([
+            'business_id' => $business[0]->getId(),
+        ]);
+
+         $totalOutcome = 0;
+        foreach ($outcomeList as $outcome){
+            $date = $outcome->getOutcomeDate();
+            $intMonth = intval(date_format($date, 'm'));
+            $outcomeTot = $outcome->getOutcomeAmount();
+            $totalOutcome += $outcomeTot;
+            $monthArray[$intMonth-1][2] = $monthArray[$intMonth-1][2] + $outcomeTot;
+        }
+        $estimateList = $dressEstimateRepository->findBy([
+            
         'user_id' => $userId],
         ['creation_date' => 'ASC'
     ]);	
@@ -35,8 +85,10 @@ class DashboardController extends AbstractController {
         return $this->render("dashboard.html.twig",
 
              ['business' => $business,
+            'labels' => $monthArray,
+            'totalIncome' => $totalIncome,
+            'totalOutcome' => $totalOutcome,
              'estimate_list' => $estimateList]
-            
             );
     }
 
