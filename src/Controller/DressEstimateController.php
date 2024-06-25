@@ -134,6 +134,7 @@ class DressEstimateController extends AbstractController
                     break;
                 }
             }
+            $total = 0;
             $entityManager->persist($estimateTab);
             foreach ($presArray as $key => $value) {
                 
@@ -142,12 +143,14 @@ class DressEstimateController extends AbstractController
                 $prest = $performanceRepository->findOneBy(
                      ['id' => $value]
                 );
+                $total += ($prest->getPirce()*$prest->getQuantity()*(1+$prest->getTax()/100));
                 $prestId = $prest->getId();
                 $estimateTabLink->setPerformanceId($prestId);
                 $entityManager->persist($estimateTabLink);
                 // $estimateTab->addPerformaceId($prest);
             }
-
+            $total = $total *(1-$dressEstimate->getDiscount()/100);
+            $dressEstimate->setTotal($total);
             $dressEstimate->setEstimateNumber($estimateNumFinal);
             $dressEstimate->setUserId($this->getUser());
             $dressEstimate->setClientId($client);
