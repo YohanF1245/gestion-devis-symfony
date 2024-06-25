@@ -153,6 +153,7 @@ class DressEstimateController extends AbstractController
             $dressEstimate->setTotal($total);
             $dressEstimate->setEstimateNumber($estimateNumFinal);
             $dressEstimate->setUserId($this->getUser());
+            $clientId = $request->get('clientSelect');
             $dressEstimate->setClientId($client);
             $entityManager->persist($dressEstimate);
             $estimateTab->setEstimateId($dressEstimate);
@@ -348,7 +349,41 @@ class DressEstimateController extends AbstractController
         }
         // dd($business->getLogo());
         // dd($base64);
+        $year = date_format($dressEstimate->getCreationDate(),"Y");
+        $estimatenum = $dressEstimate->getEstimateNumber();
+
+        
+        $enstimatenumLen = strlen((string)$estimatenum);
+
+        $addZero = '';
+        
+        switch ($enstimatenumLen) {
+            case 1:
+                $addZero = "00000";
+                break;
+            case 2:
+                $addZero = "0000";
+                # code...
+                break;
+            case 3:
+                $addZero = "000";
+                # code...
+                break;
+            case 4:
+                $addZero = "00";
+                # code...
+                break;
+            case 5:
+                $addZero = "0";
+                # code...
+                break;   
+            default:
+                # code...
+                break;
+        }
+        $estimateNumberShow = "D-".$year."-".$addZero.$estimatenum;
         $html = $this->render('dress_estimate/pdf.html.twig', [
+            'estimate_number' => $estimateNumberShow,
             'image' => $base64,
             'extension' => $extension,
             'logo' => $logo64,
@@ -372,15 +407,47 @@ class DressEstimateController extends AbstractController
           ]);
     }
     #[Route('/{id}/edit', name: 'app_dress_estimate_edit', methods: ['GET', 'POST'])]
-    public function edit(EstimatePerformanceLinkRepository $estimatePerformanceLinkRepository, Request $request, DressEstimate $dressEstimate,PerformanceRepository $performanceRepository, EstimateTabRepository $estimateTabRepository, EstimatePerformanceLinkRepository $estimatePerformanceLink, EntityManagerInterface $entityManager): Response
+    public function edit(BusinessRepository $businessRepository, ClientRepository $clientRepository, EstimatePerformanceLinkRepository $estimatePerformanceLinkRepository, Request $request, DressEstimate $dressEstimate,PerformanceRepository $performanceRepository, EstimateTabRepository $estimateTabRepository, EstimatePerformanceLinkRepository $estimatePerformanceLink, EntityManagerInterface $entityManager): Response
     {
 
+        $userId = $this->getUser()->getId();
+        $year = date_format($dressEstimate->getCreationDate(),"Y");
+        $estimatenum = $dressEstimate->getEstimateNumber();
+
+        
+        $enstimatenumLen = strlen((string)$estimatenum);
+
+        $addZero = '';
+        
+        switch ($enstimatenumLen) {
+            case 1:
+                $addZero = "00000";
+                break;
+            case 2:
+                $addZero = "0000";
+                # code...
+                break;
+            case 3:
+                $addZero = "000";
+                # code...
+                break;
+            case 4:
+                $addZero = "00";
+                # code...
+                break;
+            case 5:
+                $addZero = "0";
+                # code...
+                break;   
+            default:
+                # code...
+                break;
+        }
         $form = $this->createForm(DressEstimateType::class, $dressEstimate);
         $form->handleRequest($request);
         
         $dressEstimateId = $dressEstimate->getId();
         $estimateTabId = $dressEstimate->getEstimateTab()->getId();
-        $userId = $this->getUser()->getId();
         
         $performance = null;
         $performances = $estimatePerformanceLink->findBy(
@@ -394,6 +461,7 @@ class DressEstimateController extends AbstractController
         }
         
         if ($form->isSubmitted() && $form->isValid()) {
+            $total = 0;
             $presArray[] = 'null';
             $i=1;
             $loopOverPrestations = true;
@@ -412,6 +480,8 @@ class DressEstimateController extends AbstractController
                 $entityManager->remove($value);
             }
             $entityManager->flush();
+
+            
             foreach ($presArray as $key => $value) {
                 if ($value != 'null') {
                 $estimateTabLink = new EstimatePerformanceLink();
@@ -420,20 +490,43 @@ class DressEstimateController extends AbstractController
                 $prest = $performanceRepository->findOneBy(
                      ['id' => $value]
                 );
+                $total += ($prest->getPirce()*$prest->getQuantity()*(1+$prest->getTax()/100));
                 $prestId = $prest->getId();
                 $estimateTabLink->setPerformanceId($prestId);
                 $entityManager->persist($estimateTabLink);
                 // $estimateTab->addPerformaceId($prest);
             }
             }
+           
             $entityManager->flush();
             }
+            
+            $clientId = $request->get('clientSelect');
 
+            if($clientId != 'Selectionner le client'){
+
+                $client = $clientRepository->findOneBy(
+                    ['id' => $clientId]
+                );
+            }else{
+                $client = $clientRepository->findOneBy(
+                    ['id' => $dressEstimate->getClientId()->getId()]
+                );
+
+            }
+            $dressEstimate->setClientId($client);
+            $total = $total * (1-$dressEstimate->getDiscount()/100);
+            $dressEstimate->setTotal($total);
+            $entityManager->persist($dressEstimate);
+            $entityManager->flush();
+            //dd($total);
             
 
             return $this->redirectToRoute('app_dress_estimate_index', [], Response::HTTP_SEE_OTHER);
         }
+        $estimateNumberShow = "D-".$year."-".$addZero.$estimatenum;
         return $this->render('dress_estimate/edit.html.twig', [
+            'estimate_number' =>$estimateNumberShow,
             'performances' => $performance,
             'dress_estimate' => $dressEstimate,
             'form' => $form,
