@@ -1,0 +1,18 @@
+<select class="form-select" id="selectEstimate" name="estimateSelect" aria-label="">
+	<option selected>Selectionner le devis</option>
+	{% if estimates is not empty %}
+	{% for estimate in estimates %}
+		<option value='{{estimate.id}}'>
+			N° {{estimate.estimateNumber}} -
+			{{estimate.intitule}} -
+			{{estimate.total}} €
+		</option>
+	{# {% for i in 1..estimates|length %}
+		<option value='{{estimates[i].id}}'>
+			N° {{estimates[i].estimateNumber}} -
+			{{estimates[i].intitule}} -
+			{{estimates[i].total}} €
+		</option> #}
+	{% endfor %}
+	{% endif %}
+</select>

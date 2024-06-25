@@ -78,7 +78,17 @@
         ' {{ label[1] }}',
         {% endfor %}],
         backgroundColor:'#95C21F', 
-        borderWidth: 1
+        borderWidth: 1,
+        stack:0
+      },{
+        label: 'Entrées validées',
+        data: [
+        {% for label in labels %}
+        ' {{ label[2] }}',
+        {% endfor %}],
+        backgroundColor:'#f9b234', 
+        borderWidth: 1,
+        stack:0
       },{
         label: 'Sorties',
         data: [
@@ -86,7 +96,8 @@
         ' {{ label[2] }}',
         {% endfor %}],
         backgroundColor:'#E84F1C', 
-        borderWidth: 1
+        borderWidth: 1,
+        stack:1
       }]
     },
     options: {

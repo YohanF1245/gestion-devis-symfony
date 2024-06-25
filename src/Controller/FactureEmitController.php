@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\FactureEmit;
 use App\Form\FactureEmitType;
+use App\Repository\DressEstimateRepository;
 use App\Repository\FactureEmitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,6 +48,18 @@ class FactureEmitController extends AbstractController
     {
         return $this->render('facture_emit/show.html.twig', [
             'facture_emit' => $factureEmit,
+        ]);
+    }
+    #[Route('/select/estimate', name: 'app_facture_select_estimate', methods:['GET'])]
+    public function selectEstimate(DressEstimateRepository $dressEstimateRepository)
+    {
+        $userId = $this->getUser()->getId();
+        $estimates = $dressEstimateRepository->findBy(
+            ['user_id' => $userId],
+        );
+
+        return $this->render('facture_emit/select.estimate.html.twig', [
+            'estimates' => $estimates,
         ]);
     }
 
