@@ -2,12 +2,47 @@
 
 {% block title %}New FactureEmit{% endblock %}
 
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
-    <h1>Create new FactureEmit</h1>
+{% include('navbar.html.twig') %}
+	<div class="container col-8 offset-2 text-white">
+		<h1 class="text-center text-pd-yellow mt-3">Générer une facture</h1> 
+        {{form_start(form)}}
+        <div class="row">
+            <div class="col-9">
+        {{ include('facture_emit/select.estimate.html.twig')}}
 
-    {{ include('facture_emit/select.estimate.html.twig')}}
+            </div>
+            <div class="col-3">
+                {{form_row(form.creation_date)}}
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-4">
+                {{form_row(form.payment_date)}}
+            </div>
+            <div class="col-4">
+                {{form_row(form.majoration)}}
+            </div>
+            <div class="col-4">
+                {{form_row(form.date_limit)}}
+            </div>
+        </div>
+        <div class="row">
+                {{form_row(form.is_paid)}}
+        </div>
+		<div class="row">
+			<div class="py-3 mt-2 d-grid">
+				<button type="submit" class="btn btn-block btn-success ">Générer la facture</button>
+			</div>
+		</div>
+         {{form_end(form)}}
+        
+  
     
-    {{ include('facture_emit/_form.html.twig') }}
+    {# {{ include('facture_emit/_form.html.twig') }} #}
 
     <a href="{{ path('app_facture_emit_index') }}">back to list</a>
+   
+    </div>
 {% endblock %}

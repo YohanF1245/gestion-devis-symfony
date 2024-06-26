@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\FactureEmit;
 use App\Form\FactureEmitType;
 use App\Repository\DressEstimateRepository;
+use App\Repository\EstimateTabRepository;
 use App\Repository\FactureEmitRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,14 +19,15 @@ class FactureEmitController extends AbstractController
 {
     #[Route('/', name: 'app_facture_emit_index', methods: ['GET'])]
     public function index(FactureEmitRepository $factureEmitRepository): Response
-    {
+    {   ;
+        $factures = $factureEmitRepository->findAll();
         return $this->render('facture_emit/index.html.twig', [
             'facture_emits' => $factureEmitRepository->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_facture_emit_new', methods: ['GET', 'POST'])]
-    public function new(DressEstimateRepository $dressEstimateRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function new(EstimateTabRepository $estimateTabRepository, DressEstimateRepository $dressEstimateRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         $userId = $this->getUser()->getId();
         $estimates = $dressEstimateRepository->findBy(
@@ -35,7 +38,20 @@ class FactureEmitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $estimateId = $request->get('estimateSelect');
+            $estimate = $dressEstimateRepository->findBy([
+                'id' => $estimateId,
+            ]);
+            $estimateTab = $estimateTabRepository->findBy([
+                'estimate_id' => $estimateId,
+            ]);
+            //$factureEmit->setEstimateTab($estimateTab[0]);
+            if($factureEmit->getMajoration()=== null){
+                $factureEmit->setMajoration(0);
+            };
             $entityManager->persist($factureEmit);
+            $estimateTab[0]->setFactureId($factureEmit);
+            $entityManager->persist($estimateTab[0]);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_facture_emit_index', [], Response::HTTP_SEE_OTHER);
@@ -51,6 +67,7 @@ class FactureEmitController extends AbstractController
     #[Route('/{id}', name: 'app_facture_emit_show', methods: ['GET'])]
     public function show(FactureEmit $factureEmit): Response
     {
+        
         return $this->render('facture_emit/show.html.twig', [
             'facture_emit' => $factureEmit,
         ]);
@@ -87,11 +104,26 @@ class FactureEmitController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_facture_emit_delete', methods: ['POST'])]
-    public function delete(Request $request, FactureEmit $factureEmit, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request,FactureEmitRepository $factureEmitRepository, FactureEmit $factureEmit, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$factureEmit->getId(), $request->getPayload()->get('_token'))) {
-            $entityManager->remove($factureEmit);
-            $entityManager->flush();
+            $estimateTab =$factureEmit->getEstimateTab();
+            $query = $entityManager->createQuery(
+                'UPDATE App\Entity\EstimateTab e
+                SET e.facture_id = NULL
+                WHERE e.facture_id = :id'
+            )->setParameter('id', $factureEmit->getid(), 'uuid');
+            $query->execute();         
+
+            
+            $queryBuilder = $factureEmitRepository->createQueryBuilder('f');
+            $queryBuilder->delete()
+                        ->where('f.id = :id')
+                        ->setParameter('id', $factureEmit->getId(), 'uuid');
+            $query  = $queryBuilder->getQuery();
+            $result  = $query->getResult();
+            // $entityManager->remove($factureEmit);
+            // $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_facture_emit_index', [], Response::HTTP_SEE_OTHER);

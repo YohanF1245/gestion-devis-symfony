@@ -1,5 +1,6 @@
-<select class="form-select" id="selectEstimate" name="estimateSelect" aria-label="">
-	<option selected>Selectionner le devis</option>
+	<label class="form-label">Choisir le devis a éditer en facture</label>
+<select class="form-select" id="selectEstimate" name="estimateSelect" aria-label="" required>
+	<option disabled selected value>Selectionner le devis</option>
 	{% if estimates is not empty %}
 	{% for estimate in estimates %}
 		<option value='{{estimate.id}}'>

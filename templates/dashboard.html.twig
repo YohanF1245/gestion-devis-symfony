@@ -66,32 +66,20 @@
 				</div>
 				<div class=" col rounded-end bg-pd-red-50 text-white pe-5 py-3">
 					<p>Dernières sorties</p><hr>
+          {% set outcomeListLen = outcome_list|length %}
+					{% set outcomeLoop = 5 %}
+					{% if outcomeListLen < 5 %}
+						{% set outcomeLoop = outcomeListLen-1 %}
+					{% endif %}
+					{% for i in 0.. outcomeLoop %}
 					<p>
-						date
+						{{outcome_list[i].outcomeDate|date("d/m/y")}}
 					</p>
 
-					<p>
-						euros</p>
+					<p>{{outcome_list[i].name}} - {{outcome_list[i].outcomeAmount}} €</p>
 					<hr>
-          <p>
-						date
-					</p>
-
-					<p>
-						euros</p>
-					<hr><p>
-						date
-					</p>
-
-					<p>
-						euros</p>
-					<hr><p>
-						date
-					</p>
-
-					<p>
-						euros</p>
-					<hr>
+          {% endfor %}
+          
 				</div>
 			</div>
       </div>

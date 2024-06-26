@@ -4,8 +4,17 @@
 
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
-    <div class="container-fluid bg-pd-blue" style="height:10vh!important"></div>
-    <div class="container col-4 offset-4">
+{% if app.request.attributes.get("_route") == "app_performance_new" %}
+
+{% include 'navbar.html.twig' %}
+{% else %}
+{% include 'topbar.html.twig' %}
+{% endif %}
+    {% if app.request.attributes.get("_route") == "app_performance_new" %}
+    <div class="container col-4 offset-4 text-white">
+    {% else %}
+    <div class="container col-4 offset-4 text-black">
+    {% endif %}
     <h1 class="text-center text-pd-yellow">Ajouter une prestation</h1>
     {{form_start(form)}}
     {# {% for performance %} #}
@@ -35,11 +44,11 @@
         {# {{form_row(form.Envoyer)}} #}
     </div>
     {{form_end(form)}}
-    </div>
+    </div>{% if app.request.attributes.get("_route") == "app_performance_new" %}
+    {% endif %}
     <div class="d-flex justify-content-center">
         <a class="btn btn-primary" href="{{ path('app_performance_index') }}">Retour a la la liste des prestations</a>
     </div>
     {% if app.request.attributes.get("_route") == "app_performance_new" %}
-    <div class="container-fluid bg-pd-blue position-fixed bottom-0" style="height:10vh!important"></div>
     {% endif %}
 {% endblock %}

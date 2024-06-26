@@ -4,10 +4,20 @@
 {% endblock %}
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
-	<div class="container-fluid bg-pd-blue" style="height:10vh!important"></div>
+{% if app.request.attributes.get('_route') == 'app_client_new' %}
 
+{% include 'navbar.html.twig' %}
+{% else %}
+{%include 'topbar.html.twig' %}
+{% endif %}
 	<h1 class="text-pd-yellow text-center">Ajouter un client</h1>
-	<div class="container col-6">
+	{% if app.request.get('_route')== 'app_client_new' %}
+
+	<div class="container col-6 text-white">
+{% else %}
+
+	<div class="container col-6 text-black">
+{% endif %}
 		{{form_start(form, {attr: {'novalidate': 'novalidate'}})}}
 		<div class="row">
 			<div class="col-12 d-flex justify-content-center">
@@ -71,6 +81,6 @@
 		</div>
 	</div>
 	{% if app.request.attributes.get("_route") == "app_client_new" %}
-		<div class="container-fluid bg-pd-blue position-fixed bottom-0" style="height:10vh!important">
-		{% endif %}
+		
+	{% endif %}
 	{% endblock %}

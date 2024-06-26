@@ -4,10 +4,13 @@
 
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
+{% if app.request.attributes.get('_route') == 'app_outcome_edit' %}
+	{{include('navbar.html.twig')}}
+{% else %}
 {{include('topbar.html.twig')}}
-<div class="col-4 offset-4">
-    <h1 class="text-pd-yellow text-center">Editer la prestation</h1>
-
+{% endif %}
+<div class="col-4 offset-4 text-white">
+    <h1 class="text-pd-yellow text-center">Editer la dépense</h1>
     {{form_start(form)}}
 		{{form_row(form._token)}}
 		<div class="row">
@@ -36,5 +39,4 @@
         <a class="btn btn-primary" href="{{ path('app_outcome_index') }}">Retour</a>
         {{ include('outcome/_delete_form.html.twig') }}
     </div>
-    {{include('botbar.html.twig')}}
 {% endblock %}

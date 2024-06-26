@@ -16,32 +16,32 @@
 						<p class="fs-6 fw-bold m-0">Dashboard</p>
 					</a>
 				</li>
-				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') == 'app_dress_estimate_index' %} style="background-color:white!important;" {% endif %}>
-					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_dress_estimate_index') }}" {% if app.request.attributes.get('_route') == 'app_dress_estimate_index' %} style="color:#35aae0!important;" {% endif %}>
+				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') starts with 'app_dress_estimate' %} style="background-color:white!important;" {% endif %}>
+					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_dress_estimate_index') }}" {% if app.request.attributes.get('_route') starts with 'app_dress_estimate' %} style="color:#35aae0!important;" {% endif %}>
 
 						<p class="fs-6 fw-bold m-0">Devis</p>
 					</a>
 				</li>
-				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') == 'app_facture_emit_index' %} style="background-color:white!important;" {% endif %}>
-					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_facture_emit_index')}}" {% if app.request.attributes.get('_route') == 'app_facture_emit_index' %} style="color:#35aae0!important;" {% endif %}> 
+				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') starts with 'app_facture_emit' %} style="background-color:white!important;" {% endif %}>
+					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_facture_emit_index')}}" {% if app.request.attributes.get('_route') starts with 'app_facture_emit' %} style="color:#35aae0!important;" {% endif %}> 
 
 						<p class="fs-6 fw-bold m-0">Factures</p>
 					</a>
 				</li>
-				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') == 'app_performance_index' %} style="background-color:white!important;" {% endif %}>
-					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_performance_index') }}" {% if app.request.attributes.get('_route') == 'app_performance_index' %} style="color:#35aae0!important;" {% endif %}>
+				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') starts with 'app_performance' %} style="background-color:white!important;" {% endif %}>
+					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_performance_index') }}" {% if app.request.attributes.get('_route') starts with 'app_performance' %} style="color:#35aae0!important;" {% endif %}>
 
 						<p class="fs-6 fw-bold m-0">Prestations</p>
 					</a>
 				</li>
-				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') == 'app_client_index' %} style="background-color:white!important;" {% endif %}>
-					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_client_index') }}" {% if app.request.attributes.get('_route') == 'app_client_index' %} style="color:#35aae0!important;" {% endif %}>
+				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') starts with 'app_client' %} style="background-color:white!important;" {% endif %}>
+					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_client_index') }}" {% if app.request.attributes.get('_route') starts with 'app_client' %} style="color:#35aae0!important;" {% endif %}>
 
 						<p class="fs-6 fw-bold m-0">Clients</p>
 					</a>
 				</li>
-				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') == 'app_outcome_index' %} style="background-color:white!important;" {% endif %}>
-					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_outcome_index')}}" {% if app.request.attributes.get('_route') == 'app_outcome_index' %} style="color:#35aae0!important;" {% endif %}>
+				<li class="nav-item col-lg px-3 d-flex flex-column justify-content-end align-items-center" {% if app.request.attributes.get('_route') starts with 'app_outcome' %} style="background-color:white!important;" {% endif %}>
+					<a class="nav-link d-flex flex-column justify-content-end h-100 align-items-center justify-content-center text-white" aria-current="page" href="{{ path('app_outcome_index')}}" {% if app.request.attributes.get('_route') starts with 'app_outcome' %} style="color:#35aae0!important;" {% endif %}>
 
 						<p class="fs-6 fw-bold m-0">Dépenses</p>
 					</a>

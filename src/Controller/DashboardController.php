@@ -88,7 +88,8 @@ class DashboardController extends AbstractController {
             'labels' => $monthArray,
             'totalIncome' => $totalIncome,
             'totalOutcome' => $totalOutcome,
-             'estimate_list' => $estimateList]
+             'estimate_list' => $estimateList,
+             'outcome_list' => $outcomeList]
             );
     }
 
