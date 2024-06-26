@@ -3,113 +3,143 @@
 {% endblock %}
 
 {% block body %}
-{% include 'navbar.html.twig' %}
-{% if business == null %}
-<div class="alert alert-danger text-center" role="alert">
-    <p>Vous devez reseigner les données de l'entreprise avant de commencer a creer des devis !</p>
-    <a href="{{ path('app_business_new')}}">Renseigner une entreprise</a>
-</div>
-{% endif %}
-<div class="container">
+	{% include 'navbar.html.twig' %}
+	{% if business == null %}
+		<div class="alert alert-danger text-center" role="alert">
+			<p>Vous devez reseigner les données de l'entreprise avant de commencer a creer des devis !</p>
+			<a href="{{ path('app_business_new')}}">Renseigner une entreprise</a>
+		</div>
+	{% endif %}
+	<div class="container">
 
-{% if business != null %}
-        <div class="row">
-            <div class="col-4 margin-4">
-                <button onclick="window.location.href='{{ path('app_client_new') }}';" class="btn bg-pd-green h-100 w-100 my-4 text-white fw-bold">AJOUTER UN CLIENT</button>
-            </div>
-            <div class="col-4 margin-4">
-                <button onclick="window.location.href='{{ path('app_dress_estimate_new') }}';" class="btn bg-pd-blue h-100 w-100 my-4 text-white fw-bold">CRÉER UN DEVIS</button>
-            </div>
-            <div class="col-4 margin-4">
-                <button class="btn bg-pd-yellow h-100 w-100 my-4 text-white fw-bold">GÉNÉRER UNE FACTURE</button>
-            </div>
-        </div>
-        {% endif %}
-        <div class="row">
-        <div class="col-6 my-5">
-                <canvas id="myChart"></canvas>
-                <div class="row my-5 mb-0">
-                    <div class="col-6 bg-pd-green h-100 px-0">
-                            <p class="py-3  fs-4  text-white text-center">Rentrée</p>
-                            <hr class="text-white mx-auto w-75 hr hr-blurry">
-                            <p class="  fs-1 text-white text-center">{{totalIncome}}</p>
-                    </div>
-                    <div class="col-6 bg-pd-red h-100 px-0">
-                            <p class="py-3 fs-4 text-white text-center">Sortie</p>
-                            <hr class="w-75 mx-auto text-white hr hr-blurry">
-                            <p class="  fs-1 text-white text-center">{{totalOutcome}}</p>
-                    </div>
-                </div>
-        </div>
-        
-        <div class="col-5 offset-1 my-5 py-3 bg-pd-blue text-white ps-5">
-            <p>Derniers devis</p><hr>
-            {% set estimateListLen = estimate_list|length %}
-            {% set estimateLoop = 5 %}
-            {% if estimateListLen < 5 %}
-              {% set estimateLoop = estimateListLen-1 %}
-            {% endif %}
-            {% for i in 0.. estimateLoop %}
-            
-            <p>
-            {{ estimate_list[i].creationDate|date("d/m/Y")}}
-            </p>
+		{% if business != null %}
+			<div class="row">
+				<div class="col-4 margin-4">
+					<button onclick="window.location.href='{{ path('app_client_new') }}';" class="btn bg-pd-green h-100 w-100 my-4 text-white fw-bold">AJOUTER UN CLIENT</button>
+				</div>
+				<div class="col-4 margin-4">
+					<button onclick="window.location.href='{{ path('app_dress_estimate_new') }}';" class="btn bg-pd-blue h-100 w-100 my-4 text-white fw-bold">CRÉER UN DEVIS</button>
+				</div>
+				<div class="col-4 margin-4">
+					<button class="btn bg-pd-yellow h-100 w-100 my-4 text-white fw-bold">GÉNÉRER UNE FACTURE</button>
+				</div>
+			</div>
+		{% endif %}
+		<div class="row">
+			<div class="col-6 my-5">
+				<canvas id="myChart" class="rounded p-3" style="background-color:rgba(53, 170, 224, 0.5)!important;"></canvas>
+				<div class="row my-5 mb-0">
+					<div class="col-6 bg-pd-green-50 rounded-start h-100 px-0">
+						<p class="py-3  fs-4  text-white text-center">Rentrée</p>
+						<hr class="text-white mx-auto w-75 hr hr-blurry">
+						<p class="  fs-1 text-white text-center">{{totalIncome}}</p>
+					</div>
+					<div class="col-6 bg-pd-red-50 h-100 rounded-end px-0">
+						<p class="py-3 fs-4 text-white text-center">Sortie</p>
+						<hr class="w-75 mx-auto text-white hr hr-blurry">
+						<p class="  fs-1 text-white text-center">{{totalOutcome}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-5 offset-1 my-5 ">
+        <div class = "row"> 
+				<div class=" col rounded-start bg-pd-green-50 text-white ps-5 py-3">
+					<p>Derniers devis</p><hr>
+					{% set estimateListLen = estimate_list|length %}
+					{% set estimateLoop = 5 %}
+					{% if estimateListLen < 5 %}
+						{% set estimateLoop = estimateListLen-1 %}
+					{% endif %}
+					{% for i in 0.. estimateLoop %}
 
-            <p> D-{{estimate_list[i].estimateNumber}}  - {{estimate_list[i].total}} €</p>
-            <hr>
-            {% endfor %}
-         </div>
-         </div>
-    <script>
-  var ctx = document.getElementById('myChart');
+						<p>
+							{{ estimate_list[i].creationDate|date("d/m/Y")}}
+						</p>
 
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: [
-      {% for label in labels %}
-      ' {{ label[0] }}',
-      {% endfor %}
-      ],
-      datasets: [{
-        label: 'Entrées',
-        data: [
-        {% for label in labels %}
-        ' {{ label[1] }}',
-        {% endfor %}],
-        backgroundColor:'#95C21F', 
-        borderWidth: 1,
-        stack:0
-      },{
-        label: 'Entrées validées',
-        data: [
-        {% for label in labels %}
-        ' {{ label[2] }}',
-        {% endfor %}],
-        backgroundColor:'#f9b234', 
-        borderWidth: 1,
-        stack:0
-      },{
-        label: 'Sorties',
-        data: [
-        {% for label in labels %}
-        ' {{ label[2] }}',
-        {% endfor %}],
-        backgroundColor:'#E84F1C', 
-        borderWidth: 1,
-        stack:1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-</script>
-    <!-- <script src="../script/revenue-chart.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+						<p>
+							D-{{estimate_list[i].estimateNumber}}
+							-
+							{{estimate_list[i].total}}
+							€</p>
+						<hr>
+					{% endfor %}
+				</div>
+				<div class=" col rounded-end bg-pd-red-50 text-white pe-5 py-3">
+					<p>Dernières sorties</p><hr>
+					<p>
+						date
+					</p>
 
-{% endblock %}
+					<p>
+						euros</p>
+					<hr>
+          <p>
+						date
+					</p>
+
+					<p>
+						euros</p>
+					<hr><p>
+						date
+					</p>
+
+					<p>
+						euros</p>
+					<hr><p>
+						date
+					</p>
+
+					<p>
+						euros</p>
+					<hr>
+				</div>
+			</div>
+      </div>
+		</div>
+		<script>
+			var ctx = document.getElementById('myChart');
+Chart.defaults.color = '#FFFFFF';
+Chart.defaults.font.size = 16;
+new Chart(ctx, {
+type: 'bar',
+data: {
+labels: [{% for label in labels %}
+'  {{ label[0] }}',{% endfor %}],
+datasets: [
+{
+label: 'Entrées',
+data: [{% for label in labels %}
+'  {{ label[1] }}',{% endfor %}],
+backgroundColor: '#95C21F',
+borderWidth: 1,
+stack: 0
+}, {
+label: 'Entrées validées',
+data: [{% for label in labels %}
+'  {{ label[2] }}',{% endfor %}],
+backgroundColor: '#f9b234',
+borderWidth: 1,
+stack: 0
+}, {
+label: 'Sorties',
+data: [{% for label in labels %}
+'  {{ label[2] }}',{% endfor %}],
+backgroundColor: '#E84F1C',
+borderWidth: 1,
+stack: 1
+}
+]
+},
+options: {
+scales: {
+y: {
+beginAtZero: true
+}
+}
+}
+});
+		</script>
+		<!-- <script src="../script/revenue-chart.js"></script> -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+	{% endblock %}

@@ -1,6 +1,12 @@
 .bg-pd-green{
     background-color: #95c21f!important;
 }
+.bg-pd-green-50{
+    background-color: rgba(145, 209, 106, 0.5)!important;
+}
+.bg-pd-red-50{
+  background-color: rgba(232, 79, 28, 0.5)!important;
+}
 .bg-pd-white{
     background-color: #f6F6F6!important;
 }
@@ -19,6 +25,12 @@
 .bg-general{
     
     background-color: #2B3556!important;
+}
+.valid-row{
+    background-color: #DFD!important;
+}
+.invalid-row{
+    background-color: #FCC!important;
 }
 .bg-primary{
     background-color: red!important;

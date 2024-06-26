@@ -5,6 +5,8 @@
 {% block body %}
     <h1>Create new FactureEmit</h1>
 
+    {{ include('facture_emit/select.estimate.html.twig')}}
+    
     {{ include('facture_emit/_form.html.twig') }}
 
     <a href="{{ path('app_facture_emit_index') }}">back to list</a>

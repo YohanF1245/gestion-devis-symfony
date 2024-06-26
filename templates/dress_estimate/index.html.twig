@@ -27,15 +27,69 @@
         <tbody>
         {% for dress_estimate in dress_estimates %}
             <tr>
-                <td>{{ dress_estimate.estimateNumber }}</td>
-                <td>{{ dress_estimate.creationDate ? dress_estimate.creationDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ dress_estimate.validity }}</td>
-                <td>{{ dress_estimate.expirationDate ? dress_estimate.expirationDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ dress_estimate.intitule }}</td>
-                <td>{{ dress_estimate.freeZone }}</td>
-                <td>{{ dress_estimate.accompte }} %</td>
-                <td>{{ dress_estimate.discount }} %</td>
-                <td>
+                <td class="
+                {% if dress_estimate.isValid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}
+            " >{{ dress_estimate.estimateNumber }}</td>
+                <td class="
+                {% if dress_estimate.isValid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}
+            " >{{ dress_estimate.creationDate ? dress_estimate.creationDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="
+                {% if dress_estimate.isValid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}
+            " >{{ dress_estimate.validity }}</td>
+                <td class="
+                {% if dress_estimate.isValid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}
+            " >{{ dress_estimate.expirationDate ? dress_estimate.expirationDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="
+                {% if dress_estimate.isValid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}
+            " >{{ dress_estimate.intitule }}</td>
+                <td class="
+                {% if dress_estimate.isValid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}
+            " >{{ dress_estimate.freeZone }}</td>
+                <td class="
+                {% if dress_estimate.isValid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}
+            " >{{ dress_estimate.accompte }} %</td>
+                <td class="
+                {% if dress_estimate.isValid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}
+            " >{{ dress_estimate.discount }} %</td>
+                <td class="
+                {% if dress_estimate.isValid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}
+            " >
                 <table style="border-spacing:23px 0!important;border-collapse: separate!important;">
                     <td style="border:none!important"><a class=" btn btn-primary"href="{{ path('app_dress_estimate_show', {'id': dress_estimate.id}) }}">Voir</a></td>
                     <td style="border:none!important"><a class=" btn btn-success"href="{{ path('app_dress_estimate_edit', {'id': dress_estimate.id}) }}">Editer</a></td>

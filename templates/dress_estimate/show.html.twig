@@ -4,7 +4,7 @@
 
 {% block body %}
 
-{{include('topbar.html.twig')}}
+    {% include 'navbar.html.twig' %}
     <h1 class="text-pd-yellow text-center mt-3 ">Voir le devis</h1>
     {# <table class="table"> #}
     <div class="container mt-5 col-8 offset-2" style="background-color:white!important">
@@ -151,5 +151,4 @@
     {{ include('dress_estimate/_delete_form.html.twig') }}
     </div>
     <br><br><br><br><br>
-{{include('botbar.html.twig')}}
 {% endblock %}

@@ -31,6 +31,13 @@ class DressEstimateType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('intitule')
+            ->add('is_valid', ChoiceType::class, [
+                'choices' => [
+                    'Non' => false,
+                    'Oui' => true,
+                ],
+                'label' =>"Le devis a-t-il été validé et signé ?"
+            ])
             ->add('free_zone')
             ->add('accompte')
             ->add('discount')

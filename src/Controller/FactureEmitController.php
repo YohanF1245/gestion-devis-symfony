@@ -24,8 +24,12 @@ class FactureEmitController extends AbstractController
     }
 
     #[Route('/new', name: 'app_facture_emit_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(DressEstimateRepository $dressEstimateRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $userId = $this->getUser()->getId();
+        $estimates = $dressEstimateRepository->findBy(
+            ['user_id' => $userId],
+        );
         $factureEmit = new FactureEmit();
         $form = $this->createForm(FactureEmitType::class, $factureEmit);
         $form->handleRequest($request);
@@ -38,6 +42,7 @@ class FactureEmitController extends AbstractController
         }
 
         return $this->render('facture_emit/new.html.twig', [
+            'estimates' => $estimates,
             'facture_emit' => $factureEmit,
             'form' => $form,
         ]);

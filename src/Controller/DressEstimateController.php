@@ -465,13 +465,6 @@ class DressEstimateController extends AbstractController
             $presArray[] = 'null';
             $i=1;
             $loopOverPrestations = true;
-            while ($loopOverPrestations) {
-                if ($request->get('perfNum' . $i) !== null) {
-                    $presArray[] = $request->get('perfNum' . $i);
-                    $i++;
-                } else {
-                    break;
-                }
             //clear all links performance-estimate
             $actualPerfList = $estimatePerformanceLinkRepository->findBy(
                 ['estimate_tab_id'=> $estimateTabId] 
@@ -480,18 +473,27 @@ class DressEstimateController extends AbstractController
                 $entityManager->remove($value);
             }
             $entityManager->flush();
-
-            
+            while ($loopOverPrestations) {
+                if ($request->get('perfNum' . $i) !== null) {
+                    $presArray[] = $request->get('perfNum' . $i);
+                    $i++;
+                } else {
+                    break;
+                }
+            }
             foreach ($presArray as $key => $value) {
                 if ($value != 'null') {
                 $estimateTabLink = new EstimatePerformanceLink();
-                $entityManager->persist($estimateTabLink);
+                //$entityManager->persist($estimateTabLink);
                 $estimateTabLink->setEstimateTabId($estimateTabId);
+               //dd($value);
                 $prest = $performanceRepository->findOneBy(
                      ['id' => $value]
                 );
+                //dd($prest);
                 $total += ($prest->getPirce()*$prest->getQuantity()*(1+$prest->getTax()/100));
                 $prestId = $prest->getId();
+                //dd($prestId);
                 $estimateTabLink->setPerformanceId($prestId);
                 $entityManager->persist($estimateTabLink);
                 // $estimateTab->addPerformaceId($prest);
@@ -499,12 +501,12 @@ class DressEstimateController extends AbstractController
             }
            
             $entityManager->flush();
-            }
+            
             
             $clientId = $request->get('clientSelect');
 
             if($clientId != 'Selectionner le client'){
-
+                
                 $client = $clientRepository->findOneBy(
                     ['id' => $clientId]
                 );
@@ -512,7 +514,6 @@ class DressEstimateController extends AbstractController
                 $client = $clientRepository->findOneBy(
                     ['id' => $dressEstimate->getClientId()->getId()]
                 );
-
             }
             $dressEstimate->setClientId($client);
             $total = $total * (1-$dressEstimate->getDiscount()/100);

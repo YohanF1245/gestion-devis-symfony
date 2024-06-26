@@ -26,6 +26,9 @@ class DressEstimate
     #[ORM\Column(nullable: true)]
     private ?int $validity = null;
 
+    #[ORM\Column]
+    private ?bool $is_valid = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $expiration_date = null;
 
@@ -155,7 +158,17 @@ class DressEstimate
 
         return $this;
     }
+    public function isIsValid(): ?bool
+    {
+        return $this->is_valid;
+    }
 
+    public function setIsValid(bool $is_valid): static
+    {
+        $this->is_valid = $is_valid;
+
+        return $this;
+    }
     public function getDiscount(): ?int
     {
         return $this->discount;

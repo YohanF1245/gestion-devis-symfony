@@ -6,7 +6,7 @@
 
 
 {% block body %}
-	{{include('topbar.html.twig')}}
+    {% include 'navbar.html.twig' %}
 	<h1 class="text-pd-yellow text-center">Nouveau Devis</h1>
 	<div class="container col-8 offset-2 p-3" style="padding:30px!important;background-color:white!important;border-radius:25px!imortant;">
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-turbo="false">
@@ -143,6 +143,9 @@
 				{{form_row(form.discount)}}
 			</div>
 		</div>
+		<div style="display:none!important">
+		{{form_row(form.is_valid)}}
+		</div>
 		<div class="row">
 			<div class="py-3 d-grid">
 				<button type="submit" class="btn btn-block btn-success">Créer le devis</button>
@@ -157,7 +160,5 @@
 		</div>
 	</div>
 	<br><br><br><br>
-	{{include('botbar.html.twig')}}
-
 
 {% endblock %}
