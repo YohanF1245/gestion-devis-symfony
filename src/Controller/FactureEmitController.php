@@ -34,7 +34,8 @@ class FactureEmitController extends AbstractController
         ]);
         $data = [];
         foreach ($estimatesTabs as $estimateTab) {
-            $facture = $factureEmitRepository->findBy([
+            if($estimateTab->getFactureId() !== null){
+                 $facture = $factureEmitRepository->findBy([
                 'id' => $estimateTab->getFactureId(),
             ]);
             $estimate = $dressEstimateRepository->findBy([
@@ -49,6 +50,8 @@ class FactureEmitController extends AbstractController
                 'intitule' => $estimate[0]->getIntitule(),
             );
             $data[] = $row;
+            }
+           
         }
         
         return $this->render('facture_emit/index.html.twig', [
@@ -60,10 +63,20 @@ class FactureEmitController extends AbstractController
     #[Route('/new', name: 'app_facture_emit_new', methods: ['GET', 'POST'])]
     public function new(EstimateTabRepository $estimateTabRepository, DressEstimateRepository $dressEstimateRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
+        
         $userId = $this->getUser()->getId();
         $estimates = $dressEstimateRepository->findBy(
             ['user_id' => $userId],
         );
+        $estimateList = [];
+        foreach ($estimates as $estimate) {
+            $estimateTab = $estimateTabRepository->findBy([
+                'estimate_id' => $estimate->getId(),
+            ]);
+            if($estimateTab[0]->getFactureId() == null){
+                $estimateList[] = $estimate;
+            }
+        }
         $factureEmit = new FactureEmit();
         $form = $this->createForm(FactureEmitType::class, $factureEmit);
         $form->handleRequest($request);
@@ -89,7 +102,7 @@ class FactureEmitController extends AbstractController
         }
 
         return $this->render('facture_emit/new.html.twig', [
-            'estimates' => $estimates,
+            'estimates' => $estimateList,
             'facture_emit' => $factureEmit,
             'form' => $form,
         ]);
@@ -175,15 +188,23 @@ class FactureEmitController extends AbstractController
         ]);
     }
     #[Route('/select/estimate', name: 'app_facture_select_estimate', methods:['GET'])]
-    public function selectEstimate(DressEstimateRepository $dressEstimateRepository)
+    public function selectEstimate(EstimateTabRepository $estimateTabRepository,DressEstimateRepository $dressEstimateRepository)
     {
         $userId = $this->getUser()->getId();
         $estimates = $dressEstimateRepository->findBy(
             ['user_id' => $userId],
         );
-
+        $estimateList = [];
+        foreach ($estimates as $estimate) {
+            $estimateTab = $estimateTabRepository->findBy([
+                'estimate_id' => $estimate->getId(),
+            ]);
+            if($estimateTab[0]->getFactureId() !== null){
+                $estimateList[] = $estimate;
+            }
+        }
         return $this->render('facture_emit/select.estimate.html.twig', [
-            'estimates' => $estimates,
+            'estimates' => $estimateList,
         ]);
     }
 
