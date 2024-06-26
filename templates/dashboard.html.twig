@@ -45,6 +45,7 @@
         <div class = "row"> 
 				<div class=" col rounded-start bg-pd-green-50 text-white ps-5 py-3">
 					<p>Derniers devis</p><hr>
+					{% if estimate_list is not empty %}
 					{% set estimateListLen = estimate_list|length %}
 					{% set estimateLoop = 5 %}
 					{% if estimateListLen < 5 %}
@@ -62,11 +63,17 @@
 							{{estimate_list[i].total}}
 							€</p>
 						<hr>
-					{% endfor %}
+						{% endfor %}
+					{% else %}
+					<p> Aucun devis à afficher ! </p>
+					{% endif %}
+					
 				</div>
 				<div class=" col rounded-end bg-pd-red-50 text-white pe-5 py-3">
 					<p>Dernières sorties</p><hr>
-          {% set outcomeListLen = outcome_list|length %}
+					
+					{% if outcome_list is not empty %}
+          			{% set outcomeListLen = outcome_list|length %}
 					{% set outcomeLoop = 5 %}
 					{% if outcomeListLen < 5 %}
 						{% set outcomeLoop = outcomeListLen-1 %}
@@ -79,6 +86,9 @@
 					<p>{{outcome_list[i].name}} - {{outcome_list[i].outcomeAmount}} €</p>
 					<hr>
           {% endfor %}
+		  {% else %}
+		  <p>Aucune dépense à afficher !</p>
+		  {% endif %}
           
 				</div>
 			</div>

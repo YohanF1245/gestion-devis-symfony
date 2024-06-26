@@ -4,25 +4,56 @@ namespace App\Controller;
 
 use App\Entity\FactureEmit;
 use App\Form\FactureEmitType;
+use App\Repository\BusinessRepository;
+use App\Repository\ClientRepository;
 use App\Repository\DressEstimateRepository;
+use App\Repository\EstimatePerformanceLinkRepository;
 use App\Repository\EstimateTabRepository;
 use App\Repository\FactureEmitRepository;
+use App\Repository\PerformanceRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/facture/emit')]
 class FactureEmitController extends AbstractController
 {
     #[Route('/', name: 'app_facture_emit_index', methods: ['GET'])]
-    public function index(FactureEmitRepository $factureEmitRepository): Response
-    {   ;
-        $factures = $factureEmitRepository->findAll();
+    public function index(BusinessRepository $businessRepository, EstimateTabRepository $estimateTabRepository, DressEstimateRepository $dressEstimateRepository, FactureEmitRepository $factureEmitRepository): Response
+    {   
+        $userId = $this->getUser()->getId();
+        $businessId = $businessRepository->findBy(
+            ['user_id' => $userId],
+        );
+        $estimatesTabs = $estimateTabRepository->findBy([
+            'business_id' => $businessId[0],
+        ]);
+        $data = [];
+        foreach ($estimatesTabs as $estimateTab) {
+            $facture = $factureEmitRepository->findBy([
+                'id' => $estimateTab->getFactureId(),
+            ]);
+            $estimate = $dressEstimateRepository->findBy([
+                'id' => $estimateTab->getEstimateId(),
+            ]);
+            $row = array(
+                'id' => $facture[0]->getId(),
+                'num' =>$estimate[0]->getEstimateNumber(),
+                'total' =>$estimate[0]->getTotal(),
+                'isPaid' => $facture[0]->isIsPaid(),
+                'creationDate' => $facture[0]->getCreationDate(),
+                'intitule' => $estimate[0]->getIntitule(),
+            );
+            $data[] = $row;
+        }
+        
         return $this->render('facture_emit/index.html.twig', [
-            'facture_emits' => $factureEmitRepository->findAll(),
+            //'facture_emits' => $factureEmitRepository->findAll(),
+            'data' => $data,
         ]);
     }
 
@@ -65,11 +96,82 @@ class FactureEmitController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_facture_emit_show', methods: ['GET'])]
-    public function show(FactureEmit $factureEmit): Response
+    public function show(ClientRepository $clientRepository,BusinessRepository $businessRepository,PerformanceRepository $performanceRepository,EstimatePerformanceLinkRepository $estimatePerformanceLink, DressEstimateRepository $dressEstimateRepository,EstimateTabRepository $estimateTabRepository, FactureEmit $factureEmit): Response
     {
+        $estimateTab=$estimateTabRepository->findBy([
+            'facture_id' => $factureEmit->getId(),
+        ]);
+        $estimate = $dressEstimateRepository->findBy([
+            'id' => $estimateTab[0]->getEstimateId(),
+        ]);
+        $performancesList = $estimatePerformanceLink->findBy(
+            ['estimate_tab_id' => $estimateTab[0]->getId()]
+        );
+        $performances = [];
+        foreach ($performancesList as $performance) {
+            $perf =$performanceRepository->findBy([
+                'id' => $performance->getPerformanceId(),
+            ]);
+            $performances[] = $perf[0];
+        }
+        $user = $this->getUser();
+        $year = date_format($estimate[0]->getCreationDate(),"Y");
+        $estimatenum = $estimate[0]->getEstimateNumber();
+
         
+        $enstimatenumLen = strlen((string)$estimatenum);
+
+        $addZero = '';
+        
+        switch ($enstimatenumLen) {
+            case 1:
+                $addZero = "00000";
+                break;
+            case 2:
+                $addZero = "0000";
+                # code...
+                break;
+            case 3:
+                $addZero = "000";
+                # code...
+                break;
+            case 4:
+                $addZero = "00";
+                # code...
+                break;
+            case 5:
+                $addZero = "0";
+                # code...
+                break;   
+            default:
+                # code...
+                break;
+        }
+        
+        $invoiceNumber = "F-".$year."-".$addZero.$estimatenum;
+        $businessId = $estimate[0]->getEstimateTab()->getBusinessId()->getId();
+        $clientId = $estimate[0]->getClientId()->getId();
+        $client = $clientRepository->findOneBy(
+            ['id' => $clientId]
+        );
+        $business = $businessRepository->findOneBy(
+            ['id' => $businessId]
+        );
+        $logoExt = pathinfo($business->getLogo(),PATHINFO_EXTENSION);
+        $userId = $user->getId();
+        $logoName = $userId.".".$logoExt;
+        $logoExt = pathinfo($user->getSignature(), PATHINFO_EXTENSION);
+        $signName = $userId.".".$logoExt;
         return $this->render('facture_emit/show.html.twig', [
             'facture_emit' => $factureEmit,
+            'estimate_num' => $invoiceNumber,
+            'logo_name' => $logoName,
+            'sign_name' => $signName,
+            'estimate' => $estimate[0],
+            'performances' => $performances,
+            'client' => $client,
+            'business' => $business,
+            'user' => $user,
         ]);
     }
     #[Route('/select/estimate', name: 'app_facture_select_estimate', methods:['GET'])]

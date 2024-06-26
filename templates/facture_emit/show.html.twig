@@ -3,8 +3,153 @@
 {% block title %}FactureEmit{% endblock %}
 
 {% block body %}
-    <h1>FactureEmit</h1>
+{% include 'navbar.html.twig' %}
+    <h1 class="text-pd-yellow text-center mt-3 ">Voir la facture</h1>
+    {# <table class="table"> #}
+    <div class="container mt-5 col-8 offset-2" style="background-color:white!important">
+        <div class="row text-end fw-bold ms-5 mt-3">
+            <p>Facture N° {{estimate_num}}</p>
+        </div>
+        <div class="row ">
+			<div class="col-2 offset-1">
+				<img class="img-thumbnail" src={{asset("/public/uploaded-images/logos/"~logo_name~"")}}>
+                {# <img class="img-thumbnail" src='{{ absolute_url(business.logo) }}'> #}             
+            </div>
+            <div class="col-9 text-end m-0">
+                <p>Date d'émission : {{facture_emit.creationDate |date('d-m-Y')}}
+                <br>
+                <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 ms-5">
+                <p>
+                <span class="fw-bold ps-3 text-decoration-underline">Emetteur :</span><br>
+                </p>
+            </div>
+            <div class="col-4 offset-3">
+                <p class="fw-bold ps-3 ms-3 text-decoration-underline">Destinataire : </p>
+            </div>
+        </div>
+    <div class="row ms-5">
+        <div class="col-4 border m-3 p-3">
+            <div>{{business.businessName}}</div>
+            <div>{{user.email}}</div>
+        </div>
+        <div class="col-4 border mt-3 mb-3 p-3 offset-3">
+            <div>{{client.businessName}}</div>
+            <div>{{client.mail}}</div>
+            <div>{{client.name}} {{client.lastname}}</div>
+            <div>{{client.numStreet}} {{client.street}}</div>
+            <div>{{client.zipPostal}} {{client.town}}</div>
+        </div>
+    </div>
+    <div class="row">
+        <p class="ms-5">Intitulé : {{estimate.intitule}}</p>
+    </div>
+    
+    <div id="performanceDiv" class="row ms-5 me-5">
+			<table class="table table-striped-column">
+				<thead class="">
+					<tr class="table-dark text-center">
+						<th>Quantité</th>
+						<th>Désignation</th>
+						<th>Unité</th>
+						<th>Prix</th>
+                        <th>Tva</th>
+                        <th>Total</th>
+					</tr>
+				</thead>
+                {% set totalHt = 0 %}
+				<tbody id="perfomanceTableBody">
+                    {% for perf in performances %}
+                    <tr>
+                        <td>{{perf.quantity}}</td>
+                        <td>{{perf.designation}}</td>
+                        <td>{{perf.unit}}</td>
+                        <td>{{perf.pirce}} €</td>
+                        <td>{{perf.tax}} %</td>
+							{% set pirce = perf.pirce|trim %}
+							{% set quantity = perf.quantity|trim %}
+							{% set tax = perf.tax %}
+							{% set totalHt = totalHt + ((pirce*quantity) * (1+tax/100)) %}
+                        <td>{{((pirce*quantity) * (1+tax/100))| round(2,'common')}} €</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+			</table>
+	</div>
+    <div  class="row">
+        <div class="col-6 ms-5">
+            <p class=""></p>
+        </div>
+        <div class="col-3 offset-1">
+            <div class="d-flex justify-content-between">
+                <div class="">
+                    Total:
+                </div>
+                <div class="">
+                    {{totalHt| round(2,'common')}} €
+                </div>
+            </div>
+            <div class="d-flex justify-content-between ">
+                <div class="">
+                    Remise {{estimate.discount}} %:
+                </div>
+                <div class="">
+                    {{(totalHt*2/100)| round(2,'common')}} €
+                </div>
+            </div>
+            {% set discount = estimate.discount %}
+				{% set totalTTC = (totalHt-(totalHt*discount/100)) %}
+            <div class="d-flex justify-content-between bg-black text-white" >
+                <div class="">
+                    Total TTC:
+                </div>
+                <div class="">
+                    {{totalTTC| round(2,'common')}} €
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="">
+                   Accompte {{estimate.accompte}} %:
+                </div>
+                <div class="">
+					{% set accompte = estimate.accompte %}
+                    {{(totalTTC*accompte/100)| round(2,'common')}} €
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3 mb-3"> 
+        <div class="col-4 offset-1">
+            <p class="text-center"></p>
+            <br><br><br><br>
+        </div>
+        
+        <div class="col-4 border offset-2">
+            <p class="text-center">Signature :</p>
+            <img class="img-thumbnail" src={{asset("/public/uploaded-images/signs/"~sign_name~"")}}>
 
+            <br><br><br><br>
+        </div>
+    </div>
+    <div class="row text-center bg-black text-white pt-3 pb-3">
+        <div>Siret : {{business.siret}}</div>
+        <div>Code ape : {{business.codeApe}} Tva :  {{business.codeTva}}</div>
+        <div>Rib : {{business.rib}}</div>
+    </div>
+    </div>
+        
+    <div class="d-flex justify-content-around mt-3 col-6 offset-3">
+    <a class="btn btn-primary" href="{{  path('app_facture_emit_index') }}">Retour à la liste des facture</a>
+
+    <a class="btn btn-success" href="{{ path('app_facture_emit_edit', {'id': facture_emit.id}) }}">Editer la facture</a> 
+
+     {{ include('facture_emit/_delete_form.html.twig') }}
+    </div>
+    <br><br><br><br><br>
+{# 
     <table class="table">
         <tbody>
             <tr>
@@ -38,5 +183,5 @@
 
     <a href="{{ path('app_facture_emit_edit', {'id': facture_emit.id}) }}">edit</a>
 
-    {{ include('facture_emit/_delete_form.html.twig') }}
+    {{ include('facture_emit/_delete_form.html.twig') }} #}
 {% endblock %}

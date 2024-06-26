@@ -14,23 +14,42 @@
         <thead class="">
             <tr class="table-dark text-center">
                 <th>Date d'émission</th>
-                <th>Payment_date</th>
-                <th>Majoration</th>
-                <th>Date_limit</th>
+                <th>Numero</th>
+                <th>Intitulé</th>
+                <th>Total</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for facture_emit in facture_emits %}
+        {% for dat in data %}
             <tr>
-                <td>{{ facture_emit.creationDate ? facture_emit.creationDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ facture_emit.paymentDate ? facture_emit.paymentDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ facture_emit.majoration }}</td>
-                <td>{{ facture_emit.dateLimit ? facture_emit.dateLimit|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ facture_emit.isPaid ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_facture_emit_show', {'id': facture_emit.id}) }}">show</a>
-                    <a href="{{ path('app_facture_emit_edit', {'id': facture_emit.id}) }}">edit</a>
+                <td class = '{% if dat.isPaid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}'>{{ dat.creationDate|date('Y-m-d') }}</td>
+                <td class = '{% if dat.isPaid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}'>{{ dat.num }}</td>
+                <td class = '{% if dat.isPaid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}'>{{ dat.intitule}}</td>
+                <td class = '{% if dat.isPaid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}'>{{ dat.total }}</td>
+                <td class = '{% if dat.isPaid == 0 %}
+                    invalid-row
+                {% else %}
+                    valid-row
+                {% endif %}'>
+                    <a href="{{ path('app_facture_emit_show', {'id': dat.id}) }}">show</a>
+                    <a href="{{ path('app_facture_emit_edit', {'id': dat.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
