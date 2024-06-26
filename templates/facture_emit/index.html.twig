@@ -7,7 +7,9 @@
 <div class=" col-8 offset-2">
 
     <h1 class="text-center text-pd-yellow my-3">Mes factures</h1>
-    
+    <div class="d-flex justify-content-center mb-3">
+        <a class="btn btn-primary" href="{{ path('app_facture_emit_new') }}">Générer une facture</a>
+    </div>
     <table class="table table-striped-column">
         <thead class="">
             <tr class="table-dark text-center">
@@ -39,5 +41,4 @@
         </tbody>
     </table>
 </div>
-    <a href="{{ path('app_facture_emit_new') }}">Create new</a>
 {% endblock %}
