@@ -90,7 +90,7 @@ class UsersController extends AbstractController
             }
             $entityManager->persist($user);
             $entityManager->flush();
-            return $this->redirectToRoute('app_users_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('profile', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('users/edit.html.twig', [

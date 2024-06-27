@@ -8,10 +8,12 @@ use App\Repository\BusinessRepository;
 use App\Repository\DressEstimateRepository;
 use App\Repository\EstimatePerformanceLinkRepository;
 use App\Repository\EstimateTabRepository;
+use App\Repository\FactureEmitRepository;
 use App\Repository\OutcomeRepository;
 use App\Repository\PerformanceRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,13 +25,22 @@ class DashboardController extends AbstractController {
     function profile(BusinessRepository $businessRepository, OutcomeRepository $outcomeRepository, Request $request,DressEstimateRepository $dressEstimateRepository, EntityManagerInterface $entityManager){
         $user = $this->getUser();
         $userId= $user->getId();
+        
         $business = $businessRepository->findBy([
             'user_id' => $userId,
         ]);
-        $logoExt = pathinfo($business[0]->getLogo(),PATHINFO_EXTENSION);
         $userId = $user->getId();
-        $logoName = $userId.".".$logoExt;
+        try{
+            $logoExt = pathinfo($business[0]->getLogo(),PATHINFO_EXTENSION);
+            $logoName = $userId.".".$logoExt;
+        }catch(Exception $e){
+            $message = $e->getMessage();
+        };
         $logoExt = pathinfo($user->getSignature(), PATHINFO_EXTENSION);
+        if($business === []){
+            $business[0] = null;
+            $logoName = "";
+        }
         $signName = $userId.".".$logoExt;
         return $this->render("profile.show.html.twig",
              ['user' => $this->getUser(),
@@ -40,7 +51,7 @@ class DashboardController extends AbstractController {
             );
     }
     #[Route("/dashboard", name: "home")]
-    function dashboard(BusinessRepository $businessRepository, OutcomeRepository $outcomeRepository, Request $request,DressEstimateRepository $dressEstimateRepository, EntityManagerInterface $entityManager){
+    function dashboard(FactureEmitRepository $factureEmitRepository,BusinessRepository $businessRepository, OutcomeRepository $outcomeRepository, Request $request,DressEstimateRepository $dressEstimateRepository, EntityManagerInterface $entityManager){
         $user = $this->getUser();
         $userId = $user->getId();
 
@@ -74,13 +85,20 @@ class DashboardController extends AbstractController {
             $totalIncome += $estimateTot;
             $monthArray[$intMonth-1][1] = $monthArray[$intMonth-1][1] + $estimateTot;
         }
+        //fill invoices variables
         //fill outcome variables
-        $business = $businessRepository->findBy([
+        $outcomeList = [];
+        try{
+$business = $businessRepository->findBy([
             'user_id' => $userId,
         ]);
         $outcomeList = $outcomeRepository->findBy([
             'business_id' => $business[0]->getId(),
         ]);
+        }catch(Exception $e){
+            $message =  $e->getMessage();
+        };
+        
 
          $totalOutcome = 0;
         foreach ($outcomeList as $outcome){

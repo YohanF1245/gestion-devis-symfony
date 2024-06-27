@@ -35,6 +35,7 @@ class FactureEmitController extends AbstractController
             'business_id' => $businessId[0],
         ]);
         $data = [];
+        $facture[0]= null;
         foreach ($estimatesTabs as $estimateTab) {
             if($estimateTab->getFactureId() !== null){
                  $facture = $factureEmitRepository->findBy([
@@ -55,7 +56,6 @@ class FactureEmitController extends AbstractController
             }
            
         }
-        
         return $this->render('facture_emit/index.html.twig', [
             //'facture_emits' => $factureEmitRepository->findAll(),
             'data' => $data,

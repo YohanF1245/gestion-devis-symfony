@@ -40,32 +40,59 @@
         <tbody>
             <tr>
                 <th>Nom </th>
+                {% if business is not null %}
                 <td>{{ business.businessName}}</td>
+                {% else %}
+                <td>Pas d'entreprise renseignée !</td>
+                {% endif %}
             </tr>
             <tr>
                 <th>Siret</th>
+                {% if business is not null %}
                 <td>{{ business.siret }}</td>
+                {% else %}
+                <td>Pas d'entreprise renseignée !</td>
+                {% endif %}
             </tr>
             <tr>
                 <th>Code Ape</th>
+                {% if business is not null %}
                 <td>{{ business.codeApe }}</td>
+                {% else %}
+                <td>Pas d'entreprise renseignée !</td>
+                {% endif %}
             </tr>
             <tr>
                 <th>Code TVA</th>
+                {% if business is not null %}
                 <td>{{ business.codeTva }}</td>
+                {% else %}
+                <td>Pas d'entreprise renseignée !</td>
+                {% endif %}
             </tr>
             <tr>
                 <th>RIB</th>
+                {% if business is not null %}
                 <td>{{ business.rib }}</td>
+                {% else %}
+                <td>Pas d'entreprise renseignée !</td>
+                {% endif %}
             </tr>
             <tr>
                 <th>Logo</th>
+                {% if business is not null %}
                 <td><img class="img-thumbnail w-50" src={{asset("/public/uploaded-images/logos/"~logo_name~"")}}></td>
+                {% else %}
+                <td>Pas d'entreprise renseignée !</td>  
+                {% endif %}
             </tr>
         </tbody>
     </table>
     <div class="d-flex justify-content-center">
+    
+                {% if business is not null %}
     <a class="btn btn-primary " href="{{ path('app_business_edit', {'id': business.id}) }}">Editer l'entreprise</a>
+    {% endif %}
     </div>
     </div>
 {% endblock %}
