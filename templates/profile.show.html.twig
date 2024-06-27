@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Users{% endblock %}
+
+{% block body %}
+{% include 'navbar.html.twig' %}
+<div class="col-6 offset-3">
+<h1 class="text-pd-yellow text-center">Profil</h1>
+<h2 class="text-white text-center">Utilisateur</h2>
+<table class="table">
+        <tbody>
+            <tr>
+                <th>E-mail</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ user.pseudo }}</td>
+            </tr>
+            <tr>
+                <th>Signature</th>
+                <td><img class="img-thumbnail w-50" src={{asset("/public/uploaded-images/signs/"~sign_name~"")}}></td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ user.creationDate ? user.creationDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+    <a class="btn btn-primary " href="{{ path('app_users_edit', {'id': user.id}) }}">Editer l'utilisateur</a>
+    
+    </div>
+    <br>
+    <hr class="text-white fw-5"> 
+    <br>   
+    <h2 class="text-white text-center">Entreprise</h2>
+    
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom </th>
+                <td>{{ business.businessName}}</td>
+            </tr>
+            <tr>
+                <th>Siret</th>
+                <td>{{ business.siret }}</td>
+            </tr>
+            <tr>
+                <th>Code Ape</th>
+                <td>{{ business.codeApe }}</td>
+            </tr>
+            <tr>
+                <th>Code TVA</th>
+                <td>{{ business.codeTva }}</td>
+            </tr>
+            <tr>
+                <th>RIB</th>
+                <td>{{ business.rib }}</td>
+            </tr>
+            <tr>
+                <th>Logo</th>
+                <td><img class="img-thumbnail w-50" src={{asset("/public/uploaded-images/logos/"~logo_name~"")}}></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+    <a class="btn btn-primary " href="{{ path('app_business_edit', {'id': business.id}) }}">Editer l'entreprise</a>
+    </div>
+    </div>
+{% endblock %}

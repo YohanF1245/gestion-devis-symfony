@@ -2,12 +2,42 @@
 
 {% block title %}Edit Users{% endblock %}
 
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
-    <h1>Edit Users</h1>
-
-    {{ include('users/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_users_index') }}">back to list</a>
-
-    {{ include('users/_delete_form.html.twig') }}
+{% include('navbar.html.twig')%}
+    <h1 class="text-center text-pd-yellow">Créer un compte</h1>
+   <div class="col-4 offset-4 text-white"> 
+   {{form_start(form)}}
+    <div class="row">
+        <div class="col">
+            {{form_row(form.email)}}
+        </div>
+        <div class="col">
+            {{form_row(form.pseudo)}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{form_row(form.signature)}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{form_row(form.password.first)}}
+        </div>
+        <div class="col">
+            {{form_row(form.password.second)}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="py-3 d-grid">
+            <button type="submit" class="btn btn-block btn-primary ">Mettre à jour le compte</button>
+        </div>
+        {# {{form_row(form.Envoyer)}} #}
+    </div>
+    {{form_end(form)}}
+    </div> 
+    <div class=" d-flex justify-content-center" >
+    <a class="btn btn-success" href="{{ path('profile') }}">Retour au profil</a>
+    </div>
 {% endblock %}

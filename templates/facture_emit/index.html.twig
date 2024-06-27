@@ -48,8 +48,16 @@
                 {% else %}
                     valid-row
                 {% endif %}'>
-                    <a href="{{ path('app_facture_emit_show', {'id': dat.id}) }}">show</a>
-                    <a href="{{ path('app_facture_emit_edit', {'id': dat.id}) }}">edit</a>
+                <table style="margin:auto!important; border-spacing:23px 0!important;border-collapse: separate!important;">
+                    <td style="border:none!important"><a class=" btn btn-primary"href="{{ path('app_facture_emit_show', {'id': dat.id}) }}">Voir</a></td>
+                    <td style="border:none!important"><a class=" btn btn-success"href="{{ path('app_facture_emit_edit', {'id': dat.id}) }}">Editer</a></td>
+                    
+                    <td style="border:none!important">{{ include('facture_emit/_delete_form.html.twig') }}</td>
+               
+                    <td style="border:none!important"><a target="_blank" href="{{ path('invoice_pdf', {'id': dat.id}) }}"><img style="height:40px!important;"
+					src="{{asset("img/PDF_file_icon.svg.png")}}" class="h-100"></a> 
+                    </td>
+                </table>
                 </td>
             </tr>
         {% else %}

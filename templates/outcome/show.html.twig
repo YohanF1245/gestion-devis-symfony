@@ -10,16 +10,16 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Nom</th>
-                <td>{{ outcome.name }}</td>
+                <th class="table-dark p-3">Nom</th>
+                <td class="p-3">{{ outcome.name }}</td>
             </tr>
             <tr>
-                <th>Montant de la dépense</th>
-                <td>{{ outcome.outcomeAmount }}</td>
+                <th class="table-dark p-3">Montant de la dépense</th>
+                <td class="p-3">{{ outcome.outcomeAmount }}</td>
             </tr>
             <tr>
-                <th>Date de la dépense</th>
-                <td>{{ outcome.outcomeDate ? outcome.outcomeDate|date('Y-m-d H:i:s') : '' }}</td>
+                <th class="table-dark p-3">Date de la dépense</th>
+                <td class="p-3">{{ outcome.outcomeDate ? outcome.outcomeDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>

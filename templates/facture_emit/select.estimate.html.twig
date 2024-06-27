@@ -1,5 +1,9 @@
 	<label class="form-label">Choisir le devis a éditer en facture</label>
-<select class="form-select" id="selectEstimate" name="estimateSelect" aria-label="" required>
+<select class="form-select" id="selectEstimate" name="estimateSelect" aria-label="" 
+{% if app.request.attributes.get('_route') == 'app_facture_emit_new' %}
+	required
+{% endif %}
+>
 	<option disabled selected value>Selectionner le devis</option>
 	{% if estimates is not empty %}
 	{% for estimate in estimates %}

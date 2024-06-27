@@ -8,19 +8,17 @@
 		{% if error %}
 			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 		{% endif %}
-		<div class="container-fluid bg-pd-blue" style="height:10vh!important"></div>
-
 			<div class="col-4 offset-4 mt-5">
 				<h1 class="text-center text-pd-yellow">Connexion</h1>
 				<div class="col-12 d-flex mt-3">
 					<img class="img-fluid w-25 m-auto" src="{{asset("img/pigeon-devis-portrait.svg")}}">
 				</div>
 				<div class="mb-3">
-					<label class="form-label" for="inputEmail">Email</label>
+					<label class="form-label" for="inputEmail">E-mail</label>
 					<input class="form-control" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
 				</div>
 				<div class="mb-3">
-					<label class="form-label" for="inputPassword">Password</label>
+					<label class="form-label" for="inputPassword">Mot de passe</label>
 					<input class="form-control" type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 				</div>
 				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
@@ -33,7 +31,7 @@
 				</div>
 				<div class="d-grid">
 					<button class="btn btn-lg btn-primary" type="submit">
-						Sign in
+						Se connecter
 					</button>
 				</div>
 			</div>
@@ -46,9 +44,7 @@
 			{% endif %}
 			<div class="mb-3 mt-3 text-center">
 					Pas encore inscrit ?
-					<a href="{{ path('app_users_new') }}">Créer un compte</a>
+					<a class="text-danger"	 href="{{ path('app_users_new') }}">Créer un compte</a>
 				</div>
 		</form>
-		<div class="container-fluid bg-pd-blue position-fixed bottom-0" style="height:10vh!important">
-
 		{% endblock %}

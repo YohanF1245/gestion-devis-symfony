@@ -19,7 +19,26 @@ use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
 class DashboardController extends AbstractController {
-
+    #[Route("/profile", name: "profile")]
+    function profile(BusinessRepository $businessRepository, OutcomeRepository $outcomeRepository, Request $request,DressEstimateRepository $dressEstimateRepository, EntityManagerInterface $entityManager){
+        $user = $this->getUser();
+        $userId= $user->getId();
+        $business = $businessRepository->findBy([
+            'user_id' => $userId,
+        ]);
+        $logoExt = pathinfo($business[0]->getLogo(),PATHINFO_EXTENSION);
+        $userId = $user->getId();
+        $logoName = $userId.".".$logoExt;
+        $logoExt = pathinfo($user->getSignature(), PATHINFO_EXTENSION);
+        $signName = $userId.".".$logoExt;
+        return $this->render("profile.show.html.twig",
+             ['user' => $this->getUser(),
+             'business' => $business[0],
+             'logo_name' => $logoName,
+             'sign_name' => $signName,
+             ]
+            );
+    }
     #[Route("/dashboard", name: "home")]
     function dashboard(BusinessRepository $businessRepository, OutcomeRepository $outcomeRepository, Request $request,DressEstimateRepository $dressEstimateRepository, EntityManagerInterface $entityManager){
         $user = $this->getUser();

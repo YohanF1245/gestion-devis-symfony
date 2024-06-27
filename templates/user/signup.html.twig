@@ -3,8 +3,7 @@
 {% block title "Créér un compte" %}
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 {% block body %}
-	<div class="container-fluid bg-pd-blue" style="height:10vh!important"></div>
-	<div class="container col-4 offset-4 d-flex align-items-center" sytle="height:100vh!important">
+	<div class="container text-white col-4 offset-4 d-flex align-items-center" sytle="height:100vh!important">
 		<div class="col-12 d-flex mt-3">
 			<img class="img-fluid w-25 m-auto" src="{{asset("img/pigeon-devis-portrait.svg")}}">
 		</div>
@@ -42,6 +41,5 @@
 		</div>
 		{{form_end(form)}}
 	</div>
-	<div class="container-fluid bg-pd-blue position-fixed bottom-0" style="height:10vh!important"></div>
 
 	{% endblock %}

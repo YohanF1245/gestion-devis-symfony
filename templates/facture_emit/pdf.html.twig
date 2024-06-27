@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Devis PDF
+{% block title %}Facture PDF
 {% endblock %}
 
 {% block body %}
@@ -146,14 +146,12 @@
 			</div>
 			<div class="w-50" style="float:right">
 				<p class="right">
-					<span style="font-size:1.5rem">Devis N°
-					{{estimate_number}}</span>
+					<span style="font-size:1.5rem">Facture N°
+					{{estimate_num}}</span>
 					<br><br>
 					Date d'émission :
 					{{dress_estimate.creationDate |date('d-m-Y')}}
-					<br>Validité :
-					{{dress_estimate.estimateNumber}}
-					jours</p>
+				</p>
 			</div>
 		</div>
 		<div class=" clear m-t-1" style="">
@@ -198,14 +196,14 @@
 				{% set totalHt = 0 %}
 					{% for perf in performances %}
 						<tr >
-							<td class="p-l-1">{{perf[0].quantity}}</td>
-							<td>{{perf[0].designation}}</td>
-							<td>{{perf[0].unit}}</td>
-							<td>{{perf[0].pirce}} €</td>
-							<td>{{perf[0].tax}} %</td>
-							{% set pirce = perf[0].pirce|trim %}
-							{% set quantity = perf[0].quantity|trim %}
-							{% set tax = perf[0].tax %}
+							<td class="p-l-1">{{perf.quantity}}</td>
+							<td>{{perf.designation}}</td>
+							<td>{{perf.unit}}</td>
+							<td>{{perf.pirce}} €</td>
+							<td>{{perf.tax}} %</td>
+							{% set pirce = perf.pirce|trim %}
+							{% set quantity = perf.quantity|trim %}
+							{% set tax = perf.tax %}
 							{% set totalHt = totalHt + ((pirce*quantity) * (1+tax/100)) %}
 							<td> {{ (pirce*quantity) * (1+tax/100)| round(2,'common') }} €</td>
 						</tr>
@@ -214,8 +212,8 @@
 			</table>
 		</div>
 		<div class="clear m-t-1">
-			<div class="border w-60 float-left " style="min-height:4rem">
-				<p>{{dress_estimate.freeZone}}</p>
+			<div class=" w-60 float-left " style="min-height:4rem">
+				<p></p>
 			</div>
 			<div class="w-30 float-right" style="border:1px solid white">
 				<div class=" h-tot">
@@ -263,7 +261,7 @@
 
 			<div class="clear m-t-3">
 			<div class="w-30 float-right">
-				<p>Bon pour accord du client :</p>
+				
 			</div>
 			<div class="w-30 float-left">
 				<p>Signature :</p>
@@ -285,9 +283,9 @@
 	</div>
 
 
-	<a style="text-decoration:none;color:white;opacity:0;" href="{{ path('app_dress_estimate_index') }}">back to list</a>
+	{# <a style="text-decoration:none;color:white;opacity:0;" href="{{ path('app_dress_estimate_index') }}">back to list</a>
 
 	<a style="text-decoration:none;color:white;opacity:0;" href="{{ path('app_dress_estimate_edit', {'id': dress_estimate.id}) }}">edit</a>
 
-	{{ include('dress_estimate/_delete2_form.html.twig') }}
+	{{ include('dress_estimate/_delete2_form.html.twig') }} #}
 {% endblock %}
