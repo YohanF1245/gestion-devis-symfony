@@ -229,7 +229,7 @@
 						Remise {{dress_estimate.discount}} %:
 					</div>
 					<div class="float-right">
-						{{(totalHt*2/100)| round(2,'common')}} €
+						{{(totalHt*dress_estimate.discount/100)| round(2,'common')}} €
 					</div>
 				</div>
 				{% set discount = dress_estimate.discount %}

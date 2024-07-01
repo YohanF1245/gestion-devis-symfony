@@ -152,7 +152,7 @@
 					Date d'émission :
 					{{dress_estimate.creationDate |date('d-m-Y')}}
 					<br>Validité :
-					{{dress_estimate.estimateNumber}}
+					{{dress_estimate.validity}}
 					jours</p>
 			</div>
 		</div>
@@ -231,7 +231,7 @@
 						Remise {{dress_estimate.discount}} %:
 					</div>
 					<div class="float-right">
-						{{(totalHt*2/100)| round(2,'common')}} €
+						{{(totalHt*dress_estimate.discount/100)| round(2,'common')}} €
 					</div>
 				</div>
 				{% set discount = dress_estimate.discount %}

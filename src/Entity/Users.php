@@ -59,6 +59,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Performance::class, mappedBy: 'user_id')]
     private Collection $performances;
 
+    #[ORM\Column]
+    private ?bool $is_verified= null;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
@@ -163,7 +166,17 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    public function isIsVerified(): ?bool
+    {
+        return $this->is_verified;
+    }
 
+    public function setIsPaid(bool $is_verified): static
+    {
+        $this->is_verified = $is_verified;
+
+        return $this;
+    }
     public function getCreationDate(): ?\DateTimeInterface
     {
         return $this->creation_date;
