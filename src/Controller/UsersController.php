@@ -37,7 +37,7 @@ class UsersController extends AbstractController
     }
 
     #[Route('/new', name: 'app_users_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher	): Response
     {
         $user = new Users();
         $form = $this->createForm(UsersType::class, $user);
@@ -49,6 +49,7 @@ class UsersController extends AbstractController
             $user->setRoles([]);
             $user->setCreationDate(new DateTime());
             $entityManager->persist($user);
+            $entityManager->flush();
             try{
                 $signFile = $form->get("signature")->getData();
                 if($signFile){
@@ -80,13 +81,24 @@ class UsersController extends AbstractController
 
 
     #[Route(path: '/verify/email', name: 'app_verify_email')]
-    public function emailConfirmation(Request $request, TranslatorInterface $translator): Response
+    public function emailConfirmation(Request $request, TranslatorInterface $translator, UsersRepository $usersRepository): Response
     {
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $id = $request->query->get('id'); // retrieve the user id from the url
 
+       // Verify the user id exists and is not null
+       if (null === $id) {
+           return $this->redirectToRoute('app_login');
+       }
+
+       $user = $usersRepository->find($id);
+       // Ensure the user exists in persistence
+       if (null === $user) {
+           return $this->redirectToRoute('app_login');
+       }
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+            $this->emailVerifier->handleEmailConfirmation($request, $user);
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
@@ -96,8 +108,8 @@ class UsersController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        //return $this->redirectToRoute('app_register');
-        return $this->render('security/verify.email.html.twig');
+        return $this->redirectToRoute('app_login');
+        //return $this->render('security/verify.email.html.twig');
     }
     #[Route('/test-email', name: 'test_email')]
     public function sendTestEmail(MailerInterface $mailer): Response

@@ -171,7 +171,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->is_verified;
     }
 
-    public function setIsPaid(bool $is_verified): static
+    public function setIsVerified(bool $is_verified): static
     {
         $this->is_verified = $is_verified;
 

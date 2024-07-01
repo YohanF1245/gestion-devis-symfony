@@ -15,10 +15,11 @@ class SecurityController extends AbstractController
     #[Route(path: '/', name: 'app_login')]
     public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
+        
+        dd($this->getUser());
          if ($this->getUser() && $this->getUser()->isIsVerified() === true) {
+            dd($this->getUser());
              return $this->redirectToRoute('home');
-         }else{
-            return $this->redirectToRoute('app_verify_email');
          }
         //  $session = $request->getSession();
         //  $session->clear();
