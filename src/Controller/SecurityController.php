@@ -16,9 +16,7 @@ class SecurityController extends AbstractController
     public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
         
-        dd($this->getUser());
          if ($this->getUser() && $this->getUser()->isIsVerified() === true) {
-            dd($this->getUser());
              return $this->redirectToRoute('home');
          }
         //  $session = $request->getSession();
