@@ -35,13 +35,15 @@ class BusinessController extends AbstractController
                 $logo = $form->get("logo")->getData();
                 if($logo){
                     $fileName = $user->getId() . "." . $logo->getClientOriginalExtension();
-                    $logo->move($this->getParameter('kernel.project_dir').'\assets\public\uploaded-images\logos\\',$fileName);
-                    $business ->setLogo($this->getParameter('kernel.project_dir').'\assets\public\uploaded-images\logos\\'.$fileName);
+                    $logo->move($this->getParameter('kernel.project_dir').'/assets/public/uploaded-images/logos/',$fileName);
+                    $business ->setLogo($this->getParameter('kernel.project_dir').'/assets/public/uploaded-images/logos/'.$fileName);
                 }
             }catch(\Exception $e){
                 echo $e->getMessage();
             }
         $business->setUserId($user);
+        $user->setHasBusiness(true);
+        $entityManager->persist($user);
             $entityManager->persist($business);
             $entityManager->flush();
 
@@ -72,8 +74,8 @@ class BusinessController extends AbstractController
             $logo = $form->get("logo")->getData();
             if($logo){
                 $fileName = $user->getId() . "." . $logo->getClientOriginalExtension();
-                $logo->move($this->getParameter('kernel.project_dir').'\assets\public\uploaded-images\logos\\',$fileName);
-                $business ->setLogo($this->getParameter('kernel.project_dir').'\assets\public\uploaded-images\logos\\'.$fileName);
+                $logo->move($this->getParameter('kernel.project_dir').'/assets/public/uploaded-images/logos/',$fileName);
+                $business ->setLogo($this->getParameter('kernel.project_dir').'/assets/public/uploaded-images/logos/'.$fileName);
             }
         }catch(\Exception $e){
             echo $e->getMessage();

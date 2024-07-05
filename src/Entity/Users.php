@@ -62,6 +62,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $is_verified= null;
 
+    #[ORM\Column]
+    private ?bool $has_business = null;
     public function __construct()
     {
         $this->clients = new ArrayCollection();
@@ -174,6 +176,17 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $is_verified): static
     {
         $this->is_verified = $is_verified;
+
+        return $this;
+    }
+    public function hasHasBusiness(): ?bool
+    {
+        return $this->has_business;
+    }
+
+    public function setHasBusiness(bool $has_business): static
+    {
+        $this->has_business = $has_business;
 
         return $this;
     }

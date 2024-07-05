@@ -47,6 +47,7 @@ class UsersController extends AbstractController
             $user->setPassword( $passwordHasher->hashPassword($user, $user->getPassword()));
             
             $user->setRoles([]);
+            $user->setHasBusiness(false);
             $user->setCreationDate(new DateTime());
             $entityManager->persist($user);
             $entityManager->flush();
@@ -54,8 +55,8 @@ class UsersController extends AbstractController
                 $signFile = $form->get("signature")->getData();
                 if($signFile){
                     $fileName = $user->getId() . "." . $signFile->getClientOriginalExtension();
-                    $signFile->move($this->getParameter('kernel.project_dir').'\assets\public\uploaded-images\signs\\',$fileName);
-                    $user ->setSignature($this->getParameter('kernel.project_dir').'\assets\public\uploaded-images\signs\\'.$fileName);
+                    $signFile->move($this->getParameter('kernel.project_dir').'/assets/public/uploaded-images/signs/',$fileName);
+                    $user ->setSignature($this->getParameter('kernel.project_dir').'/assets/public/uploaded-images/signs/'.$fileName);
                 }
             }catch(\Exception $e){
                 echo $e->getMessage();
@@ -153,8 +154,8 @@ class UsersController extends AbstractController
                 $signFile = $form->get("signature")->getData();
                 if($signFile){
                     $fileName = $user->getId() . "." . $signFile->getClientOriginalExtension();
-                    $signFile->move($this->getParameter('kernel.project_dir').'\assets\public\uploaded-images\signs\\',$fileName);
-                    $user ->setSignature($this->getParameter('kernel.project_dir').'\assets\public\uploaded-images\signs\\'.$fileName);
+                    $signFile->move($this->getParameter('kernel.project_dir').'/assets/public/uploaded-images/signs/',$fileName);
+                    $user ->setSignature($this->getParameter('kernel.project_dir').'/assets/public/uploaded-images/signs/'.$fileName);
                     
                 }
             }catch(\Exception $e){

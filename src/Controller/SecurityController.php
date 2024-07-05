@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\BusinessRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +17,11 @@ class SecurityController extends AbstractController
     #[Route(path: '/', name: 'app_login')]
     public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
-        
-         if ($this->getUser() && $this->getUser()->isIsVerified() === true) {
-             return $this->redirectToRoute('home');
-         }
+
+
+        if ($this->getUser() && $this->getUser()->isIsVerified() === true) {
+                return $this->redirectToRoute('home');
+        }
         //  $session = $request->getSession();
         //  $session->clear();
         //  dd($session);
@@ -36,6 +39,4 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
-
-    
 }

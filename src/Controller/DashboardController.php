@@ -25,6 +25,9 @@ class DashboardController extends AbstractController {
     function profile(BusinessRepository $businessRepository, OutcomeRepository $outcomeRepository, Request $request,DressEstimateRepository $dressEstimateRepository, EntityManagerInterface $entityManager){
         $user = $this->getUser();
         $userId= $user->getId();
+        if($user->hasHasBusiness() === false){
+            return $this->redirectToRoute('app_business_new');
+        }
         
         $business = $businessRepository->findBy([
             'user_id' => $userId,
@@ -54,7 +57,9 @@ class DashboardController extends AbstractController {
     function dashboard(FactureEmitRepository $factureEmitRepository,BusinessRepository $businessRepository, OutcomeRepository $outcomeRepository, Request $request,DressEstimateRepository $dressEstimateRepository, EntityManagerInterface $entityManager){
         $user = $this->getUser();
         $userId = $user->getId();
-
+        if($user->hasHasBusiness() === false){
+            return $this->redirectToRoute('app_business_new');
+        }
         //setup js chart variable
         $monthArray = array (
             array('Janvier',0,0),
