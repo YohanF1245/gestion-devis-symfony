@@ -1,7 +1,8 @@
-body {
-    background-color: skyblue;
+#section-1{
+    height: 100vh;
+    background-color: black;
 }
-.parallax {
+.parallax-zer {
     border:3px solid black!important;
     background-attachment: fixed!important;
     background-size: cover!important;
