@@ -20,6 +20,8 @@
             <tr>
                 <th>Signature</th>
                 <td><img class="img-thumbnail w-50" src={{asset("/public/uploaded-images/signs/"~sign_name~"")}}></td>
+                
+                <td><img class="img-thumbnail w-50" src= {{ absolute_url(user.signature) }}></td>
             </tr>
             <tr>
                 <th>Date de création</th>
@@ -82,6 +84,8 @@
                 <th>Logo</th>
                 {% if business is not null %}
                 <td><img class="img-thumbnail w-50" src={{asset("/public/uploaded-images/logos/"~logo_name~"")}}></td>
+                
+                <td><img class="img-thumbnail w-50" src= {{ absolute_url(business.logo) }}></td>
                 {% else %}
                 <td>Pas d'entreprise renseignée !</td>  
                 {% endif %}

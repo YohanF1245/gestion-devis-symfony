@@ -1,15 +1,461 @@
-{% extends 'base.html.twig' %}
-{% block title %}Bienvenue!
-{% endblock %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
 
-{% block body %}
-	<div class="parallax-zer" style="height:100vh!important;">
-    QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hWqsdf
-    QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hWqsdf
-    sqdf
-    sqdff
-    sqdfdsq
-    f9b234dsq
-    fsq
+        {% block stylesheets %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    
+        {# <link href="{{absolute_url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css')}}" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> #}
+        {% endblock %}
+
+        {% block javascripts %}
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            {% block importmap %}{{ importmap('cv') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <nav class="desktop">
+        <ul>
+            <li><a href="#top"><span class="mdi mdi-home-outline"></span></a></li>
+            <li><a href="#section1">À PROPOS</a></li>
+            <li><a href="#section2">COMPÉTENCES</a></li>
+            <li><a href="#section3">PARCOURS</a></li>
+            <li><a href="#section4">RÉALISTATIONS</a></li>
+            <li><a href="#section4">CONTACT</a></li>
+            <li><a href="https://github.com/YohanF1245" target="_blank"><span class="mdi mdi-github"></span></a></li>
+        </ul>
+    </nav>
+   
+    <nav id="mobile-nav" role="navigation">
+        <div id="menuToggle">
+          <input type="checkbox" />
+            <span></span>
+            <span></span>
+            <span></span>
+        <ul id="menu">
+            <ul>
+                <li><a href="#top">HOME</span></a></li>
+                <li><a href="#section1">À PROPOS</a></li>
+                <li><a href="#section2">COMPÉTENCES</a></li>
+                <li><a href="#section3">PARCOURS</a></li>
+                <li><a href="#section4">RÉALISTATIONS</a></li>
+                <li><a href="#section4">CONTACT</a></li>
+                <li><a href="https://github.com/YohanF1245" target="_blank">GITHUB</span></a></li>
+            </ul>
+        </ul>
+       </div>
+      </nav>
+    <div id="top" class="parallax">
+        <div class="center-main-title">
+            <h1>Bonjour, je m'appelle Yohan et je suis</h1>
+            <h2>Concepteur Développeur d'Applications</h2>
+            <p class="subtext-main">Actuellement en recherche d'un stage de fin d'étude pour Juillet 2025</p>
+            <p class=" animate__animated animate__backInUp main-icons"><span
+                    class="purple anim mdi mdi-xml"></span><span class="blue anim mdi mdi-database-outline"></span>
+                <span class="red anim mdi mdi-remote-desktop"></span><span
+                    class="green anim mdi mdi-pencil-ruler-outline"></span><span class="yellow mdi mdi-web"></span>
+            </p>
+        </div>
     </div>
-	{% endblock %}
+    <section id="section1">
+        <div class="intro">
+            <div class="intro-left">
+
+                <img class="photo-moi" src="{{ asset('images/moi.jpg') }}" alt="moi">
+            </div>
+            <div class="intro-right">
+                <p class="intro-text"><span class="montserrat titre-intro">À propos de moi.
+                    </span><br><br>
+
+                    Mon parcours professionnel a commencé avec l'obtention d'un diplôme de Technicien de Maintenance
+                    Informatique, où j'ai acquis une solide maîtrise des techniques de maintenance et de dépannage du
+                    matériel informatique, ainsi que des notions en réseau. Ce premier pas dans le domaine de
+                    l'informatique m'a permis de développer une base technique essentielle et une compréhension
+                    approfondie des infrastructures matérielles et des systèmes de réseaux.<br><br>
+
+                    Cherchant toujours à élargir mes horizons et à approfondir mes compétences, j'ai ensuite entrepris
+                    un Diplôme d'Accès aux Études Universitaires (DAEU). Cette étape cruciale m'a ouvert la voie vers un
+                    Diplôme d'études universitaires scientifiques et techniques Informatique d'organisation et systèmes
+                    d'information (DEUST IOSI), où j'ai pu me plonger dans l'univers
+                    de la programmation. Cette formation m'a permis de découvrir ma passion pour le code et de renforcer
+                    mes compétences techniques.<br><br>
+
+                    Autodidacte par nature, j'ai continuellement cherché à élargir mes connaissances et à perfectionner
+                    mes compétences en explorant diverses technologies. Je me suis ainsi familiarisé avec les
+                    technologies de backend et de frontend, ainsi qu'avec le développement d'applications desktop. Mon
+                    aisance avec les bases de données complète cette palette de compétences, me permettant d'aborder des
+                    projets complexes avec une vision globale et une expertise technique.<br><br>
+
+                    Aujourd'hui, fort de ce parcours diversifié et enrichissant, je me fixe un nouvel objectif ambitieux
+                    : reprendre mes études dans le but d'obtenir un titre de Concepteur Développeur d'Applications.
+                    Cette nouvelle étape représente pour moi un défi stimulant, en phase avec mon aspiration constante à
+                    évoluer et à me perfectionner.<br><br>
+
+                    Je suis animé par une grande détermination et une soif de challenge. Mon sérieux et mon engagement
+                    me poussent à toujours donner le meilleur de moi-même dans chaque projet que j'entreprends. Je crois
+                    fermement que chaque défi est une opportunité d'apprentissage et de croissance.<br><br>
+
+                    Merci de votre visite sur mon site. J'espère que vous trouverez ici toutes les informations sur mon
+                    parcours et mes compétences. N'hésitez pas à me contacter pour toute question ou pour discuter de
+                    projets futurs.</p>
+            </div>
+        </div>
+        <div class="contact-button-wrapper">
+            <a class="contact-button" href="#section4">Contactez-moi</a>
+        </div>
+    </section>
+    <section id="section2">
+        <div class="container-s2">
+            <h3>Compétences</h3>
+            <div class="skill-container">
+                <div class="skill-left">
+                    <h4 class="purple-static">Front-end</h4>
+                    <p class="skill-text">Création et intégration de sites web et applications mobiles responsive,
+                        accessibles et répondant aux normes W3C.</p>
+                    <div class="skill-bar">
+
+                        <span class="purple-static mdi mdi-language-html5"></span>
+                        <span class="purple-static mdi mdi-language-css3"></span>
+                        <span class="purple-static mdi mdi-language-javascript"></span>
+                        <span class="purple-static mdi mdi-bootstrap"></span>
+                        <span class="purple-static mdi mdi-react"></span>
+                    </div>
+
+                </div>
+                <div class="skill-icon">
+                    <span class="purple-static anim mdi mdi-xml"></span>
+                </div>
+
+            </div>
+            <div class="container-s2 ">
+                <div class="skill-container">
+                    <div class="skill-icon">
+                        <span class="blue-static anim mdi mdi-database-outline"></span>
+                    </div>
+                    <div class="skill-right">
+                        <h4 class="blue-static">Back-end</h4>
+                        <p class="skill-text">Développement de sites web et applications, création et gestion de bases
+                            de données, programmation orientée objet et modèle 3 tiers, mise en ligne.</p>
+                        <div class="skill-bar">
+
+                            <span class="blue-static mdi mdi-language-php"></span>
+                            <span class="blue-static mdi mdi-symfony"></span>
+                            <span class="blue-static mdi mdi-nodejs"></span>
+                            <span class="blue-static mdi mdi-database-outline"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="container-s2">
+                    <div class="skill-container">
+                        <div class="skill-left">
+                            <h4 class="yellow-static">CMS</h4>
+                            <p class="skill-text">Création et édition de thèmes et plugins. Mon expérience est
+                                principalement portée sur WordPress. J'ai l'habitude de travailler avec les plugins
+                                WooCommerce, ACF et Yoast SEO.</p>
+                            <div class="skill-bar" style="justify-content: center">
+                                <span class="yellow-static mdi mdi-wordpress"></span>
+                            </div>
+
+                        </div>
+                        <div class="skill-icon">
+
+                            <span class="yellow-static anim mdi mdi-account-edit"></span>
+                        </div>
+
+                    </div>
+                    <div class="container-s2">
+                        <div class="skill-container">
+                            <div class="skill-icon">
+                                <span class="green-static anim mdi mdi-pencil-ruler-outline"></span>
+                            </div>
+                            <div class="skill-right">
+                                <h4 class="green-static">Design</h4>
+                                <p class="skill-text">Création de maquettes Figma et HTML, ainsi que de prototypes
+                                    fonctionnels. Conception centrée utilisateur selon les règles d'UX lors de la
+                                    création d'une interface utilisateur.</p>
+                                <div class="skill-bar green-svg">
+                                    <svg height="200px" width="200px" version="1.1" id="Capa_1"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        viewBox="0 0 17.469 17.469" xml:space="preserve" fill="#000000">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <g>
+                                                <g>
+                                                    <path style="fill:#2ECC71;"
+                                                        d="M5.925,4.982c-0.442,0-0.742,0.043-0.898,0.087v2.841C5.213,7.952,5.44,7.966,5.754,7.966 c1.157,0,1.871-0.585,1.871-1.571C7.624,5.511,7.01,4.982,5.925,4.982z">
+                                                    </path>
+                                                    <path style="fill:#2ECC71;"
+                                                        d="M16.4,0.002H1.07C0.479,0.002,0,0.48,0,1.069v15.329c0,0.59,0.479,1.069,1.07,1.069H16.4 c0.59,0,1.069-0.479,1.069-1.069V1.07C17.469,0.48,16.99,0.002,16.4,0.002z M8.894,8.624c-0.741,0.7-1.842,1.014-3.125,1.014 c-0.287,0-0.543-0.014-0.743-0.043v3.442H2.869V3.541C3.54,3.428,4.482,3.342,5.811,3.342c1.341,0,2.299,0.256,2.94,0.771 c0.617,0.486,1.03,1.286,1.03,2.228S9.466,8.08,8.894,8.624z M12.145,13.179c-0.916,0-1.729-0.198-2.258-0.485l0.385-1.556 c0.4,0.241,1.229,0.527,1.873,0.527c0.655,0,0.927-0.228,0.927-0.586c0-0.356-0.214-0.527-1.027-0.799 c-1.442-0.485-2-1.271-1.986-2.099c0-1.298,1.114-2.286,2.842-2.286c0.814,0,1.542,0.187,1.97,0.4l-0.385,1.5 c-0.314-0.172-0.913-0.399-1.514-0.399c-0.527,0-0.826,0.214-0.826,0.571c0,0.328,0.269,0.499,1.126,0.8 c1.328,0.456,1.886,1.128,1.899,2.154C15.171,12.222,14.141,13.179,12.145,13.179z">
+                                                    </path>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                    <svg fill="#2ECC71" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
+                                        enable-background="new 0 0 512 512" xml:space="preserve">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <g id="2069a460dcf28295e231f3111e035a9d">
+                                                <path style="fill:#2ECC71;" display="inline"
+                                                    d="M337.803,268.126c0.728,3.618,1.085,7.964,1.085,11.586v26.423c0,4.708-0.357,9.05-1.447,13.033 c-4.341,19.188-20.269,31.492-38.37,31.492c-28.232,0-44.162-23.528-44.162-55.745c0-32.943,15.93-58.281,44.523-58.281 C319.704,236.634,333.822,250.752,337.803,268.126z M511.5,85.667v340.667c0,46.842-38.325,85.167-85.167,85.167H85.667 C38.825,511.5,0.5,473.175,0.5,426.333V85.667C0.5,38.825,38.825,0.5,85.667,0.5h340.667C473.175,0.5,511.5,38.825,511.5,85.667z M171.661,138.536h-44.523v243.979h44.523V138.536z M384.864,382.515c-0.728-11.947-1.451-31.492-1.451-49.59V125.503h-44.525 v99.909h-0.724c-7.959-13.031-25.338-23.167-49.59-23.167c-42.353,0-79.276,35.113-78.915,94.118 c0,54.298,33.303,90.132,75.292,90.132c25.699,0,47.058-12.305,57.558-31.854h0.724l1.809,27.874H384.864z">
+                                                </path>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                        stroke="#2ECC71">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path style="fill:#2ECC7100;"
+                                                d="M12 3H9C7.34315 3 6 4.34315 6 6C6 7.65685 7.34315 9 9 9M12 3V9M12 3H15C16.6569 3 18 4.34315 18 6C18 7.65685 16.6569 9 15 9M12 9H9M12 9H15M12 9V15M9 9C7.34315 9 6 10.3431 6 12C6 13.6569 7.34315 15 9 15M15 9C16.6569 9 18 10.3431 18 12C18 13.6569 16.6569 15 15 15C13.3431 15 12 13.6569 12 12C12 10.3431 13.3431 9 15 9ZM12 15H9M12 15V18C12 19.6569 10.6569 21 9 21C7.34315 21 6 19.6569 6 18C6 16.3431 7.34315 15 9 15"
+                                                stroke="#2ECC71" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round"></path>
+                                        </g>
+                                    </svg>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="container-s2">
+                            <div class="skill-container">
+                                <div class="skill-left">
+                                    <h4 class="grey-static">Environnement de travail</h4>
+                                    <p class="skill-text"><span class="mdi mdi-laptop"></span> <span
+                                            class="text-bold">Systèmems d'exploitation:</span> Windows 11, Linux Ubuntu
+                                    </p>
+                                    <p class="skill-text"><span class="mdi mdi-console-line"></span> <span
+                                            class="text-bold">Workflow:</span> GIT, XAMPP, Chrome, Filezilla, Postman,
+                                        DBeaver, CLI, NPM</p>
+                                    <p class="skill-text"><span class="mdi mdi-xml"></span> <span
+                                            class="text-bold">Ide:</span> Visual Studio Code, Eclipse for Java</p>
+                                    <p class="skill-text"><span class="mdi mdi-pen"></span> <span
+                                            class="text-bold">Autres compétences:</span> maîtrise de l'anglais,
+                                        traduction anglais/français, rédaction</p>
+                                    <p class="skill-text"><span class="mdi mdi-account-tie"></span> <span
+                                            class="text-bold">Savoir-être:</span> capacité d'adaptation, travail en
+                                        équipe, organisation, rigueur, force de proposition</p>
+
+                                </div>
+                                <div class="skill-icon">
+
+                                    <span class="grey-static mdi mdi-coffee-outline"></span>
+                                </div>
+
+                            </div>
+    </section>
+    <section id="section3">
+        <h3>
+            Parcours
+        </h3>
+        <div class="timeline">
+            <div class="timeline-separator"></div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2024</div>
+                <div class="timeline-content">
+                    <h4 class="green-static margin-bottom-0"><span class="mdi mdi-school-outline"></span> Concepteur
+                        Developeur d'Applications</h4>
+                    <h5>Simplon Valenciennes</h5>
+                    <ul>
+                        <li>En cours</li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2023</div>
+                <div class="timeline-content">
+                    <h4 class="blue-static margin-bottom-0"><span class="mdi mdi-briefcase-outline"></span> Service
+                        Numérique</h4>
+                    <h5>Association AGEVAL</h5>
+                    <p>
+                    <ul>
+                        <li>Maquettage d'application</li>
+                        <li>Intégration Web</li>
+                        <li>Conception et mise en œuvre d'une application pour entrepreneurs indépendants</li>
+                        <li>Participation a la communication interne de l'entreprise via des campagnes d'e-mailing brevo
+                        </li>
+                        <li>Réalisation d'affiches et de flyers</li>
+                        <li>Gestion et suivi des tickets d'assistance</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2023</div>
+                <div class="timeline-content">
+                    <h4 class="green-static margin-bottom-0"><span class="mdi mdi-school-outline"></span> Atelier RGPD
+                    </h4>
+                    <h5>CNIL</h5>
+                    <p>
+                    <ul>
+                        <li>Connaissance approfondie du RGPD</li>
+                        <li>Mise en conformité réglementaire</li>
+                        <li>Gestion des données personnelles</li>
+                        <li>Sécurité des données</li>
+                        <li>Formation et sensibilisation des collaborateurs</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2017</div>
+                <div class="timeline-content">
+                    <h4 class="green-static margin-bottom-0"><span class="mdi mdi-school-outline"></span> DEUST IOSI
+                    </h4>
+                    <h5>Université polytechnique Hauts-de-France</h5>
+                    <p>
+                    <ul>
+                        <li>Programmation en langage C</li>
+                        <li>Développement web avec HTML, CSS et JavaScript</li>
+                        <li>Gestion de bases de données</li>
+                        <li>Débogage et optimisation du code</li>
+                        <li>Conception et développement d'applications en langage C</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2016</div>
+                <div class="timeline-content">
+                    <h4 class="green-static margin-bottom-0"><span class="mdi mdi-school-outline"></span> DAEU B</h4>
+                    <h5>Université polytechnique Hauts-de-France</h5>
+                    <p>
+                    <ul>
+                        <li>Validation du niveau BAC Scientifique</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2008</div>
+                <div class="timeline-content">
+                    <h4 class="blue-static margin-bottom-0"><span class="mdi mdi-briefcase-outline"></span> Dépannage
+                        informatique</h4>
+                    <h5>DJP service</h5>
+                    <p>
+                    <ul>
+                        <li>Diagnostic et résolution de problèmes informatiques</li>
+                        <li>Installation et configuration de systèmes d'exploitation</li>
+                        <li>Réparation et maintenance de matériel informatique</li>
+                        <li>Soutien technique aux utilisateurs finaux</li>
+                        <li>Gestion et suivi des tickets d'assistance</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2007</div>
+                <div class="timeline-content">
+                    <h4 class="blue-static margin-bottom-0"><span class="mdi mdi-briefcase-outline"></span> Dépannage
+                        informatique</h4>
+                    <h5>Micro SOS</h5>
+                    <p>
+                    <ul>
+                        <li>Diagnostic et résolution de problèmes informatiques</li>
+                        <li>Installation et configuration de systèmes d'exploitation</li>
+                        <li>Réparation et maintenance de matériel informatique</li>
+                        <li>Soutien technique aux utilisateurs finaux</li>
+                        <li>Gestion et suivi des tickets d'assistance</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2006</div>
+                <div class="timeline-content">
+                    <h4 class="green-static margin-bottom-0"><span class="mdi mdi-school-outline"></span> Agent d'intervention en matériel micro-informatique
+                    </h4>
+                    <h5>Actif CNT</h5>
+                    <p>
+                    <ul>
+                        <li>Installation et configuration de postes de travail micro-informatique</li>
+                        <li>Intégration à un réseau local et externe</li>
+                        <li>Diagnostic et résolution de problèmes techniques</li>
+                        <li>Mise à niveau des systèmes d'exploitation</li>
+                        <li>Suivi et maintenance du matériel informatique</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2004</div>
+                <div class="timeline-content">
+                    <h4 class="green-static margin-bottom-0"><span class="mdi mdi-school-outline"></span> BEP métiers du secrétariat
+                    </h4>
+                    <h5>LP du Hainaut</h5>
+                    <p>
+                    <ul>
+                        <li>Rédaction et saisie de courriers et de notes</li>
+                        <li>Communication avec les clients par téléphone</li>
+                        <li>Organisation de réunions et de déplacements</li>
+                        <li>Gestion et classification de documents</li>
+                        <li>Utilisation de logiciels de bureautique (traitement de texte, tableur, gestionnaire de fichiers)</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="section4">
+        <h3>
+            Réalisations
+        </h3>
+        <div class="project-container">
+            <div class="project-card">
+                <img class="project-image" src="{{ asset('images/pigeon-devis.png') }}" alt="Pigeon-Devis">
+                <div class="project-details">
+                    <div class="project-title">Pigeon-Devis</div>
+                    <div class="project-description">Pigeon devis est né d'une collaboration avec des entrepreneurs cherchant une solution pour éditer et gérer leurs devis.</div>
+                    <div class="project-cta">
+                        <a href="http://yohanferdin.ovh" target="_blank">Voir le Projet</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section id="section5">
+        <h3>
+            Contact
+        </h3>
+        <div class="contact-form">
+            <form action="https://formspree.io/f/xyzgyldz" method="post">
+                <div class="top-input">
+
+                <input type="text" name="name" placeholder="Votre nom" required>
+                <input type="email" name="email" placeholder="Votre email" required>
+                </div>
+                <textarea name="message" placeholder="Votre message" required></textarea>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Yohan Ferdin.<br>Tous droits réservés.</p>
+    </footer>
+</html

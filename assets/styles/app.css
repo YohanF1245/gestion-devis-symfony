@@ -1,12 +1,3 @@
 body {
     background-color: skyblue;
 }
-.parallax {
-    border:3px solid black!important;
-    background-attachment: fixed!important;
-    background-size: cover!important;
-    background-repeat: no-repeat!important;
-    background-position: center!important;  
-    height: 100vh!important;
-    background-image: url("../assets/images/cv-section-1-bg.jpg")!important;
-}

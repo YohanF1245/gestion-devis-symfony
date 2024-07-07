@@ -33,6 +33,7 @@ class BusinessType extends AbstractType
             ])
             ->add('business_name', TextType::class,[
                 "required" => true,
+                "label" => "Nom de l'entreprise",
             ])
             ->add('code_ape')
             ->add('code_tva')

@@ -16,9 +16,14 @@ class OutcomeType extends AbstractType
         $builder
             ->add('outcome_date', null, [
                 'widget' => 'single_text',
+                'label' => 'Date de la dépense',
             ])
-            ->add('outcome_amount')
-            ->add('name')
+            ->add('outcome_amount', null, [
+                'label' => 'Montant de la dépense',
+            ])
+            ->add('name', null, [
+                'label' => 'Intitulé de la dépense',
+            ])
         ;
     }
 

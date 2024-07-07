@@ -24,13 +24,19 @@ class DressEstimateType extends AbstractType
             // ])
             ->add('creation_date', null, [
                 'widget' => 'single_text',
+                'label' => "Date de création du devis",
             ])
             //->add('estimate_number')
-            ->add('validity')
+            ->add('validity',null,[
+                'label' =>"Validité (jours)",
+            ])
             ->add('expiration_date', null, [
                 'widget' => 'single_text',
+                'label' => "Date d'expiration du devis",
             ])
-            ->add('intitule')
+            ->add('intitule',null, [
+                'label' =>"Intitulé du devis",
+            ])
             ->add('is_valid', ChoiceType::class, [
                 'choices' => [
                     'Non' => false,
@@ -38,9 +44,15 @@ class DressEstimateType extends AbstractType
                 ],
                 'label' =>"Le devis a-t-il été validé et signé ?"
             ])
-            ->add('free_zone')
-            ->add('accompte')
-            ->add('discount')
+            ->add('free_zone',null, [
+                'label' =>"Zone libre",
+            ])
+            ->add('accompte',null, [
+                'label' =>"Accompte (%)",
+            ])
+            ->add('discount',null, [
+                'label' =>"Remise (%)",
+            ])
             // ->add('id', EntityType::class, [
             //     'class' => Performance::class,
             //     'choice_label' => 'designation',

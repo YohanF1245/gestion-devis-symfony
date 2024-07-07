@@ -21,13 +21,18 @@ class FactureEmitType extends AbstractType
         $builder
             ->add('creation_date', null, [
                 'widget' => 'single_text',
+                "label" => "Date de création de la facture"
             ])
             ->add('payment_date', null, [
                 'widget' => 'single_text',
+                'label' => "Date de paiement de la facture"
             ])
-            ->add('majoration')
+            ->add('majoration', null, [
+                'label' => "Majoration (%)"
+            ])
             ->add('date_limit', null, [
                 'widget' => 'single_text',
+                'label' => "Date limite de paiement de la facture"
             ])
             ->add('is_paid', ChoiceType::class, [
                 'choices' => [
